@@ -7,7 +7,7 @@
   <title>VK Nutrition — Fuel Your Strength</title>
   <link rel="icon" type="image/png" href="./VK logo.png">
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <link rel="stylesheet" href="./style.css?v=4">
+  <link rel="stylesheet" href="./style.css?v=5">
 
 </head>
 <body>
@@ -53,10 +53,17 @@
             <a class="btn btn-dark" href="#categories">Explore Products</a>
           </div>
         </div>
-        <div class="hero-products" aria-hidden="true">
+        <div class="hero-products hero-slideshow" aria-label="Featured VK Nutrition products">
           <div class="hero-ring"></div>
-          <div class="tub"><div class="label"><small>VK NUTRITION</small>WHEY<br><b>PROTEIN</b><span>PREMIUM BLEND</span></div></div>
-          <div class="shaker"></div>
+          <div class="slideshow-frame">
+            <img class="slide active" src="./anabolic%202.png" alt="Anabolic Alphadrol supplement">
+            <img class="slide" src="./gold%20whey%202.png" alt="Gold whey protein supplement">
+            <img class="slide" src="./hero-products.png" alt="VK Nutrition product collection">
+            <img class="slide" src="./pure%20whey%202.png" alt="Pure whey protein supplement">
+          </div>
+          <div class="slideshow-dots" aria-hidden="true">
+            <span class="slideshow-dot active"></span><span class="slideshow-dot"></span><span class="slideshow-dot"></span><span class="slideshow-dot"></span>
+          </div>
         </div>
       </div>
     </section>
@@ -261,7 +268,7 @@
     </div>
   </div>
 
-  <script src="./script.js?v=4"></script>
+  <script src="./script.js?v=5"></script>
 </body>
 </html>
 
