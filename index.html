@@ -147,6 +147,21 @@
     .otp-btn:disabled{opacity:.55;cursor:not-allowed;border-color:var(--line);color:var(--muted)}
     .auth-divider{display:flex;align-items:center;gap:10px;color:var(--muted);font-size:11.5px;text-transform:uppercase;letter-spacing:.06em;margin:2px 0}
     .auth-divider:before,.auth-divider:after{content:"";flex:1;height:1px;background:var(--line)}
+    .account-wrap{position:relative}
+    .account-btn{display:flex;align-items:center;gap:8px;background:var(--lime);color:#171200;border:1px solid var(--lime);border-radius:9px;height:42px;padding:0 16px 0 8px;font-size:13px;font-weight:900}
+    .account-btn:hover{background:var(--lime-dark)}
+    .account-avatar{width:28px;height:28px;border-radius:50%;background:#111;color:var(--lime);display:grid;place-items:center;font-size:12px;font-weight:900;flex-shrink:0}
+    .account-name{max-width:110px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+    .account-menu{position:absolute;right:0;top:calc(100% + 10px);width:230px;background:var(--surface);border:1px solid var(--line);border-radius:14px;box-shadow:var(--shadow);padding:8px;opacity:0;pointer-events:none;transform:translateY(-6px);transition:.18s;z-index:30}
+    .account-menu.open{opacity:1;pointer-events:auto;transform:translateY(0)}
+    .account-menu-head{padding:12px 12px 10px;border-bottom:1px solid var(--line);margin-bottom:6px}
+    .account-menu-head strong{display:block;font-size:13px}
+    .account-menu-head span{display:block;font-size:11.5px;color:var(--muted);margin-top:2px}
+    .account-menu button{width:100%;text-align:left;background:transparent;border:0;color:#fff;padding:10px 12px;border-radius:9px;font-size:13px;font-weight:700;display:flex;align-items:center;gap:9px}
+    .account-menu button:hover{background:#1c231e;color:var(--lime)}
+    .account-menu button.danger:hover{color:#ff6a6a}
+    .settings-panel{display:flex;flex-direction:column;gap:14px}
+    .settings-panel[hidden]{display:none}
     @media(max-width:480px){.field-row{grid-template-columns:1fr}.auth-modal{padding:26px 20px 28px}}
     @media(max-width:950px){.nav-links{display:none}.mobile-toggle{display:grid}.search{margin-left:auto}.hero-content{width:67%}.hero-products{opacity:.75}.categories{grid-template-columns:repeat(3,1fr)}.product-grid{grid-template-columns:repeat(2,1fr)}.trust-grid{grid-template-columns:repeat(2,1fr)}}
     @media(max-width:620px){.container{width:min(100% - 28px,1240px)}.nav{height:65px;gap:7px}.logo{font-size:19px}.logo-img{height:32px}.search{display:none}.icon-btn{width:37px;height:37px}.mobile-only{display:grid}.hero{min-height:615px}.hero-inner{min-height:615px;align-items:flex-start}.hero-content{width:100%;padding-top:68px}.hero-products{width:100%;height:300px;bottom:-14px;right:-5px;opacity:.75}.hero-ring{width:280px;height:280px;right:5px;top:14px}.hero-ring:after{font-size:7px;letter-spacing:3px;padding:56px 10px}.tub{transform:scale(.73) rotate(-8deg);transform-origin:bottom right;right:67px;bottom:-4px}.shaker{transform:scale(.7) rotate(13deg);transform-origin:bottom right;right:0;bottom:5px}h1{font-size:48px}.hero p{font-size:14px;max-width:390px}.stats .container{grid-template-columns:1fr 1fr}.stat{padding:16px 12px}.stat:nth-child(odd){border-left:1px solid var(--line)}section{padding:62px 0}.section-head{align-items:flex-end}.section-head h2{font-size:29px}.product-grid{gap:10px}.product-image{height:180px}.mini-tub{transform:scale(.77)}.mini-pouch{transform:scale(.77)}.product-info{padding:12px}.product h3{font-size:13px}.card-actions{flex-direction:column}.categories{grid-template-columns:1fr 1fr;gap:10px}.category{min-height:120px}.promo{grid-template-columns:1fr;min-height:470px}.promo-copy{padding:33px 25px}.promo-copy h2{font-size:36px}.promo-art{min-height:220px}.promo-tub{right:85px;bottom:4px;transform:scale(.76) rotate(10deg);transform-origin:bottom right}.promo-pouch{right:-7px;bottom:-10px;transform:scale(.7) rotate(13deg);transform-origin:bottom right}.trust-grid,.reviews,.footer-grid{grid-template-columns:1fr}.trust-grid{gap:10px}.trust{padding:19px}.footer-grid{gap:18px}.legal{flex-direction:column}.hide-mobile{display:none}.hero-actions .btn{padding:13px 15px}}
@@ -161,7 +176,17 @@
       </div>
       <label class="search"><input id="searchInput" type="search" placeholder="Search products..." aria-label="Search products"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg></label>
       <div class="nav-actions">
-        <button class="btn-login hide-mobile" id="accountBtn" aria-label="Login or create account">Login</button>
+        <div class="account-wrap hide-mobile">
+          <button class="btn-login" id="accountBtn" aria-label="Login or create account">Login</button>
+          <div class="account-menu" id="accountMenu">
+            <div class="account-menu-head">
+              <strong id="accountMenuName">Signed in</strong>
+              <span id="accountMenuSub"></span>
+            </div>
+            <button type="button" id="openSettingsBtn">⚙ Settings</button>
+            <button type="button" id="logoutBtn" class="danger">↪ Log Out</button>
+          </div>
+        </div>
         <button class="icon-btn mobile-only" id="accountBtnMobile" aria-label="Login or create account">♙</button>
         <button class="icon-btn" id="wishlistBtn" aria-label="Wishlist">♡<span class="badge" id="wishCount">0</span></button>
         <button class="icon-btn" id="cartBtn" aria-label="Cart">🛒<span class="badge" id="cartCount">0</span></button>
@@ -349,6 +374,24 @@
     </form>
   </div>
 
+  <div class="auth-overlay" id="settingsOverlay"></div>
+  <div class="auth-modal" id="settingsModal" role="dialog" aria-modal="true" aria-labelledby="settingsTitle">
+    <button class="auth-close" id="settingsClose" aria-label="Close">×</button>
+    <div class="auth-head">
+      <img class="auth-logo" src="VK_logo-removebg-preview.png" alt="VK Nutrition">
+      <h2 id="settingsTitle">Account Settings</h2>
+      <p class="auth-sub">Update your profile details below.</p>
+    </div>
+    <form class="settings-panel" id="settingsForm" novalidate>
+      <div class="field-row">
+        <div class="field"><label for="setName">Name</label><input id="setName" type="text" placeholder="First name"></div>
+        <div class="field"><label for="setSurname">Surname</label><input id="setSurname" type="text" placeholder="Last name"></div>
+      </div>
+      <div class="field"><label for="setEmail">Email <span>(Customer ID)</span></label><input id="setEmail" type="email" placeholder="you@example.com" disabled></div>
+      <button class="btn btn-primary full" type="submit">Save Changes</button>
+    </form>
+  </div>
+
   <script>
     /* ---------- Supabase init (safe, will not crash the rest of the script) ---------- */
     const SUPABASE_URL = "https://owpgbkrnimhwvgqntggq.supabase.co";
@@ -427,6 +470,93 @@
       return true;
     }
 
+    /* ---------- Account state: header button + dropdown + settings ---------- */
+    let currentUser = null; // { id, email, phone, first_name, last_name }
+
+    function setLoggedIn(user){
+      currentUser = user;
+      const btn = $("#accountBtn");
+      const label = user.first_name || user.email || user.phone || "Account";
+      btn.innerHTML = `<span class="account-avatar">${(user.first_name||label).charAt(0).toUpperCase()}</span><span class="account-name">${label}</span>`;
+      $("#accountMenuName").textContent = user.first_name ? `${user.first_name} ${user.last_name||""}`.trim() : "Signed in";
+      $("#accountMenuSub").textContent = user.email || user.phone || "";
+    }
+
+    function setLoggedOut(){
+      currentUser = null;
+      const btn = $("#accountBtn");
+      btn.innerHTML = "Login";
+      $("#accountMenu").classList.remove("open");
+    }
+
+    // Toggle dropdown when clicking the account button (only when logged in)
+    $("#accountBtn").addEventListener("click", (e)=>{
+      if(currentUser){
+        e.stopPropagation();
+        $("#accountMenu").classList.toggle("open");
+      } else {
+        openAuth();
+      }
+    });
+    document.addEventListener("click", (e)=>{
+      const wrap = document.querySelector(".account-wrap");
+      if(wrap && !wrap.contains(e.target)) $("#accountMenu").classList.remove("open");
+    });
+
+    // Logout
+    $("#logoutBtn").addEventListener("click", async ()=>{
+      $("#accountMenu").classList.remove("open");
+      if(supabaseClient){
+        try { await supabaseClient.auth.signOut(); } catch(err){ console.error("[VK] signOut error:", err); }
+      }
+      setLoggedOut();
+      showToast("You've been logged out.");
+    });
+
+    // Settings modal open/close
+    const settingsOverlay=$("#settingsOverlay"), settingsModal=$("#settingsModal");
+    function openSettings(){
+      $("#accountMenu").classList.remove("open");
+      $("#setName").value = currentUser?.first_name || "";
+      $("#setSurname").value = currentUser?.last_name || "";
+      $("#setEmail").value = currentUser?.email || "";
+      settingsOverlay.classList.add("show"); settingsModal.classList.add("open");
+    }
+    function closeSettings(){ settingsOverlay.classList.remove("show"); settingsModal.classList.remove("open"); }
+    $("#openSettingsBtn").addEventListener("click", openSettings);
+    $("#settingsClose").addEventListener("click", closeSettings);
+    settingsOverlay.addEventListener("click", closeSettings);
+
+    $("#settingsForm").addEventListener("submit", async (e)=>{
+      e.preventDefault();
+      const first_name=$("#setName").value.trim(), last_name=$("#setSurname").value.trim();
+      if(!first_name || !last_name){ showToast("Enter your name and surname."); return; }
+
+      if(supabaseClient && currentUser?.id){
+        const { error } = await supabaseClient.from("profiles").upsert({
+          id: currentUser.id, first_name, last_name, email: currentUser.email || null
+        });
+        if(error){ console.error("[VK] settings save error:", error); showToast(`Couldn't save: ${error.message}`); return; }
+      }
+
+      currentUser.first_name = first_name;
+      currentUser.last_name = last_name;
+      setLoggedIn(currentUser);
+      showToast("Settings saved.");
+      closeSettings();
+    });
+
+    // Restore session on page load (in case Supabase already has one)
+    (async ()=>{
+      if(!supabaseClient) return;
+      try {
+        const { data: { session } } = await supabaseClient.auth.getSession();
+        if(session?.user){
+          setLoggedIn({ id: session.user.id, email: session.user.email, phone: session.user.phone });
+        }
+      } catch(err){ console.error("[VK] getSession error:", err); }
+    })();
+
     // Mobile -> OTP generation helper, shared by sign in and sign up
     function wireOtp({mobileId, sendBtnId, otpFieldId, hintId}){
       const mobileInput=$(mobileId), sendBtn=$(sendBtnId), otpField=$(otpFieldId);
@@ -470,6 +600,7 @@
       e.preventDefault();
       const id=$("#siLoginId").value.trim(), pw=$("#siPassword").value;
       if(!id || !pw){ showToast("Enter your login ID and password."); return; }
+      setLoggedIn({ email: id });
       showToast(`Signed in as ${id}.`);
       closeAuth();
     });
@@ -496,6 +627,7 @@
           return;
         }
 
+        setLoggedIn({ id: data.user.id, phone: data.user.phone });
         showToast(`Mobile ${mobile} verified — signed in successfully.`);
         closeAuth();
       } catch (err) {
@@ -546,6 +678,7 @@
           console.error("[VK] profiles upsert error:", profileError);
         }
 
+        setLoggedIn({ id: data.user.id, phone: data.user.phone, email, first_name: name, last_name: surname });
         showToast(`Welcome, ${name}! Your VK Nutrition account is ready.`);
         closeAuth();
       } catch (err) {
