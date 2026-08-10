@@ -138,10 +138,10 @@
     .auth-divider{display:flex;align-items:center;gap:10px;color:var(--muted);font-size:11.5px;text-transform:uppercase;letter-spacing:.06em;margin:2px 0}
     .auth-divider:before,.auth-divider:after{content:"";flex:1;height:1px;background:var(--line)}
     .account-wrap{position:relative}
-    .account-btn{display:flex;align-items:center;gap:8px;background:var(--lime);color:#171200;border:1px solid var(--lime);border-radius:9px;height:42px;padding:0 16px 0 8px;font-size:13px;font-weight:900}
-    .account-btn:hover{background:var(--lime-dark)}
-    .account-avatar{width:28px;height:28px;border-radius:50%;background:#111;color:var(--lime);display:grid;place-items:center;font-size:12px;font-weight:900;flex-shrink:0}
-    .account-name{max-width:110px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+    .account-btn{width:42px;height:42px;padding:0;display:grid;place-items:center;background:transparent;color:var(--lime);border:1px solid transparent;border-radius:50%;font-size:13px;font-weight:900}
+    .account-btn:hover{background:transparent;border-color:var(--lime);color:var(--lime)}
+    .account-avatar{width:34px;height:34px;border-radius:50%;background:transparent;border:1px solid var(--lime);color:var(--lime);display:grid;place-items:center;font-size:13px;font-weight:900;flex-shrink:0}
+    .account-name{display:none}
     .account-menu{position:absolute;right:0;top:calc(100% + 10px);width:270px;background:var(--surface);border:1px solid var(--line);border-radius:14px;box-shadow:var(--shadow);padding:8px;opacity:0;pointer-events:none;transform:translateY(-6px);transition:.18s;z-index:30}
     .account-menu.open{opacity:1;pointer-events:auto;transform:translateY(0)}
     .account-menu-head{padding:12px 12px 10px;border-bottom:1px solid var(--line);margin-bottom:6px}
