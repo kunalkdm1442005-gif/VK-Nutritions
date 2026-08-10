@@ -6,8 +6,6 @@
   <meta name="description" content="VK Nutrition — Premium sports nutrition for strength, performance and recovery." />
   <title>VK Nutrition — Fuel Your Strength</title>
   <link rel="icon" type="image/png" href="./VK logo.png">
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
   <style>
     :root{
       --ink:#0a0d0c;
@@ -331,34 +329,7 @@
         <div class="otp-row"><input id="siMobile" type="tel" inputmode="numeric" maxlength="10" placeholder="10-digit mobile number"><button class="otp-btn" id="siSendOtp" type="button">Send OTP</button></div>
       </div>
       <div class="field otp-field" id="siOtpField" hidden><label for="siOtp">Enter OTP <span id="siOtpHint"></span></label>
-        <div class="otp-row"><input id="siOtp" type="tel" inputmode="numeric" maxlength="6" placeholder="6-digit OTP">
-          </div>
-          $("#siVerifyOtp").onclick=()=>{
-  const otp=$("#siOtp").value.trim(), mobile=$("#siMobile").value.trim();
-  if(otp.length!==6){ showToast("Enter the 6-digit OTP sent to your mobile."); return; }
-  showToast(`Mobile ${mobile} verified — signed in successfully.`);
-  closeAuth();
-};
-        $("#siVerifyOtp").onclick = async () => {
-  const otp = $("#siOtp").value.trim(), mobile = $("#siMobile").value.trim();
-  if (otp.length !== 6) { showToast("Enter the 6-digit OTP sent to your mobile."); return; }
-
-  const e164 = "+91" + mobile; // adjust country code as needed
-
-  const { data, error } = await supabase.auth.verifyOtp({
-    phone: e164,
-    token: otp,
-    type: "sms"
-  });
-
-  if (error) {
-    showToast(`Verification failed: ${error.message}`);
-    return;
-  }
-
-  showToast(`Mobile ${mobile} verified — signed in successfully.`);
-  closeAuth();
-};
+        <div class="otp-row"><input id="siOtp" type="tel" inputmode="numeric" maxlength="6" placeholder="6-digit OTP"><button class="otp-btn" id="siVerifyOtp" type="button">Verify & Sign In</button></div>
       </div>
     </form>
 
@@ -457,49 +428,13 @@
     });
 
     // Sign in — mobile OTP path
-    function wireOtp({mobileId, sendBtnId, otpFieldId, hintId}){
-  const mobileInput = $(mobileId), sendBtn = $(sendBtnId), otpField = $(otpFieldId);
-
-  mobileInput.addEventListener("input", () => {
-    mobileInput.value = mobileInput.value.replace(/\D/g, "").slice(0, 10);
-  });
-
-  sendBtn.onclick = async () => {
-    const mobile = mobileInput.value.trim();
-    if (mobile.length !== 10) { showToast("Enter a valid 10-digit mobile number."); return; }
-
-    const e164 = "+91" + mobile; // adjust country code as needed
-
-    sendBtn.disabled = true;
-    sendBtn.textContent = "Sending...";
-
-    const { error } = await supabase.auth.signInWithOtp({ phone: e164 });
-
-    if (error) {
-      showToast(`Failed to send OTP: ${error.message}`);
-      sendBtn.disabled = false;
-      sendBtn.textContent = "Send OTP";
-      return;
-    }
-
-    otpField.hidden = false;
-    if (hintId) $(hintId).textContent = `sent to ${mobile.slice(0,2)}••••••${mobile.slice(-2)}`;
-    showToast(`OTP sent to your mobile number ending in ${mobile.slice(-2)}.`);
-
-    let secs = 30;
-    sendBtn.textContent = `Resend in ${secs}s`;
-    const t = setInterval(() => {
-      secs--;
-      if (secs <= 0) {
-        clearInterval(t);
-        sendBtn.disabled = false;
-        sendBtn.textContent = "Resend OTP";
-      } else {
-        sendBtn.textContent = `Resend in ${secs}s`;
-      }
-    }, 1000);
-  };
-}
+    wireOtp({mobileId:"#siMobile", sendBtnId:"#siSendOtp", otpFieldId:"#siOtpField", hintId:"#siOtpHint"});
+    $("#siVerifyOtp").onclick=()=>{
+      const otp=$("#siOtp").value.trim(), mobile=$("#siMobile").value.trim();
+      if(otp.length!==6){ showToast("Enter the 6-digit OTP sent to your mobile."); return; }
+      showToast(`Mobile ${mobile} verified — signed in successfully.`);
+      closeAuth();
+    };
 
     // Sign up — mobile OTP
     wireOtp({mobileId:"#suMobile", sendBtnId:"#suSendOtp", otpFieldId:"#suOtpField", hintId:"#suOtpHint"});
