@@ -79,8 +79,7 @@
     function setLoggedIn(user){
       currentUser = user;
       const btn = $("#accountBtn");
-      btn.classList.remove("btn-login");
-      btn.classList.add("account-btn");
+      btn.className = "account-btn";
       const label = user.first_name || user.email || user.phone || "Account";
       btn.innerHTML = `<span class="account-avatar">${(user.first_name||label).charAt(0).toUpperCase()}</span><span class="account-name">${label}</span>`;
       $("#accountMenuName").textContent = user.first_name ? `${user.first_name} ${user.last_name||""}`.trim() : "Signed in";
@@ -90,8 +89,7 @@
     function setLoggedOut(){
       currentUser = null;
       const btn = $("#accountBtn");
-      btn.classList.remove("account-btn");
-      btn.classList.add("btn-login");
+      btn.className = "btn-login";
       btn.innerHTML = "Login";
       $("#accountMenu").classList.remove("open");
     }
