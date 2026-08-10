@@ -350,9 +350,21 @@
   </div>
 
   <script>
+    /* ---------- Supabase init (safe, will not crash the rest of the script) ---------- */
     const SUPABASE_URL = "https://owpgbkrnimhwvgqntggq.supabase.co";
-const SUPABASE_ANON_KEY = "sb_publishable_yVu_tEIx690wZny03SmjBg_yNQX8toM";
-const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+    const SUPABASE_ANON_KEY = "sb_publishable_yVu_tEIx690wZny03SmjBg_yNQX8toM";
+    let supabaseClient = null;
+    try {
+      if (!window.supabase) {
+        console.error("[VK] Supabase library did not load from CDN. Check your network/ad-blocker, or that you are not opening this file via file:// — serve it over http(s) instead.");
+      } else {
+        supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+        console.log("[VK] Supabase client created OK.");
+      }
+    } catch (err) {
+      console.error("[VK] Supabase init failed:", err);
+    }
+
     const cart = [];
     let wishlist = 0;
     const $ = s => document.querySelector(s);
@@ -407,33 +419,51 @@ const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
     }
     document.querySelectorAll(".auth-tab").forEach(t=>t.onclick=()=>setAuthTab(t.dataset.tab));
 
-    // Mobile -> OTP generation helper, shared by sign in and sign up
-    function wireOtp({mobileId, sendBtnId, otpFieldId, hintId}){
-  const mobileInput=$(mobileId), sendBtn=$(sendBtnId), otpField=$(otpFieldId);
-  mobileInput.addEventListener("input",()=>{ mobileInput.value=mobileInput.value.replace(/\D/g,"").slice(0,10); });
-  sendBtn.onclick=async ()=>{
-    const mobile=mobileInput.value.trim();
-    if(mobile.length!==10){ showToast("Enter a valid 10-digit mobile number."); return; }
-
-    const e164 = "+91"+mobile; // change country code if needed
-
-    sendBtn.disabled=true; sendBtn.textContent="Sending...";
-
-    const { error } = await supabase.auth.signInWithOtp({ phone: e164 });
-
-    if(error){
-      showToast(`Failed to send OTP: ${error.message}`);
-      sendBtn.disabled=false; sendBtn.textContent="Send OTP";
-      return;
+    function requireSupabase(){
+      if(!supabaseClient){
+        showToast("Auth isn't ready — Supabase failed to load. Check the console.");
+        return false;
+      }
+      return true;
     }
 
-    otpField.hidden=false;
-    if(hintId) $(hintId).textContent=`sent to ${mobile.slice(0,2)}••••••${mobile.slice(-2)}`;
-    showToast(`OTP sent to your mobile number ending in ${mobile.slice(-2)}.`);
-    let secs=30; sendBtn.textContent=`Resend in ${secs}s`;
-    const t=setInterval(()=>{ secs--; if(secs<=0){ clearInterval(t); sendBtn.disabled=false; sendBtn.textContent="Resend OTP"; } else { sendBtn.textContent=`Resend in ${secs}s`; } },1000);
-  };
-}
+    // Mobile -> OTP generation helper, shared by sign in and sign up
+    function wireOtp({mobileId, sendBtnId, otpFieldId, hintId}){
+      const mobileInput=$(mobileId), sendBtn=$(sendBtnId), otpField=$(otpFieldId);
+      mobileInput.addEventListener("input",()=>{ mobileInput.value=mobileInput.value.replace(/\D/g,"").slice(0,10); });
+      sendBtn.addEventListener("click", async ()=>{
+        console.log("[VK] Send OTP clicked for", sendBtnId);
+        if(!requireSupabase()) return;
+
+        const mobile=mobileInput.value.trim();
+        if(mobile.length!==10){ showToast("Enter a valid 10-digit mobile number."); return; }
+
+        const e164 = "+91"+mobile; // change country code if needed
+
+        sendBtn.disabled=true; sendBtn.textContent="Sending...";
+
+        try {
+          const { error } = await supabaseClient.auth.signInWithOtp({ phone: e164 });
+
+          if(error){
+            console.error("[VK] signInWithOtp error:", error);
+            showToast(`Failed to send OTP: ${error.message}`);
+            sendBtn.disabled=false; sendBtn.textContent="Send OTP";
+            return;
+          }
+
+          otpField.hidden=false;
+          if(hintId) $(hintId).textContent=`sent to ${mobile.slice(0,2)}••••••${mobile.slice(-2)}`;
+          showToast(`OTP sent to your mobile number ending in ${mobile.slice(-2)}.`);
+          let secs=30; sendBtn.textContent=`Resend in ${secs}s`;
+          const t=setInterval(()=>{ secs--; if(secs<=0){ clearInterval(t); sendBtn.disabled=false; sendBtn.textContent="Resend OTP"; } else { sendBtn.textContent=`Resend in ${secs}s`; } },1000);
+        } catch (err) {
+          console.error("[VK] Unexpected error sending OTP:", err);
+          showToast("Something went wrong sending the OTP. See console for details.");
+          sendBtn.disabled=false; sendBtn.textContent="Send OTP";
+        }
+      });
+    }
 
     // Sign in — password path
     $("#signinPanel").addEventListener("submit",e=>{
@@ -446,59 +476,83 @@ const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
     // Sign in — mobile OTP path
     wireOtp({mobileId:"#siMobile", sendBtnId:"#siSendOtp", otpFieldId:"#siOtpField", hintId:"#siOtpHint"});
-   $("#siVerifyOtp").onclick=async ()=>{
-  const otp=$("#siOtp").value.trim(), mobile=$("#siMobile").value.trim();
-  if(otp.length!==6){ showToast("Enter the 6-digit OTP sent to your mobile."); return; }
+    $("#siVerifyOtp").addEventListener("click", async ()=>{
+      if(!requireSupabase()) return;
+      const otp=$("#siOtp").value.trim(), mobile=$("#siMobile").value.trim();
+      if(otp.length!==6){ showToast("Enter the 6-digit OTP sent to your mobile."); return; }
 
-  const e164 = "+91"+mobile;
+      const e164 = "+91"+mobile;
 
-  const { data, error } = await supabase.auth.verifyOtp({
-    phone: e164,
-    token: otp,
-    type: "sms"
-  });
+      try {
+        const { data, error } = await supabaseClient.auth.verifyOtp({
+          phone: e164,
+          token: otp,
+          type: "sms"
+        });
 
-  if(error){ showToast(`Verification failed: ${error.message}`); return; }
+        if(error){
+          console.error("[VK] verifyOtp error:", error);
+          showToast(`Verification failed: ${error.message}`);
+          return;
+        }
 
-  showToast(`Mobile ${mobile} verified — signed in successfully.`);
-  closeAuth();
-};
+        showToast(`Mobile ${mobile} verified — signed in successfully.`);
+        closeAuth();
+      } catch (err) {
+        console.error("[VK] Unexpected error verifying OTP:", err);
+        showToast("Something went wrong verifying the OTP. See console for details.");
+      }
+    });
 
     // Sign up — mobile OTP
     wireOtp({mobileId:"#suMobile", sendBtnId:"#suSendOtp", otpFieldId:"#suOtpField", hintId:"#suOtpHint"});
-   $("#signupPanel").addEventListener("submit",async e=>{
-  e.preventDefault();
-  const name=$("#suName").value.trim(), surname=$("#suSurname").value.trim(),
-        email=$("#suEmail").value.trim(), pw=$("#suPassword").value,
-        mobile=$("#suMobile").value.trim(), otp=$("#suOtp").value.trim();
-  if(!name || !surname){ showToast("Enter your name and surname."); return; }
-  if(!email){ showToast("Enter your email — this becomes your Customer ID."); return; }
-  if(!pw || pw.length<6){ showToast("Create a password with at least 6 characters."); return; }
-  if(mobile.length!==10){ showToast("Enter a valid 10-digit mobile number."); return; }
-  if($("#suOtpField").hidden){ showToast("Send and enter the OTP sent to your mobile to verify it."); return; }
-  if(otp.length!==6){ showToast("Enter the 6-digit OTP sent to your mobile."); return; }
+    $("#signupPanel").addEventListener("submit", async e=>{
+      e.preventDefault();
+      if(!requireSupabase()) return;
 
-  const e164 = "+91"+mobile;
+      const name=$("#suName").value.trim(), surname=$("#suSurname").value.trim(),
+            email=$("#suEmail").value.trim(), pw=$("#suPassword").value,
+            mobile=$("#suMobile").value.trim(), otp=$("#suOtp").value.trim();
+      if(!name || !surname){ showToast("Enter your name and surname."); return; }
+      if(!email){ showToast("Enter your email — this becomes your Customer ID."); return; }
+      if(!pw || pw.length<6){ showToast("Create a password with at least 6 characters."); return; }
+      if(mobile.length!==10){ showToast("Enter a valid 10-digit mobile number."); return; }
+      if($("#suOtpField").hidden){ showToast("Send and enter the OTP sent to your mobile to verify it."); return; }
+      if(otp.length!==6){ showToast("Enter the 6-digit OTP sent to your mobile."); return; }
 
-  const { data, error } = await supabase.auth.verifyOtp({
-    phone: e164,
-    token: otp,
-    type: "sms"
-  });
+      const e164 = "+91"+mobile;
 
-  if(error){ showToast(`Verification failed: ${error.message}`); return; }
+      try {
+        const { data, error } = await supabaseClient.auth.verifyOtp({
+          phone: e164,
+          token: otp,
+          type: "sms"
+        });
 
-  // Save extra profile info (requires a 'profiles' table in Supabase)
-  await supabase.from("profiles").upsert({
-    id: data.user.id,
-    first_name: name,
-    last_name: surname,
-    email: email
-  });
+        if(error){
+          console.error("[VK] verifyOtp (signup) error:", error);
+          showToast(`Verification failed: ${error.message}`);
+          return;
+        }
 
-  showToast(`Welcome, ${name}! Your VK Nutrition account is ready.`);
-  closeAuth();
-});
+        // Save extra profile info (requires a 'profiles' table in Supabase)
+        const { error: profileError } = await supabaseClient.from("profiles").upsert({
+          id: data.user.id,
+          first_name: name,
+          last_name: surname,
+          email: email
+        });
+        if(profileError){
+          console.error("[VK] profiles upsert error:", profileError);
+        }
+
+        showToast(`Welcome, ${name}! Your VK Nutrition account is ready.`);
+        closeAuth();
+      } catch (err) {
+        console.error("[VK] Unexpected error during signup:", err);
+        showToast("Something went wrong creating your account. See console for details.");
+      }
+    });
   </script>
 </body>
 </html>
