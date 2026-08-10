@@ -142,6 +142,8 @@
     .account-btn:hover{background:transparent;border-color:var(--lime);color:var(--lime)}
     .account-avatar{width:34px;height:34px;border-radius:50%;background:transparent;border:1px solid var(--lime);color:var(--lime);display:grid;place-items:center;font-size:13px;font-weight:900;flex-shrink:0}
     .account-name{display:none}
+    #accountBtn:has(.account-avatar){width:42px!important;height:42px!important;padding:0!important;background:transparent!important;color:var(--lime)!important;border:1px solid transparent!important;border-radius:50%!important;display:grid!important;place-items:center!important}
+    #accountBtn:has(.account-avatar):hover{background:transparent!important;border-color:var(--lime)!important}
     .account-menu{position:absolute;right:0;top:calc(100% + 10px);width:270px;background:var(--surface);border:1px solid var(--line);border-radius:14px;box-shadow:var(--shadow);padding:8px;opacity:0;pointer-events:none;transform:translateY(-6px);transition:.18s;z-index:30}
     .account-menu.open{opacity:1;pointer-events:auto;transform:translateY(0)}
     .account-menu-head{padding:12px 12px 10px;border-bottom:1px solid var(--line);margin-bottom:6px}
