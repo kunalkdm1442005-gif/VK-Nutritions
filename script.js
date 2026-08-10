@@ -80,6 +80,7 @@
       currentUser = user;
       const btn = $("#accountBtn");
       btn.className = "account-btn";
+      btn.style.cssText = "width:42px;height:42px;padding:0;background:transparent;color:var(--lime);border:1px solid transparent;border-radius:50%;display:grid;place-items:center";
       const label = user.first_name || user.email || user.phone || "Account";
       btn.innerHTML = `<span class="account-avatar">${(user.first_name||label).charAt(0).toUpperCase()}</span><span class="account-name">${label}</span>`;
       $("#accountMenuName").textContent = user.first_name ? `${user.first_name} ${user.last_name||""}`.trim() : "Signed in";
@@ -90,6 +91,7 @@
       currentUser = null;
       const btn = $("#accountBtn");
       btn.className = "btn-login";
+      btn.removeAttribute("style");
       btn.innerHTML = "Login";
       $("#accountMenu").classList.remove("open");
     }
