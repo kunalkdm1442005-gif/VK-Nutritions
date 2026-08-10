@@ -18,6 +18,22 @@
     const $ = s => document.querySelector(s);
     const money = n => "₹" + n.toLocaleString("en-IN");
     const showToast = message => { const t=$("#toast"); t.textContent=message; t.classList.add("show"); setTimeout(()=>t.classList.remove("show"),2400); };
+
+    /* ---------- Hero product slideshow ---------- */
+    const slides = Array.from(document.querySelectorAll(".slide"));
+    const slideDots = Array.from(document.querySelectorAll(".slideshow-dot"));
+    let activeSlide = 0;
+    function showSlide(index){
+      if(!slides.length) return;
+      activeSlide = (index + slides.length) % slides.length;
+      slides.forEach((slide,i)=>slide.classList.toggle("active",i===activeSlide));
+      slideDots.forEach((dot,i)=>dot.classList.toggle("active",i===activeSlide));
+    }
+    if(slides.length > 1){
+      showSlide(0);
+      setInterval(()=>showSlide(activeSlide + 1),2000);
+    }
+
     function renderCart(){
       $("#cartCount").textContent=cart.reduce((a,x)=>a+x.qty,0);
       $("#drawerCount").textContent=`(${cart.reduce((a,x)=>a+x.qty,0)})`;
