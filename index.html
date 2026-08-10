@@ -6,6 +6,7 @@
   <meta name="description" content="VK Nutrition — Premium sports nutrition for strength, performance and recovery." />
   <title>VK Nutrition — Fuel Your Strength</title>
   <link rel="icon" type="image/png" href="./VK logo.png">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <style>
     :root{
       --ink:#0a0d0c;
@@ -349,6 +350,9 @@
   </div>
 
   <script>
+    const SUPABASE_URL = "https://owpgbkrnimhwvgqntggq.supabase.co";
+const SUPABASE_ANON_KEY = "sb_publishable_yVu_tEIx690wZny03SmjBg_yNQX8toM";
+const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
     const cart = [];
     let wishlist = 0;
     const $ = s => document.querySelector(s);
@@ -405,18 +409,31 @@
 
     // Mobile -> OTP generation helper, shared by sign in and sign up
     function wireOtp({mobileId, sendBtnId, otpFieldId, hintId}){
-      const mobileInput=$(mobileId), sendBtn=$(sendBtnId), otpField=$(otpFieldId);
-      mobileInput.addEventListener("input",()=>{ mobileInput.value=mobileInput.value.replace(/\D/g,"").slice(0,10); });
-      sendBtn.onclick=()=>{
-        const mobile=mobileInput.value.trim();
-        if(mobile.length!==10){ showToast("Enter a valid 10-digit mobile number."); return; }
-        otpField.hidden=false;
-        if(hintId) $(hintId).textContent=`sent to ${mobile.slice(0,2)}••••••${mobile.slice(-2)}`;
-        showToast(`OTP sent to your mobile number ending in ${mobile.slice(-2)}.`);
-        let secs=30; sendBtn.disabled=true; sendBtn.textContent=`Resend in ${secs}s`;
-        const t=setInterval(()=>{ secs--; if(secs<=0){ clearInterval(t); sendBtn.disabled=false; sendBtn.textContent="Resend OTP"; } else { sendBtn.textContent=`Resend in ${secs}s`; } },1000);
-      };
+  const mobileInput=$(mobileId), sendBtn=$(sendBtnId), otpField=$(otpFieldId);
+  mobileInput.addEventListener("input",()=>{ mobileInput.value=mobileInput.value.replace(/\D/g,"").slice(0,10); });
+  sendBtn.onclick=async ()=>{
+    const mobile=mobileInput.value.trim();
+    if(mobile.length!==10){ showToast("Enter a valid 10-digit mobile number."); return; }
+
+    const e164 = "+91"+mobile; // change country code if needed
+
+    sendBtn.disabled=true; sendBtn.textContent="Sending...";
+
+    const { error } = await supabase.auth.signInWithOtp({ phone: e164 });
+
+    if(error){
+      showToast(`Failed to send OTP: ${error.message}`);
+      sendBtn.disabled=false; sendBtn.textContent="Send OTP";
+      return;
     }
+
+    otpField.hidden=false;
+    if(hintId) $(hintId).textContent=`sent to ${mobile.slice(0,2)}••••••${mobile.slice(-2)}`;
+    showToast(`OTP sent to your mobile number ending in ${mobile.slice(-2)}.`);
+    let secs=30; sendBtn.textContent=`Resend in ${secs}s`;
+    const t=setInterval(()=>{ secs--; if(secs<=0){ clearInterval(t); sendBtn.disabled=false; sendBtn.textContent="Resend OTP"; } else { sendBtn.textContent=`Resend in ${secs}s`; } },1000);
+  };
+}
 
     // Sign in — password path
     $("#signinPanel").addEventListener("submit",e=>{
@@ -429,29 +446,59 @@
 
     // Sign in — mobile OTP path
     wireOtp({mobileId:"#siMobile", sendBtnId:"#siSendOtp", otpFieldId:"#siOtpField", hintId:"#siOtpHint"});
-    $("#siVerifyOtp").onclick=()=>{
-      const otp=$("#siOtp").value.trim(), mobile=$("#siMobile").value.trim();
-      if(otp.length!==6){ showToast("Enter the 6-digit OTP sent to your mobile."); return; }
-      showToast(`Mobile ${mobile} verified — signed in successfully.`);
-      closeAuth();
-    };
+   $("#siVerifyOtp").onclick=async ()=>{
+  const otp=$("#siOtp").value.trim(), mobile=$("#siMobile").value.trim();
+  if(otp.length!==6){ showToast("Enter the 6-digit OTP sent to your mobile."); return; }
+
+  const e164 = "+91"+mobile;
+
+  const { data, error } = await supabase.auth.verifyOtp({
+    phone: e164,
+    token: otp,
+    type: "sms"
+  });
+
+  if(error){ showToast(`Verification failed: ${error.message}`); return; }
+
+  showToast(`Mobile ${mobile} verified — signed in successfully.`);
+  closeAuth();
+};
 
     // Sign up — mobile OTP
     wireOtp({mobileId:"#suMobile", sendBtnId:"#suSendOtp", otpFieldId:"#suOtpField", hintId:"#suOtpHint"});
-    $("#signupPanel").addEventListener("submit",e=>{
-      e.preventDefault();
-      const name=$("#suName").value.trim(), surname=$("#suSurname").value.trim(),
-            email=$("#suEmail").value.trim(), pw=$("#suPassword").value,
-            mobile=$("#suMobile").value.trim(), otp=$("#suOtp").value.trim();
-      if(!name || !surname){ showToast("Enter your name and surname."); return; }
-      if(!email){ showToast("Enter your email — this becomes your Customer ID."); return; }
-      if(!pw || pw.length<6){ showToast("Create a password with at least 6 characters."); return; }
-      if(mobile.length!==10){ showToast("Enter a valid 10-digit mobile number."); return; }
-      if($("#suOtpField").hidden){ showToast("Send and enter the OTP sent to your mobile to verify it."); return; }
-      if(otp.length!==6){ showToast("Enter the 6-digit OTP sent to your mobile."); return; }
-      showToast(`Welcome, ${name}! Your VK Nutrition account is ready.`);
-      closeAuth();
-    });
+   $("#signupPanel").addEventListener("submit",async e=>{
+  e.preventDefault();
+  const name=$("#suName").value.trim(), surname=$("#suSurname").value.trim(),
+        email=$("#suEmail").value.trim(), pw=$("#suPassword").value,
+        mobile=$("#suMobile").value.trim(), otp=$("#suOtp").value.trim();
+  if(!name || !surname){ showToast("Enter your name and surname."); return; }
+  if(!email){ showToast("Enter your email — this becomes your Customer ID."); return; }
+  if(!pw || pw.length<6){ showToast("Create a password with at least 6 characters."); return; }
+  if(mobile.length!==10){ showToast("Enter a valid 10-digit mobile number."); return; }
+  if($("#suOtpField").hidden){ showToast("Send and enter the OTP sent to your mobile to verify it."); return; }
+  if(otp.length!==6){ showToast("Enter the 6-digit OTP sent to your mobile."); return; }
+
+  const e164 = "+91"+mobile;
+
+  const { data, error } = await supabase.auth.verifyOtp({
+    phone: e164,
+    token: otp,
+    type: "sms"
+  });
+
+  if(error){ showToast(`Verification failed: ${error.message}`); return; }
+
+  // Save extra profile info (requires a 'profiles' table in Supabase)
+  await supabase.from("profiles").upsert({
+    id: data.user.id,
+    first_name: name,
+    last_name: surname,
+    email: email
+  });
+
+  showToast(`Welcome, ${name}! Your VK Nutrition account is ready.`);
+  closeAuth();
+});
   </script>
 </body>
 </html>
