@@ -93,29 +93,42 @@
 
     function setLoggedIn(user){
       currentUser = user;
-      const btn = $("#accountBtn");
-      btn.className = "account-btn";
-      btn.style.cssText = "width:42px;height:42px;padding:0;background:transparent;color:var(--lime);border:1px solid transparent;border-radius:50%;display:grid;place-items:center";
       const label = user.first_name || user.email || user.phone || "Account";
-      btn.innerHTML = `<span class="account-avatar">${(user.first_name||label).charAt(0).toUpperCase()}</span><span class="account-name">${label}</span>`;
+      const avatar = `<span class="account-avatar">${(user.first_name||label).charAt(0).toUpperCase()}</span><span class="account-name">${label}</span>`;
+      const desktopBtn = $("#accountBtn"), mobileBtn = $("#accountBtnMobile");
+      desktopBtn.className = "account-btn";
+      desktopBtn.removeAttribute("style");
+      desktopBtn.innerHTML = avatar;
+      desktopBtn.setAttribute("aria-label", "Open account menu");
+      mobileBtn.className = "account-btn mobile-only";
+      mobileBtn.innerHTML = avatar;
+      mobileBtn.setAttribute("aria-label", "Open account menu");
       $("#accountMenuName").textContent = user.first_name ? `${user.first_name} ${user.last_name||""}`.trim() : "Signed in";
       $("#accountMenuSub").textContent = user.email || user.phone || "";
     }
 
     function setLoggedOut(){
       currentUser = null;
-      const btn = $("#accountBtn");
-      btn.className = "btn-login";
-      btn.removeAttribute("style");
-      btn.innerHTML = "Login";
+      const desktopBtn = $("#accountBtn"), mobileBtn = $("#accountBtnMobile");
+      desktopBtn.className = "btn-login";
+      desktopBtn.removeAttribute("style");
+      desktopBtn.innerHTML = "Login";
+      desktopBtn.setAttribute("aria-label", "Login or create account");
+      mobileBtn.className = "icon-btn mobile-only";
+      mobileBtn.innerHTML = "👤";
+      mobileBtn.setAttribute("aria-label", "Login or create account");
       $("#accountMenu").classList.remove("open");
+      desktopBtn.setAttribute("aria-expanded", "false");
+      mobileBtn.setAttribute("aria-expanded", "false");
     }
 
     // The same button opens Login when logged out, and the account menu when logged in.
     function handleAccountButtonClick(e){
       e.stopPropagation();
       if(currentUser){
-        $("#accountMenu").classList.toggle("open");
+        const isOpen = $("#accountMenu").classList.toggle("open");
+        $("#accountBtn").setAttribute("aria-expanded", String(isOpen));
+        $("#accountBtnMobile").setAttribute("aria-expanded", String(isOpen));
       } else {
         openAuth();
       }
@@ -123,8 +136,12 @@
     $("#accountBtn").addEventListener("click", handleAccountButtonClick);
     $("#accountBtnMobile").addEventListener("click", handleAccountButtonClick);
     document.addEventListener("click", (e)=>{
-      const wrap = document.querySelector(".account-wrap");
-      if(wrap && !wrap.contains(e.target)) $("#accountMenu").classList.remove("open");
+      const controls = $("#accountControls");
+      if(controls && !controls.contains(e.target)) {
+        $("#accountMenu").classList.remove("open");
+        $("#accountBtn").setAttribute("aria-expanded", "false");
+        $("#accountBtnMobile").setAttribute("aria-expanded", "false");
+      }
     });
 
     // Logout
