@@ -55,14 +55,6 @@
     $("#closeCart").onclick=close; $("#overlay").onclick=close;
     $("#checkoutBtn").onclick=()=>showToast(cart.length ? "Checkout is ready for secure payment integration." : "Your cart is currently empty.");
     $("#wishlistBtn").onclick=()=>showToast(wishlist ? `${wishlist} item${wishlist>1?"s":""} saved to wishlist.` : "Your wishlist is empty.");
-    const mobileNav=$("#mobileNav"), menuBtn=$("#menuBtn");
-    const closeMobileNav=()=>{mobileNav.classList.remove("open");menuBtn.setAttribute("aria-expanded","false");};
-    menuBtn.onclick=()=>{
-      const isOpen=mobileNav.classList.toggle("open");
-      menuBtn.setAttribute("aria-expanded",String(isOpen));
-    };
-    mobileNav.querySelectorAll("a").forEach(link=>link.onclick=closeMobileNav);
-    document.addEventListener("keydown",e=>{if(e.key==="Escape") closeMobileNav();});
     $("#searchInput").addEventListener("input",e=>{
       const q=e.target.value.toLowerCase();
       document.querySelectorAll(".product").forEach(p=>p.style.display=p.dataset.name.toLowerCase().includes(q)?"block":"none");
