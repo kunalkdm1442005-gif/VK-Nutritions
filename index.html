@@ -7,7 +7,7 @@
   <title>VK Nutrition — Fuel Your Strength</title>
   <link rel="icon" type="image/png" href="./VK logo.png">
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-   <link rel="stylesheet" href="./style.css?v=10">
+  <link rel="stylesheet" href="./style.css?v=10">
 
 </head>
 <body>
@@ -19,8 +19,11 @@
       </div>
       <label class="search"><input id="searchInput" type="search" placeholder="Search products..." aria-label="Search products"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg></label>
       <div class="nav-actions">
-        <div class="account-wrap hide-mobile">
-          <button class="btn-login" id="accountBtn" aria-label="Login or create account">Login</button>
+        <div class="account-controls" id="accountControls">
+          <div class="account-wrap hide-mobile">
+            <button class="btn-login" id="accountBtn" aria-label="Login or create account" aria-expanded="false">Login</button>
+          </div>
+          <button class="icon-btn mobile-only" id="accountBtnMobile" aria-label="Login or create account" aria-expanded="false">👤</button>
           <div class="account-menu" id="accountMenu">
             <div class="account-menu-head">
               <strong id="accountMenuName">Signed in</strong>
@@ -33,7 +36,6 @@
             <button type="button" id="logoutBtn" class="danger">↪ Log Out</button>
           </div>
         </div>
-        <button class="icon-btn mobile-only" id="accountBtnMobile" aria-label="Login or create account">♙</button>
         <button class="icon-btn" id="wishlistBtn" aria-label="Wishlist">♡<span class="badge" id="wishCount">0</span></button>
         <button class="icon-btn" id="cartBtn" aria-label="Cart">🛒<span class="badge" id="cartCount">0</span></button>
         <details class="mobile-menu">
@@ -177,7 +179,7 @@
         <div><h4>Customer Care</h4><ul><li>Track Your Order</li><li>Shipping & Delivery</li><li>Returns & Refunds</li><li>Contact Support</li></ul></div>
         <div><h4>Stay In The Loop</h4><p>Get product drops, offers and training essentials.</p><div class="newsletter"><input type="email" placeholder="Your email address"><button aria-label="Subscribe">→</button></div></div>
       </div>
-      <div class="legal"><span>© 2026 VK Nutrition. All rights reserved.</span><span>Privacy Policy &nbsp; · &nbsp; Terms & Conditions</span></div>
+      <div class="legal"><span>© 2025 VK Nutrition. All rights reserved.</span><span>Privacy Policy &nbsp; · &nbsp; Terms & Conditions</span></div>
     </div>
   </footer>
 
@@ -273,7 +275,7 @@
     </div>
   </div>
 
-  <script src="./script.js?v=9"></script>
+  <script src="./script.js?v=10"></script>
 </body>
 </html>
 
