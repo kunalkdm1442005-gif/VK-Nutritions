@@ -7,7 +7,7 @@
   <title>VK Nutrition — Fuel Your Strength</title>
   <link rel="icon" type="image/png" href="./VK logo.png">
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <link rel="stylesheet" href="./style.css?v=11">
+  <link rel="stylesheet" href="./style.css?v=12">
 
 </head>
 <body>
@@ -38,6 +38,10 @@
         </div>
         <button class="icon-btn" id="wishlistBtn" aria-label="Wishlist">♡<span class="badge" id="wishCount">0</span></button>
         <button class="icon-btn" id="cartBtn" aria-label="Cart">🛒<span class="badge" id="cartCount">0</span></button>
+        <div class="wishlist-menu" id="wishlistMenu" aria-live="polite">
+          <div class="wishlist-menu-head"><strong>Saved Items</strong><span id="wishlistSummary">Your wishlist is empty.</span></div>
+          <div id="wishlistItems"></div>
+        </div>
         <details class="mobile-menu">
           <summary class="icon-btn mobile-toggle" aria-label="Open navigation menu">☰</summary>
           <div class="mobile-nav" id="mobileNav" aria-label="Mobile navigation">
@@ -275,7 +279,7 @@
     </div>
   </div>
 
-  <script src="./script.js?v=10"></script>
+  <script src="./script.js?v=12"></script>
 </body>
 </html>
 
