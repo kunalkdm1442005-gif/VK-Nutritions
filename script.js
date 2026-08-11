@@ -15,6 +15,7 @@
 
     const cart = [];
     let wishlist = 0;
+    const wishlistItems = [];
     const $ = s => document.querySelector(s);
     const money = n => "₹" + n.toLocaleString("en-IN");
     const showToast = message => { const t=$("#toast"); t.textContent=message; t.classList.add("show"); setTimeout(()=>t.classList.remove("show"),2400); };
@@ -50,11 +51,62 @@
     document.querySelectorAll(".add").forEach(b=>b.onclick=e=>addProduct(e.target.closest(".product")));
     document.querySelectorAll(".buy").forEach(b=>b.onclick=e=>addProduct(e.target.closest(".product"),true));
     document.querySelectorAll(".wish").forEach(b=>b.onclick=e=>{const el=e.target; if(!el.classList.contains("active")){el.classList.add("active");el.textContent="♥";wishlist++;}else{el.classList.remove("active");el.textContent="♡";wishlist--} $("#wishCount").textContent=wishlist;});
+    function renderWishlist(){
+      wishlist = wishlistItems.length;
+      $("#wishCount").textContent = wishlist;
+      $("#wishlistSummary").textContent = wishlist ? `${wishlist} saved item${wishlist === 1 ? "" : "s"}.` : "Your wishlist is empty.";
+      $("#wishlistItems").innerHTML = wishlist
+        ? wishlistItems.map(item => `<div class="wishlist-item"><strong>${item.name}</strong><button type="button" data-wishlist-name="${item.name}">Remove</button></div>`).join("")
+        : '<p class="wishlist-empty">Tap the heart on any product to save it here.</p>';
+      document.querySelectorAll("[data-wishlist-name]").forEach(button => button.onclick = () => {
+        const index = wishlistItems.findIndex(item => item.name === button.dataset.wishlistName);
+        if(index < 0) return;
+        wishlistItems.splice(index, 1);
+        document.querySelectorAll(".product").forEach(card => {
+          if(card.dataset.name === button.dataset.wishlistName){
+            const heart = card.querySelector(".wish");
+            heart.classList.remove("active");
+            heart.textContent = "♡";
+          }
+        });
+        renderWishlist();
+        showToast("Removed from wishlist.");
+      });
+    }
+    document.querySelectorAll(".wish").forEach(button => button.onclick = e => {
+      const heart = e.currentTarget, card = heart.closest(".product");
+      const itemIndex = wishlistItems.findIndex(item => item.name === card.dataset.name);
+      if(itemIndex < 0){
+        heart.classList.add("active"); heart.textContent = "♥";
+        wishlistItems.push({ name: card.dataset.name });
+        showToast(`${card.dataset.name} saved to wishlist.`);
+      } else {
+        heart.classList.remove("active"); heart.textContent = "♡";
+        wishlistItems.splice(itemIndex, 1);
+        showToast(`${card.dataset.name} removed from wishlist.`);
+      }
+      renderWishlist();
+    });
     const close=()=>{$("#drawer").classList.remove("open");$("#overlay").classList.remove("show")};
     $("#cartBtn").onclick=()=>{$("#drawer").classList.add("open");$("#overlay").classList.add("show")};
     $("#closeCart").onclick=close; $("#overlay").onclick=close;
     $("#checkoutBtn").onclick=()=>showToast(cart.length ? "Checkout is ready for secure payment integration." : "Your cart is currently empty.");
     $("#wishlistBtn").onclick=()=>showToast(wishlist ? `${wishlist} item${wishlist>1?"s":""} saved to wishlist.` : "Your wishlist is empty.");
+    $("#wishlistBtn").onclick=e=>{
+      e.stopPropagation();
+      const isOpen = $("#wishlistMenu").classList.toggle("open");
+      $("#wishlistBtn").setAttribute("aria-expanded", String(isOpen));
+      $("#accountMenu").classList.remove("open");
+      $("#accountBtn").setAttribute("aria-expanded", "false");
+      $("#accountBtnMobile").setAttribute("aria-expanded", "false");
+    };
+    renderWishlist();
+    document.addEventListener("click", e => {
+      if(!e.target.closest("#wishlistBtn") && !e.target.closest("#wishlistMenu")) {
+        $("#wishlistMenu").classList.remove("open");
+        $("#wishlistBtn").setAttribute("aria-expanded", "false");
+      }
+    });
     $("#searchInput").addEventListener("input",e=>{
       const q=e.target.value.toLowerCase();
       document.querySelectorAll(".product").forEach(p=>p.style.display=p.dataset.name.toLowerCase().includes(q)?"block":"none");
