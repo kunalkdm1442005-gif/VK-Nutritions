@@ -7,7 +7,7 @@
   <title>VK Nutrition — Fuel Your Strength</title>
   <link rel="icon" type="image/png" href="./VK logo.png">
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <link rel="stylesheet" href="./style.css?v=8">
+  <link rel="stylesheet" href="./style.css?v=9">
 
 </head>
 <body>
@@ -36,15 +36,17 @@
         <button class="icon-btn mobile-only" id="accountBtnMobile" aria-label="Login or create account">♙</button>
         <button class="icon-btn" id="wishlistBtn" aria-label="Wishlist">♡<span class="badge" id="wishCount">0</span></button>
         <button class="icon-btn" id="cartBtn" aria-label="Cart">🛒<span class="badge" id="cartCount">0</span></button>
-        <button class="icon-btn mobile-toggle" id="menuBtn" type="button" aria-label="Open navigation menu" aria-controls="mobileNav" aria-expanded="false">☰</button>
+        <details class="mobile-menu">
+          <summary class="icon-btn mobile-toggle" aria-label="Open navigation menu">☰</summary>
+          <div class="mobile-nav" id="mobileNav" aria-label="Mobile navigation">
+            <a class="active" href="#home">Home</a>
+            <a href="#shop">Shop</a>
+            <a href="#categories">Categories</a>
+            <a href="#offers">Offers</a>
+          </div>
+        </details>
       </div>
     </nav>
-    <div class="mobile-nav" id="mobileNav" aria-label="Mobile navigation">
-      <a class="active" href="#home">Home</a>
-      <a href="#shop">Shop</a>
-      <a href="#categories">Categories</a>
-      <a href="#offers">Offers</a>
-    </div>
   </header>
 
   <main>
@@ -271,24 +273,7 @@
     </div>
   </div>
 
-  <script src="./script.js?v=8"></script>
-  <script>
-    (() => {
-      const menuButton = document.getElementById("menuBtn");
-      const mobileMenu = document.getElementById("mobileNav");
-      if (!menuButton || !mobileMenu) return;
-      const closeMenu = () => {
-        mobileMenu.classList.remove("open");
-        menuButton.setAttribute("aria-expanded", "false");
-      };
-      menuButton.addEventListener("click", () => {
-        const isOpen = mobileMenu.classList.toggle("open");
-        menuButton.setAttribute("aria-expanded", String(isOpen));
-      });
-      mobileMenu.querySelectorAll("a").forEach(link => link.addEventListener("click", closeMenu));
-      document.addEventListener("keydown", event => { if (event.key === "Escape") closeMenu(); });
-    })();
-  </script>
+  <script src="./script.js?v=9"></script>
 </body>
 </html>
 
