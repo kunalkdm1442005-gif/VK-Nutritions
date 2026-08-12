@@ -6,7 +6,10 @@
       if (!window.supabase) {
         console.error("[VK] Supabase library did not load from CDN. Check your network/ad-blocker, or that you are not opening this file via file:// — serve it over http(s) instead.");
       } else {
-        supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+        supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
+          auth: { persistSession: true, autoRefreshToken: true, detectSessionInUrl: true }
+        });
+        window.vkSupabase = supabaseClient;
         console.log("[VK] Supabase client created OK.");
       }
     } catch (err) {
