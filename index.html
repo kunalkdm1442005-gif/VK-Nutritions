@@ -213,14 +213,6 @@
       <div class="field"><label for="siPassword">Password</label><input id="siPassword" type="password" autocomplete="current-password" placeholder="Enter your password"></div>
       <button class="btn btn-primary full" type="submit">Sign In →</button>
 
-      <div class="auth-divider"><span>or sign in with mobile OTP</span></div>
-
-      <div class="field"><label for="siMobile">Mobile Number</label>
-        <div class="otp-row"><input id="siMobile" type="tel" inputmode="numeric" maxlength="10" placeholder="10-digit mobile number"><button class="otp-btn" id="siSendOtp" type="button">Send OTP</button></div>
-      </div>
-      <div class="field otp-field" id="siOtpField" hidden><label for="siOtp">Enter OTP <span id="siOtpHint"></span></label>
-        <div class="otp-row"><input id="siOtp" type="tel" inputmode="numeric" maxlength="6" placeholder="6-digit OTP"><button class="otp-btn" id="siVerifyOtp" type="button">Verify & Sign In</button></div>
-      </div>
     </form>
 
     <form class="auth-panel" id="signupPanel" hidden novalidate>
@@ -230,11 +222,12 @@
       </div>
       <div class="field"><label for="suEmail">Customer ID <span>(Email)</span></label><input id="suEmail" type="email" autocomplete="email" placeholder="you@example.com"></div>
       <div class="field"><label for="suPassword">Create Password</label><input id="suPassword" type="password" autocomplete="new-password" placeholder="Create a password"></div>
-      <div class="field"><label for="suMobile">Mobile Number</label>
-        <div class="otp-row"><input id="suMobile" type="tel" inputmode="numeric" maxlength="10" placeholder="10-digit mobile number"><button class="otp-btn" id="suSendOtp" type="button">Send OTP</button></div>
-      </div>
-      <div class="field otp-field" id="suOtpField" hidden><label for="suOtp">Enter OTP <span id="suOtpHint"></span></label><input id="suOtp" type="tel" inputmode="numeric" maxlength="6" placeholder="6-digit OTP"></div>
+      <div class="field"><label for="suMobile">Mobile Number</label><input id="suMobile" type="tel" inputmode="numeric" maxlength="10" autocomplete="tel-national" placeholder="10-digit mobile number"></div>
       <button class="btn btn-primary full" id="signUpBtn" type="submit">Sign Up</button>
+      <div hidden aria-hidden="true">
+        <input id="siMobile"><button id="siSendOtp" type="button"></button><div id="siOtpField"><input id="siOtp"><button id="siVerifyOtp" type="button"></button><span id="siOtpHint"></span></div>
+        <button id="suSendOtp" type="button"></button><div id="suOtpField"><input id="suOtp"><span id="suOtpHint"></span></div>
+      </div>
     </form>
   </div>
 
@@ -279,7 +272,8 @@
     </div>
   </div>
 
-  <script src="./script.js?v=12"></script>
+  <script src="./script.js?v=13"></script>
+  <script src="./auth-patch.js?v=1"></script>
 </body>
 </html>
 
