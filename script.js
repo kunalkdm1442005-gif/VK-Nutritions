@@ -1,24 +1,25 @@
-    /* ---------- Supabase init (safe, will not crash the rest of the script) ---------- */
+    /* ---------- Supabase init ---------- */
     const SUPABASE_URL = "https://owpgbkrnimhwvgqntggq.supabase.co";
     const SUPABASE_ANON_KEY = "sb_publishable_yVu_tEIx690wZny03SmjBg_yNQX8toM";
     let supabaseClient = null;
     try {
-      if (!window.supabase) {
-        console.error("[VK] Supabase library did not load from CDN. Check your network/ad-blocker, or that you are not opening this file via file:// — serve it over http(s) instead.");
-      } else {
-        supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
-          auth: { persistSession: true, autoRefreshToken: true, detectSessionInUrl: true }
-        });
-        window.vkSupabase = supabaseClient;
-        console.log("[VK] Supabase client created OK.");
+      if (!window.supabase?.createClient) {
+        throw new Error("Supabase browser library did not load. Serve this site over http(s), not file://.");
       }
+      supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
+        auth: {
+          autoRefreshToken: true,
+          persistSession: true,
+          detectSessionInUrl: true
+        }
+      });
+      console.info("[VK] Supabase client initialized.");
     } catch (err) {
-      console.error("[VK] Supabase init failed:", err);
+      console.error("[VK] Supabase initialization failed:", err);
     }
 
     const cart = [];
     let wishlist = 0;
-    const wishlistItems = [];
     const $ = s => document.querySelector(s);
     const money = n => "₹" + n.toLocaleString("en-IN");
     const showToast = message => { const t=$("#toast"); t.textContent=message; t.classList.add("show"); setTimeout(()=>t.classList.remove("show"),2400); };
@@ -54,62 +55,11 @@
     document.querySelectorAll(".add").forEach(b=>b.onclick=e=>addProduct(e.target.closest(".product")));
     document.querySelectorAll(".buy").forEach(b=>b.onclick=e=>addProduct(e.target.closest(".product"),true));
     document.querySelectorAll(".wish").forEach(b=>b.onclick=e=>{const el=e.target; if(!el.classList.contains("active")){el.classList.add("active");el.textContent="♥";wishlist++;}else{el.classList.remove("active");el.textContent="♡";wishlist--} $("#wishCount").textContent=wishlist;});
-    function renderWishlist(){
-      wishlist = wishlistItems.length;
-      $("#wishCount").textContent = wishlist;
-      $("#wishlistSummary").textContent = wishlist ? `${wishlist} saved item${wishlist === 1 ? "" : "s"}.` : "Your wishlist is empty.";
-      $("#wishlistItems").innerHTML = wishlist
-        ? wishlistItems.map(item => `<div class="wishlist-item"><strong>${item.name}</strong><button type="button" data-wishlist-name="${item.name}">Remove</button></div>`).join("")
-        : '<p class="wishlist-empty">Tap the heart on any product to save it here.</p>';
-      document.querySelectorAll("[data-wishlist-name]").forEach(button => button.onclick = () => {
-        const index = wishlistItems.findIndex(item => item.name === button.dataset.wishlistName);
-        if(index < 0) return;
-        wishlistItems.splice(index, 1);
-        document.querySelectorAll(".product").forEach(card => {
-          if(card.dataset.name === button.dataset.wishlistName){
-            const heart = card.querySelector(".wish");
-            heart.classList.remove("active");
-            heart.textContent = "♡";
-          }
-        });
-        renderWishlist();
-        showToast("Removed from wishlist.");
-      });
-    }
-    document.querySelectorAll(".wish").forEach(button => button.onclick = e => {
-      const heart = e.currentTarget, card = heart.closest(".product");
-      const itemIndex = wishlistItems.findIndex(item => item.name === card.dataset.name);
-      if(itemIndex < 0){
-        heart.classList.add("active"); heart.textContent = "♥";
-        wishlistItems.push({ name: card.dataset.name });
-        showToast(`${card.dataset.name} saved to wishlist.`);
-      } else {
-        heart.classList.remove("active"); heart.textContent = "♡";
-        wishlistItems.splice(itemIndex, 1);
-        showToast(`${card.dataset.name} removed from wishlist.`);
-      }
-      renderWishlist();
-    });
     const close=()=>{$("#drawer").classList.remove("open");$("#overlay").classList.remove("show")};
     $("#cartBtn").onclick=()=>{$("#drawer").classList.add("open");$("#overlay").classList.add("show")};
     $("#closeCart").onclick=close; $("#overlay").onclick=close;
     $("#checkoutBtn").onclick=()=>showToast(cart.length ? "Checkout is ready for secure payment integration." : "Your cart is currently empty.");
     $("#wishlistBtn").onclick=()=>showToast(wishlist ? `${wishlist} item${wishlist>1?"s":""} saved to wishlist.` : "Your wishlist is empty.");
-    $("#wishlistBtn").onclick=e=>{
-      e.stopPropagation();
-      const isOpen = $("#wishlistMenu").classList.toggle("open");
-      $("#wishlistBtn").setAttribute("aria-expanded", String(isOpen));
-      $("#accountMenu").classList.remove("open");
-      $("#accountBtn").setAttribute("aria-expanded", "false");
-      $("#accountBtnMobile").setAttribute("aria-expanded", "false");
-    };
-    renderWishlist();
-    document.addEventListener("click", e => {
-      if(!e.target.closest("#wishlistBtn") && !e.target.closest("#wishlistMenu")) {
-        $("#wishlistMenu").classList.remove("open");
-        $("#wishlistBtn").setAttribute("aria-expanded", "false");
-      }
-    });
     $("#searchInput").addEventListener("input",e=>{
       const q=e.target.value.toLowerCase();
       document.querySelectorAll(".product").forEach(p=>p.style.display=p.dataset.name.toLowerCase().includes(q)?"block":"none");
@@ -148,42 +98,69 @@
 
     function setLoggedIn(user){
       currentUser = user;
+      const btn = $("#accountBtn");
+      btn.className = "account-btn";
+      btn.style.cssText = "width:42px;height:42px;padding:0;background:transparent;color:var(--lime);border:1px solid transparent;border-radius:50%;display:grid;place-items:center";
       const label = user.first_name || user.email || user.phone || "Account";
-      const avatar = `<span class="account-avatar">${(user.first_name||label).charAt(0).toUpperCase()}</span><span class="account-name">${label}</span>`;
-      const desktopBtn = $("#accountBtn"), mobileBtn = $("#accountBtnMobile");
-      desktopBtn.className = "account-btn";
-      desktopBtn.removeAttribute("style");
-      desktopBtn.innerHTML = avatar;
-      desktopBtn.setAttribute("aria-label", "Open account menu");
-      mobileBtn.className = "account-btn mobile-only";
-      mobileBtn.innerHTML = avatar;
-      mobileBtn.setAttribute("aria-label", "Open account menu");
+      btn.innerHTML = `<span class="account-avatar">${(user.first_name||label).charAt(0).toUpperCase()}</span><span class="account-name">${label}</span>`;
+      const mobileBtn = $("#accountBtnMobile");
+      mobileBtn.textContent = (user.first_name || label).charAt(0).toUpperCase();
+      mobileBtn.setAttribute("aria-label", `Open account for ${label}`);
       $("#accountMenuName").textContent = user.first_name ? `${user.first_name} ${user.last_name||""}`.trim() : "Signed in";
       $("#accountMenuSub").textContent = user.email || user.phone || "";
     }
 
+    async function hydrateUser(user){
+      if(!user?.id || !supabaseClient){ setLoggedIn(user); return user; }
+      const { data: profile, error } = await supabaseClient
+        .from("profiles")
+        .select("id, first_name, last_name, email, phone")
+        .eq("id", user.id)
+        .maybeSingle();
+      if(error){
+        console.error("[VK] profile load error:", error);
+        showToast("Account validation is unavailable. Please run supabase/schema.sql, then try again.");
+        throw error;
+      }
+      const hydrated = { ...user, ...(profile || {}) };
+      setLoggedIn(hydrated);
+      return hydrated;
+    }
+
+    async function checkSignupDuplicates(email, phone){
+      if(!requireSupabase()) throw new Error("Supabase client is unavailable.");
+      const { data, error } = await supabaseClient.rpc("check_signup_duplicates", {
+        p_email: email.toLowerCase(),
+        p_phone: phone
+      });
+      if(error){
+        console.error("[VK] duplicate validation error:", error);
+        showToast("Account validation is unavailable. Please run supabase/schema.sql, then try again.");
+        throw error;
+      }
+      const result = Array.isArray(data) ? data[0] : data;
+      if(result?.email_exists) throw new Error("EMAIL_ALREADY_EXISTS");
+      if(result?.phone_exists) throw new Error("PHONE_ALREADY_EXISTS");
+    }
+
     function setLoggedOut(){
       currentUser = null;
-      const desktopBtn = $("#accountBtn"), mobileBtn = $("#accountBtnMobile");
-      desktopBtn.className = "btn-login";
-      desktopBtn.removeAttribute("style");
-      desktopBtn.innerHTML = "Login";
-      desktopBtn.setAttribute("aria-label", "Login or create account");
-      mobileBtn.className = "icon-btn mobile-only";
-      mobileBtn.innerHTML = "👤";
+      const btn = $("#accountBtn");
+      btn.className = "btn-login";
+      btn.removeAttribute("style");
+      btn.innerHTML = "Login";
+      const mobileBtn = $("#accountBtnMobile");
+      mobileBtn.textContent = "♙";
       mobileBtn.setAttribute("aria-label", "Login or create account");
       $("#accountMenu").classList.remove("open");
-      desktopBtn.setAttribute("aria-expanded", "false");
-      mobileBtn.setAttribute("aria-expanded", "false");
     }
 
     // The same button opens Login when logged out, and the account menu when logged in.
     function handleAccountButtonClick(e){
       e.stopPropagation();
       if(currentUser){
-        const isOpen = $("#accountMenu").classList.toggle("open");
-        $("#accountBtn").setAttribute("aria-expanded", String(isOpen));
-        $("#accountBtnMobile").setAttribute("aria-expanded", String(isOpen));
+        if(e.currentTarget.id === "accountBtnMobile") openSettings("profile");
+        else $("#accountMenu").classList.toggle("open");
       } else {
         openAuth();
       }
@@ -191,12 +168,8 @@
     $("#accountBtn").addEventListener("click", handleAccountButtonClick);
     $("#accountBtnMobile").addEventListener("click", handleAccountButtonClick);
     document.addEventListener("click", (e)=>{
-      const controls = $("#accountControls");
-      if(controls && !controls.contains(e.target)) {
-        $("#accountMenu").classList.remove("open");
-        $("#accountBtn").setAttribute("aria-expanded", "false");
-        $("#accountBtnMobile").setAttribute("aria-expanded", "false");
-      }
+      const wrap = document.querySelector(".account-wrap");
+      if(wrap && !wrap.contains(e.target)) $("#accountMenu").classList.remove("open");
     });
 
     // Logout
@@ -287,16 +260,24 @@
       }
     });
 
-    // Restore session on page load (in case Supabase already has one)
+    // Restore and continuously track the persisted Supabase session.
     (async ()=>{
       if(!supabaseClient) return;
       try {
-        const { data: { session } } = await supabaseClient.auth.getSession();
+        const { data: { session }, error } = await supabaseClient.auth.getSession();
+        if(error) throw error;
         if(session?.user){
-          setLoggedIn({ id: session.user.id, email: session.user.email, phone: session.user.phone });
+          await hydrateUser({ id: session.user.id, email: session.user.email, phone: session.user.phone });
         }
       } catch(err){ console.error("[VK] getSession error:", err); }
     })();
+    supabaseClient?.auth.onAuthStateChange(async (event, session)=>{
+      if(event === "SIGNED_OUT") { setLoggedOut(); return; }
+      if(session?.user && event !== "INITIAL_SESSION") {
+        try { await hydrateUser({ id: session.user.id, email: session.user.email, phone: session.user.phone }); }
+        catch(err){ console.error("[VK] auth state profile error:", err); }
+      }
+    });
 
     // Mobile -> OTP generation helper, shared by sign in and sign up
     function wireOtp({mobileId, sendBtnId, otpFieldId, hintId}){
@@ -314,7 +295,10 @@
         sendBtn.disabled=true; sendBtn.textContent="Sending...";
 
         try {
-          const { error } = await supabaseClient.auth.signInWithOtp({ phone: e164 });
+          const { error } = await supabaseClient.auth.signInWithOtp({
+            phone: e164,
+            options: { shouldCreateUser: sendBtnId === "#siSendOtp" }
+          });
 
           if(error){
             console.error("[VK] signInWithOtp error:", error);
@@ -336,14 +320,26 @@
       });
     }
 
-    // Sign in — password path
-    $("#signinPanel").addEventListener("submit",e=>{
+    // Sign in — email/password path
+    $("#signinPanel").addEventListener("submit", async e=>{
       e.preventDefault();
-      const id=$("#siLoginId").value.trim(), pw=$("#siPassword").value;
+      if(!requireSupabase()) return;
+      const id=$("#siLoginId").value.trim().toLowerCase(), pw=$("#siPassword").value;
       if(!id || !pw){ showToast("Enter your login ID and password."); return; }
-      setLoggedIn({ email: id });
-      showToast(`Signed in as ${id}.`);
-      closeAuth();
+      try {
+        const { data, error } = await supabaseClient.auth.signInWithPassword({ email:id, password:pw });
+        if(error){
+          console.error("[VK] signInWithPassword error:", error);
+          showToast(error.message.includes("Invalid login credentials") ? "Email or password is incorrect." : error.message);
+          return;
+        }
+        await hydrateUser({ id:data.user.id, email:data.user.email, phone:data.user.phone });
+        showToast(`Signed in as ${data.user.email}.`);
+        closeAuth();
+      } catch(err){
+        console.error("[VK] sign-in error:", err);
+        if(err.message !== "EMAIL_ALREADY_EXISTS" && err.message !== "PHONE_ALREADY_EXISTS") showToast("Sign in failed. Please try again.");
+      }
     });
 
     // Sign in — mobile OTP path
@@ -368,7 +364,7 @@
           return;
         }
 
-        setLoggedIn({ id: data.user.id, phone: data.user.phone });
+        await hydrateUser({ id: data.user.id, phone: data.user.phone, email: data.user.email });
         showToast(`Mobile ${mobile} verified — signed in successfully.`);
         closeAuth();
       } catch (err) {
@@ -377,7 +373,7 @@
       }
     });
 
-    // Sign up — mobile OTP
+    // Sign up — email/password account with optional phone OTP verification.
     wireOtp({mobileId:"#suMobile", sendBtnId:"#suSendOtp", otpFieldId:"#suOtpField", hintId:"#suOtpHint"});
     $("#signupPanel").addEventListener("submit", async e=>{
       e.preventDefault();
@@ -385,45 +381,41 @@
 
       const name=$("#suName").value.trim(), surname=$("#suSurname").value.trim(),
             email=$("#suEmail").value.trim(), pw=$("#suPassword").value,
-            mobile=$("#suMobile").value.trim(), otp=$("#suOtp").value.trim();
+            mobile=$("#suMobile").value.trim();
       if(!name || !surname){ showToast("Enter your name and surname."); return; }
-      if(!email){ showToast("Enter your email — this becomes your Customer ID."); return; }
+      if(!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){ showToast("Enter a valid email — this becomes your Customer ID."); return; }
       if(!pw || pw.length<6){ showToast("Create a password with at least 6 characters."); return; }
       if(mobile.length!==10){ showToast("Enter a valid 10-digit mobile number."); return; }
-      if($("#suOtpField").hidden){ showToast("Send and enter the OTP sent to your mobile to verify it."); return; }
-      if(otp.length!==6){ showToast("Enter the 6-digit OTP sent to your mobile."); return; }
-
-      const e164 = "+91"+mobile;
-
       try {
-        const { data, error } = await supabaseClient.auth.verifyOtp({
-          phone: e164,
-          token: otp,
-          type: "sms"
-        });
+        await checkSignupDuplicates(email, "+91"+mobile);
 
+        const { data, error } = await supabaseClient.auth.signUp({
+          email,
+          password: pw,
+          options: {
+            data: { first_name:name, last_name:surname, phone:"+91"+mobile }
+          }
+        });
         if(error){
-          console.error("[VK] verifyOtp (signup) error:", error);
-          showToast(`Verification failed: ${error.message}`);
+          console.error("[VK] signUp error:", error);
+          const duplicate = /already registered|already exists/i.test(error.message);
+          showToast(duplicate ? "That email address is already registered." : error.message);
           return;
         }
-
-        // Save extra profile info (requires a 'profiles' table in Supabase)
-        const { error: profileError } = await supabaseClient.from("profiles").upsert({
-          id: data.user.id,
-          first_name: name,
-          last_name: surname,
-          email: email
-        });
-        if(profileError){
-          console.error("[VK] profiles upsert error:", profileError);
+        if(!data.user){ throw new Error("Sign up did not return a user."); }
+        // If email confirmation is enabled, Supabase returns no session until confirmed.
+        if(data.session){
+          await hydrateUser({ id:data.user.id, phone:data.user.phone, email:data.user.email, first_name:name, last_name:surname });
+          showToast(`Welcome, ${name}! Your VK Nutrition account is ready.`);
+          closeAuth();
+        } else {
+          showToast("Account created. Check your email to confirm it, then sign in.");
+          setAuthTab("signin");
         }
-
-        setLoggedIn({ id: data.user.id, phone: data.user.phone, email, first_name: name, last_name: surname });
-        showToast(`Welcome, ${name}! Your VK Nutrition account is ready.`);
-        closeAuth();
       } catch (err) {
         console.error("[VK] Unexpected error during signup:", err);
-        showToast("Something went wrong creating your account. See console for details.");
+        if(err.message === "EMAIL_ALREADY_EXISTS") showToast("That email address is already registered.");
+        else if(err.message === "PHONE_ALREADY_EXISTS") showToast("That mobile number is already registered.");
+        else showToast(err.message || "Something went wrong creating your account.");
       }
     });
