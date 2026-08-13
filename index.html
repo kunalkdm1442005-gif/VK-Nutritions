@@ -7,7 +7,7 @@
   <title>VK Nutrition — Fuel Your Strength</title>
   <link rel="icon" type="image/png" href="./VK logo.png">
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <link rel="stylesheet" href="./style.css?v=12">
+  <link rel="stylesheet" href="./style.css?v=9">
 
 </head>
 <body>
@@ -19,11 +19,8 @@
       </div>
       <label class="search"><input id="searchInput" type="search" placeholder="Search products..." aria-label="Search products"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg></label>
       <div class="nav-actions">
-        <div class="account-controls" id="accountControls">
-          <div class="account-wrap hide-mobile">
-            <button class="btn-login" id="accountBtn" aria-label="Login or create account" aria-expanded="false">Login</button>
-          </div>
-          <button class="icon-btn mobile-only" id="accountBtnMobile" aria-label="Login or create account" aria-expanded="false">👤</button>
+        <div class="account-wrap hide-mobile">
+          <button class="btn-login" id="accountBtn" aria-label="Login or create account">Login</button>
           <div class="account-menu" id="accountMenu">
             <div class="account-menu-head">
               <strong id="accountMenuName">Signed in</strong>
@@ -36,12 +33,9 @@
             <button type="button" id="logoutBtn" class="danger">↪ Log Out</button>
           </div>
         </div>
+        <button class="icon-btn mobile-only" id="accountBtnMobile" aria-label="Login or create account">♙</button>
         <button class="icon-btn" id="wishlistBtn" aria-label="Wishlist">♡<span class="badge" id="wishCount">0</span></button>
         <button class="icon-btn" id="cartBtn" aria-label="Cart">🛒<span class="badge" id="cartCount">0</span></button>
-        <div class="wishlist-menu" id="wishlistMenu" aria-live="polite">
-          <div class="wishlist-menu-head"><strong>Saved Items</strong><span id="wishlistSummary">Your wishlist is empty.</span></div>
-          <div id="wishlistItems"></div>
-        </div>
         <details class="mobile-menu">
           <summary class="icon-btn mobile-toggle" aria-label="Open navigation menu">☰</summary>
           <div class="mobile-nav" id="mobileNav" aria-label="Mobile navigation">
@@ -213,6 +207,14 @@
       <div class="field"><label for="siPassword">Password</label><input id="siPassword" type="password" autocomplete="current-password" placeholder="Enter your password"></div>
       <button class="btn btn-primary full" type="submit">Sign In →</button>
 
+      <div class="auth-divider"><span>or sign in with mobile OTP</span></div>
+
+      <div class="field"><label for="siMobile">Mobile Number</label>
+        <div class="otp-row"><input id="siMobile" type="tel" inputmode="numeric" maxlength="10" placeholder="10-digit mobile number"><button class="otp-btn" id="siSendOtp" type="button">Send OTP</button></div>
+      </div>
+      <div class="field otp-field" id="siOtpField" hidden><label for="siOtp">Enter OTP <span id="siOtpHint"></span></label>
+        <div class="otp-row"><input id="siOtp" type="tel" inputmode="numeric" maxlength="6" placeholder="6-digit OTP"><button class="otp-btn" id="siVerifyOtp" type="button">Verify & Sign In</button></div>
+      </div>
     </form>
 
     <form class="auth-panel" id="signupPanel" hidden novalidate>
@@ -222,12 +224,11 @@
       </div>
       <div class="field"><label for="suEmail">Customer ID <span>(Email)</span></label><input id="suEmail" type="email" autocomplete="email" placeholder="you@example.com"></div>
       <div class="field"><label for="suPassword">Create Password</label><input id="suPassword" type="password" autocomplete="new-password" placeholder="Create a password"></div>
-      <div class="field"><label for="suMobile">Mobile Number</label><input id="suMobile" type="tel" inputmode="numeric" maxlength="10" autocomplete="tel-national" placeholder="10-digit mobile number"></div>
-      <button class="btn btn-primary full" id="signUpBtn" type="submit">Sign Up</button>
-      <div hidden aria-hidden="true">
-        <input id="siMobile"><button id="siSendOtp" type="button"></button><div id="siOtpField"><input id="siOtp"><button id="siVerifyOtp" type="button"></button><span id="siOtpHint"></span></div>
-        <button id="suSendOtp" type="button"></button><div id="suOtpField"><input id="suOtp"><span id="suOtpHint"></span></div>
+      <div class="field"><label for="suMobile">Mobile Number</label>
+        <div class="otp-row"><input id="suMobile" type="tel" inputmode="numeric" maxlength="10" placeholder="10-digit mobile number"><button class="otp-btn" id="suSendOtp" type="button">Send OTP</button></div>
       </div>
+      <div class="field otp-field" id="suOtpField" hidden><label for="suOtp">Enter OTP <span id="suOtpHint"></span></label><input id="suOtp" type="tel" inputmode="numeric" maxlength="6" placeholder="6-digit OTP"></div>
+      <button class="btn btn-primary full" id="signUpBtn" type="submit">Sign Up</button>
     </form>
   </div>
 
@@ -272,8 +273,7 @@
     </div>
   </div>
 
-  <script src="./script.js?v=13"></script>
-  <script src="./auth-patch.js?v=1"></script>
+  <script src="./script.js?v=10"></script>
 </body>
 </html>
 
