@@ -175,13 +175,7 @@ async function requestOtp(mode) {
   if (isSignUp) {
     const first_name = $("#suName").value.trim(), last_name = $("#suSurname").value.trim();
     if (!first_name || !last_name) return showToast("Enter your name and surname.");
-    const { data: available, error: availabilityError } = await supabaseClient.rpc("vk_registration_available", { registration_email: email, registration_mobile: phone });
-    if (availabilityError) { console.error("[VK] availability error", availabilityError); return showToast("Account validation is unavailable. Please try again."); }
-    if (!available) return showToast("An account already exists with this email or mobile number. Please sign in.");
     options = { shouldCreateUser: true, data: { first_name, last_name, mobile: phone } };
-  } else {
-    const { data: matched, error: matchError } = await supabaseClient.rpc("vk_email_mobile_match", { login_email: email, login_mobile: phone });
-    if (matchError || !matched) return showToast("Email or mobile number is not registered. Please create an account.");
   }
   const button = $(`#${mode}SendOtp`);
   button.disabled = true; button.textContent = "Sending…";
