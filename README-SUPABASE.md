@@ -13,7 +13,7 @@ The browser-safe Supabase URL and publishable key are already configured in `scr
 ## Authentication behaviour
 
 - Registration asks for name, email, and mobile number, then sends the OTP to the email address.
-- Sign-in asks for the same email and mobile number, then sends the OTP only to the registered email address.
+- Sign-in asks for the same email and mobile number, then sends the OTP only to the registered email address. It does not depend on custom database functions before sending the OTP.
 - SMS OTP is not used.
 - Supabase persists and refreshes the signed-in session until the user chooses Log Out.
 - Supabase controls email delivery and rate limits. The website sends the request immediately and adds no artificial wait.
