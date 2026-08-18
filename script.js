@@ -11,7 +11,8 @@ let supabaseClient = null;
 try {
   if (!window.supabase?.createClient) throw new Error("Supabase library did not load.");
   supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
-    auth: { persistSession: true, autoRefreshToken: true, detectSessionInUrl: true }
+    // This storefront uses a code entered in the form, not a magic-link session in the URL.
+    auth: { persistSession: true, autoRefreshToken: true, detectSessionInUrl: false }
   });
 } catch (error) {
   console.error("[VK] Supabase initialization failed:", error);
