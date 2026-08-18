@@ -1,35 +1,33 @@
-# VK Nutrition Supabase setup
+# VK Nutrition: email OTP and customer data setup
 
-This folder is the fixed version of the VK Nutrition storefront. The Supabase URL and browser-safe publishable key are already configured in `script.js`.
+The browser-safe Supabase URL and publishable key are already configured in `script.js`. Do **not** add a service-role key to this website.
 
-## One-time Supabase setup
+## Required Supabase setup
 
-1. Open the project SQL Editor: https://supabase.com/dashboard/project/owpgbkrnimhwvgqntggq/sql/new
-2. Open `supabase/schema.sql`, paste the complete file into the SQL Editor, and click **Run**.
-3. In Supabase, open **Authentication -> Providers** and enable **Email**.
-4. If email confirmation is enabled, configure the project Site URL and redirect URL to the URL where this storefront will be hosted. Users must confirm their email before password sign-in.
-5. Phone OTP is optional. To use the mobile OTP path, enable **Phone** and configure an SMS provider in Supabase Authentication.
+1. In Supabase Dashboard, open **SQL Editor**.
+2. Run the complete contents of `supabase-setup.sql` once.
+3. In **Authentication → Providers**, enable **Email**.
+4. In **Authentication → Email Templates**, use an email OTP template containing `{{ .Token }}`. Do not use a magic-link-only template.
+5. In **Authentication → URL Configuration**, add your deployed website URL as the Site URL and a Redirect URL.
 
-The SQL creates the `profiles` table, unique email/phone checks, row-level security policies, a profile trigger for new Auth users, and the secure account-deletion RPC used by the app.
+## Authentication behaviour
 
-## Run the storefront
+- Registration asks for name, email, and mobile number, then sends the OTP to the email address.
+- Sign-in asks for the same email and mobile number, then sends the OTP only to the registered email address.
+- SMS OTP is not used.
+- Supabase persists and refreshes the signed-in session until the user chooses Log Out.
+- Supabase controls email delivery and rate limits. The website sends the request immediately and adds no artificial wait.
 
-Serve the folder over HTTP or HTTPS; do not open `index.html` directly with `file://`.
+## Customer data
 
-For a local test, from this folder run:
+The SQL setup stores each signed-in customer's profile, login events, saved checkout requests, and product view history. Row-level security ensures each customer can read only their own data.
+
+## Run locally
+
+Serve the folder over HTTP(S), not `file://`:
 
 ```powershell
 py -m http.server 4174
 ```
 
-Then open http://127.0.0.1:4174/.
-
-## Auth behavior fixed
-
-- Sign up creates a real Supabase email/password user and stores the profile metadata.
-- Duplicate email and mobile numbers are checked before signup.
-- Sign in uses Supabase `signInWithPassword` instead of a local hard-coded password.
-- Sessions persist across refreshes and the profile is reloaded from `profiles`.
-- The mobile profile button opens the profile settings after login.
-
-Never put a Supabase `service_role` key in browser code. Only the publishable/anon key belongs in `script.js`.
+Then open `http://127.0.0.1:4174/`.
