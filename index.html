@@ -7,7 +7,7 @@
   <title>VK Nutrition — Fuel Your Strength</title>
   <link rel="icon" type="image/png" href="./VK logo.png">
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <link rel="stylesheet" href="./style.css?v=9">
+  <link rel="stylesheet" href="./style.css?v=14">
 
 </head>
 <body>
@@ -28,6 +28,9 @@
             </div>
             <button type="button" id="openProfileBtn">♙ Profile Edit</button>
             <button type="button" id="openSettingsBtn">⚙ Settings</button>
+            <button type="button" id="openOrdersBtn">▣ Order History</button>
+            <button type="button" id="openViewsBtn">◷ View History</button>
+            <button type="button" id="openLoginsBtn">◉ Login History</button>
             <button type="button" id="openLanguageBtn">🌐 Language</button>
             <div class="menu-divider"></div>
             <button type="button" id="logoutBtn" class="danger">↪ Log Out</button>
@@ -203,18 +206,11 @@
     </div>
 
     <form class="auth-panel" id="signinPanel" novalidate>
-      <div class="field"><label for="siLoginId">Login ID <span>(Email or Customer ID)</span></label><input id="siLoginId" type="text" autocomplete="username" placeholder="you@example.com"></div>
-      <div class="field"><label for="siPassword">Password</label><input id="siPassword" type="password" autocomplete="current-password" placeholder="Enter your password"></div>
-      <button class="btn btn-primary full" type="submit">Sign In →</button>
-
-      <div class="auth-divider"><span>or sign in with mobile OTP</span></div>
-
-      <div class="field"><label for="siMobile">Mobile Number</label>
-        <div class="otp-row"><input id="siMobile" type="tel" inputmode="numeric" maxlength="10" placeholder="10-digit mobile number"><button class="otp-btn" id="siSendOtp" type="button">Send OTP</button></div>
-      </div>
-      <div class="field otp-field" id="siOtpField" hidden><label for="siOtp">Enter OTP <span id="siOtpHint"></span></label>
-        <div class="otp-row"><input id="siOtp" type="tel" inputmode="numeric" maxlength="6" placeholder="6-digit OTP"><button class="otp-btn" id="siVerifyOtp" type="button">Verify & Sign In</button></div>
-      </div>
+      <div class="field"><label for="siEmail">Email Account</label><input id="siEmail" type="email" autocomplete="email" placeholder="you@example.com"></div>
+      <div class="field"><label for="siMobile">Mobile Number</label><input id="siMobile" type="tel" inputmode="numeric" maxlength="10" autocomplete="tel-national" placeholder="10-digit mobile number"></div>
+      <button class="btn btn-primary full" id="siSendOtp" type="button">Send Email OTP →</button>
+      <div class="field otp-field" id="siOtpField" hidden><label for="siOtp">Email OTP <span id="siOtpHint"></span></label><input id="siOtp" type="text" inputmode="numeric" maxlength="8" autocomplete="one-time-code" placeholder="Enter the code from your email"></div>
+      <button class="btn btn-dark full" id="siVerifyOtp" type="submit" hidden>Verify & Sign In →</button>
     </form>
 
     <form class="auth-panel" id="signupPanel" hidden novalidate>
@@ -223,13 +219,18 @@
         <div class="field"><label for="suSurname">Surname</label><input id="suSurname" type="text" placeholder="Last name"></div>
       </div>
       <div class="field"><label for="suEmail">Customer ID <span>(Email)</span></label><input id="suEmail" type="email" autocomplete="email" placeholder="you@example.com"></div>
-      <div class="field"><label for="suPassword">Create Password</label><input id="suPassword" type="password" autocomplete="new-password" placeholder="Create a password"></div>
-      <div class="field"><label for="suMobile">Mobile Number</label>
-        <div class="otp-row"><input id="suMobile" type="tel" inputmode="numeric" maxlength="10" placeholder="10-digit mobile number"><button class="otp-btn" id="suSendOtp" type="button">Send OTP</button></div>
-      </div>
-      <div class="field otp-field" id="suOtpField" hidden><label for="suOtp">Enter OTP <span id="suOtpHint"></span></label><input id="suOtp" type="tel" inputmode="numeric" maxlength="6" placeholder="6-digit OTP"></div>
-      <button class="btn btn-primary full" id="signUpBtn" type="submit">Sign Up</button>
+      <div class="field"><label for="suMobile">Mobile Number</label><input id="suMobile" type="tel" inputmode="numeric" maxlength="10" autocomplete="tel-national" placeholder="10-digit mobile number"></div>
+      <button class="btn btn-primary full" id="suSendOtp" type="button">Send Email OTP →</button>
+      <div class="field otp-field" id="suOtpField" hidden><label for="suOtp">Email OTP <span id="suOtpHint"></span></label><input id="suOtp" type="text" inputmode="numeric" maxlength="8" autocomplete="one-time-code" placeholder="Enter the code from your email"></div>
+      <button class="btn btn-dark full" id="signUpBtn" type="submit" hidden>Verify & Create Account →</button>
     </form>
+  </div>
+
+  <div class="auth-overlay" id="historyOverlay"></div>
+  <div class="auth-modal" id="historyModal" role="dialog" aria-modal="true" aria-labelledby="historyTitle">
+    <button class="auth-close" id="historyClose" aria-label="Close">×</button>
+    <div class="auth-head"><img class="auth-logo" src="VK_logo-removebg-preview.png" alt="VK Nutrition"><h2 id="historyTitle">Account History</h2><p class="auth-sub" id="historySub">Your saved account activity.</p></div>
+    <div class="history-list" id="historyList"></div>
   </div>
 
   <div class="auth-overlay" id="settingsOverlay"></div>
@@ -273,7 +274,6 @@
     </div>
   </div>
 
-  <script src="./script.js?v=10"></script>
+  <script src="./script.js?v=14"></script>
 </body>
 </html>
-
