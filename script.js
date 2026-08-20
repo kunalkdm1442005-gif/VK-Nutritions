@@ -111,7 +111,7 @@ function setLoggedOut() {
   desktop.innerHTML = "Login";
   mobile.textContent = "♙";
   mobile.setAttribute("aria-label", "Login or create account");
-  $("#accountMenu").classList.remove("open");
+  closeAccountMenu();
 }
 function setLoggedIn(user) {
   currentUser = user;
@@ -139,17 +139,29 @@ async function hydrateUser(authUser) {
     last_name: profile?.last_name || authUser.user_metadata?.last_name || ""
   });
 }
+function closeAccountMenu() {
+  $("#accountMenu").classList.remove("open");
+  $("#accountBtn").setAttribute("aria-expanded", "false");
+  $("#accountBtnMobile").setAttribute("aria-expanded", "false");
+}
+function toggleAccountMenu() {
+  const menu = $("#accountMenu");
+  const isOpen = menu.classList.toggle("open");
+  $("#accountBtn").setAttribute("aria-expanded", String(isOpen));
+  $("#accountBtnMobile").setAttribute("aria-expanded", String(isOpen));
+}
 function handleAccountButton(event) {
   event.stopPropagation();
   if (!currentUser) return openAuth();
-  if (event.currentTarget.id === "accountBtnMobile") return openSettings();
-  $("#accountMenu").classList.toggle("open");
+  toggleAccountMenu();
 }
 $("#accountBtn").addEventListener("click", handleAccountButton);
 $("#accountBtnMobile").addEventListener("click", handleAccountButton);
 document.addEventListener("click", event => {
-  const wrap = document.querySelector(".account-wrap");
-  if (wrap && !wrap.contains(event.target)) $("#accountMenu").classList.remove("open");
+  const menu = $("#accountMenu");
+  const desktopButton = $("#accountBtn");
+  const mobileButton = $("#accountBtnMobile");
+  if (!menu.contains(event.target) && !desktopButton.contains(event.target) && !mobileButton.contains(event.target)) closeAccountMenu();
 });
 $("#logoutBtn").addEventListener("click", async () => {
   if (!requireClient()) return;
@@ -267,7 +279,7 @@ $("#historyClose").addEventListener("click", closeHistory);
 historyOverlay.addEventListener("click", closeHistory);
 async function openHistory(type) {
   if (!currentUser) return openAuth();
-  $("#accountMenu").classList.remove("open");
+  closeAccountMenu();
   const config = {
     orders: { title: "Order History", subtitle: "Your saved order requests.", table: "order_history", select: "items,total_amount,status,created_at", order: "created_at" },
     views: { title: "View History", subtitle: "Products you viewed while signed in.", table: "view_history", select: "product_name,product_price,viewed_at", order: "viewed_at" },
@@ -293,6 +305,7 @@ $("#openLoginsBtn").addEventListener("click", () => openHistory("logins"));
 const settingsOverlay = $("#settingsOverlay"), settingsModal = $("#settingsModal");
 function openSettings() {
   if (!currentUser) return openAuth();
+  closeAccountMenu();
   $("#setName").value = currentUser.first_name || "";
   $("#setSurname").value = currentUser.last_name || "";
   $("#setEmail").value = currentUser.email || "";
@@ -314,7 +327,7 @@ $("#settingsForm").addEventListener("submit", async event => {
 });
 
 const languageOverlay = $("#languageOverlay"), languageModal = $("#languageModal");
-function openLanguage() { languageOverlay.classList.add("show"); languageModal.classList.add("open"); }
+function openLanguage() { closeAccountMenu(); languageOverlay.classList.add("show"); languageModal.classList.add("open"); }
 function closeLanguage() { languageOverlay.classList.remove("show"); languageModal.classList.remove("open"); }
 $("#openLanguageBtn").addEventListener("click", openLanguage);
 $("#languageClose").addEventListener("click", closeLanguage);
