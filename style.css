@@ -40,8 +40,9 @@
     .btn-login{background:var(--lime);color:#171200;border:1px solid var(--lime);border-radius:9px;height:42px;padding:0 20px;font-size:13px;font-weight:900;letter-spacing:.02em;transition:.2s}
     .btn-login:hover{background:var(--lime-dark);transform:translateY(-1px)}
     .mobile-only{display:none}
-    .mobile-toggle{display:none}
-    .mobile-menu,.mobile-nav{display:none}
+    .mobile-toggle{display:grid}
+    .mobile-menu{display:block;position:relative}
+    .mobile-nav{display:none}
     .hero{min-height:615px;position:relative;isolation:isolate;overflow:hidden;background:#080b09}
     .hero:before{content:"";position:absolute;inset:0;z-index:1;pointer-events:none;background:linear-gradient(90deg,rgba(5,7,6,.94) 0%,rgba(5,7,6,.76) 42%,rgba(5,7,6,.24) 100%),linear-gradient(rgba(255,255,255,.045) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.045) 1px,transparent 1px);background-size:auto,45px 45px,45px 45px}
     .hero-inner{min-height:615px;display:flex;align-items:center;position:relative;z-index:2}
@@ -148,6 +149,7 @@
     .auth-divider{display:flex;align-items:center;gap:10px;color:var(--muted);font-size:11.5px;text-transform:uppercase;letter-spacing:.06em;margin:2px 0}
     .auth-divider:before,.auth-divider:after{content:"";flex:1;height:1px;background:var(--line)}
     .account-controls{position:relative;display:flex;align-items:center}
+    .account-wrap{position:relative;display:flex;align-items:center}
     .account-btn.mobile-only{display:none}
     .account-btn{width:42px;height:42px;padding:0;display:grid;place-items:center;background:transparent;color:var(--cyan);border:1px solid transparent;border-radius:50%;font-size:13px;font-weight:900}
     .account-btn:hover{background:transparent;border-color:var(--cyan);color:var(--cyan)}
@@ -164,6 +166,9 @@
     .account-menu button:hover{background:#10272d;color:var(--cyan)}
     .account-menu button.danger:hover{color:#ff6a6a}
     .account-menu .menu-divider{height:1px;background:var(--line);margin:6px 4px}
+    .mobile-menu[open] .mobile-nav{display:block;position:fixed;top:86px;right:20px;z-index:120;width:min(260px,calc(100vw - 40px));max-height:calc(100dvh - 104px);overflow-y:auto;overscroll-behavior:contain;padding:9px;background:rgba(15,23,42,.98);border:1px solid var(--line);border-radius:12px;box-shadow:0 16px 40px rgba(0,0,0,.55)}
+    .mobile-nav button{display:flex;width:100%;min-height:46px;align-items:center;padding:12px 14px;border:0;border-radius:8px;background:transparent;color:#e8ece9;text-align:left;font:800 14px/1.2 Inter,Arial,sans-serif}
+    .mobile-nav button:hover,.mobile-nav button:focus-visible{background:#263752;color:var(--lime);outline:none}
     .wishlist-menu{position:fixed;top:86px;right:20px;width:290px;background:var(--surface);border:1px solid var(--line);border-radius:14px;box-shadow:var(--shadow);padding:8px;opacity:0;pointer-events:none;transform:translateY(-6px);transition:.18s;z-index:110}
     .wishlist-menu.open{opacity:1;pointer-events:auto;transform:translateY(0)}
     .wishlist-menu-head{padding:12px 12px 10px;border-bottom:1px solid var(--line);margin-bottom:6px}
