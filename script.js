@@ -61,6 +61,16 @@ function showSlide(index) {
   slides.forEach((slide, i) => slide.classList.toggle("active", i === activeSlide));
   dots.forEach((dot, i) => dot.classList.toggle("active", i === activeSlide));
 }
+ dots.forEach((dot, index) => dot.addEventListener("click", () => showSlide(index)));
+const heroSlideshow = $(".hero-slideshow");
+let swipeStartX = 0;
+if (heroSlideshow) {
+  heroSlideshow.addEventListener("touchstart", event => { swipeStartX = event.changedTouches[0].clientX; }, { passive: true });
+  heroSlideshow.addEventListener("touchend", event => {
+    const distance = event.changedTouches[0].clientX - swipeStartX;
+    if (Math.abs(distance) > 45) showSlide(activeSlide + (distance < 0 ? 1 : -1));
+  }, { passive: true });
+}
 if (slides.length > 1) { showSlide(0); setInterval(() => showSlide(activeSlide + 1), 4000); }
 
 function renderCart() {
