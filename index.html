@@ -7,7 +7,7 @@
   <title>VK Nutrition — Fuel Your Strength</title>
   <link rel="icon" type="image/png" href="./VK logo.png">
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <link rel="stylesheet" href="./style.css?v=15">
+  <link rel="stylesheet" href="./style.css?v=16">
 
 </head>
 <body>
@@ -32,14 +32,12 @@
             <button type="button" id="openViewsBtn">◷ View History</button>
             <button type="button" id="openLoginsBtn">◉ Login History</button>
             <button type="button" id="openLanguageBtn">🌐 Language</button>
-            <button type="button" id="openWishlistBtn">♡ Wishlist</button>
+            <button type="button" id="openWishlistBtn">♡ Wishlist <span class="menu-count" id="accountWishlistCount">(0)</span></button>
+            <button type="button" id="openCartBtn">🛒 Shopping Cart <span class="menu-count" id="accountCartCount">(0)</span></button>
             <div class="menu-divider"></div>
             <button type="button" id="logoutBtn" class="danger">↪ Log Out</button>
           </div>
         </div>
-        <button class="icon-btn" id="wishlistBtn" aria-label="Wishlist">♡<span class="badge" id="wishCount">0</span></button>
-        <button class="icon-btn" id="cartBtn" aria-label="Cart">🛒<span class="badge" id="cartCount">0</span></button>
-  
       </div>
     </nav>
   </header>
@@ -266,6 +264,6 @@
     </div>
   </div>
 
- <script src="./script.js?v=19"></script>
+ <script src="./script.js?v=20"></script>
 </body>
 </html>
