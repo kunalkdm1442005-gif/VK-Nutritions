@@ -212,4 +212,12 @@
     footer.main-footer{background:#0F172A}.newsletter input{background:#1E293B;border-color:#475569}.newsletter button{background:var(--lime);color:#0F172A}
     .drawer{background:#0F172A}.cart-thumb{background:#1E293B}.account-menu{background:#172033}.auth-modal{background:#172033}.auth-tabs{background:#1E293B}
     .account-menu button:hover,.language-option:hover,.language-option.active{background:#263752;color:var(--lime)}
-    @media(max-width:620px){.account-btn.mobile-only{display:grid;width:37px;height:37px}.wishlist-menu{top:82px;right:14px;width:min(290px,calc(100vw - 28px))}}
+    @media(max-width:620px){
+      .account-btn.mobile-only{display:grid;width:37px;height:37px}
+      #accountBtn{display:none!important}
+      .account-wrap{display:block}
+      .account-menu{top:80px;right:max(14px,env(safe-area-inset-right));width:min(330px,calc(100vw - 28px));max-height:calc(100dvh - 96px);overflow-y:auto;overscroll-behavior:contain;z-index:110}
+      .account-menu button{min-height:46px;padding:12px;font-size:14px}
+      .account-menu-head{padding:14px 12px 12px}
+      .wishlist-menu{top:82px;right:14px;width:min(290px,calc(100vw - 28px))}
+    }
