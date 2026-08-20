@@ -50,7 +50,7 @@ if (slides.length > 1) { showSlide(0); setInterval(() => showSlide(activeSlide +
 function renderCart() {
   const quantity = cart.reduce((total, item) => total + item.qty, 0);
   const total = cart.reduce((sum, item) => sum + item.price * item.qty, 0);
-  $("#cartCount").textContent = quantity;
+  $("#accountCartCount").textContent = `(${quantity})`;
   $("#drawerCount").textContent = `(${quantity})`;
   $("#cartTotal").textContent = money(total);
   $("#cartItems").innerHTML = cart.length
@@ -77,17 +77,21 @@ document.querySelectorAll(".wish").forEach(button => button.addEventListener("cl
   const saved = heart.classList.contains("active");
   heart.textContent = saved ? "♥" : "♡";
   wishlist += saved ? 1 : -1;
-  $("#wishCount").textContent = wishlist;
+  $("#accountWishlistCount").textContent = `(${wishlist})`;
   showToast(saved ? "Saved to wishlist." : "Removed from wishlist.");
 }));
-$("#cartBtn").addEventListener("click", () => { $("#drawer").classList.add("open"); $("#overlay").classList.add("show"); });
+function openCart() {
+  closeAccountMenu();
+  $("#drawer").classList.add("open");
+  $("#overlay").classList.add("show");
+}
+$("#openCartBtn").addEventListener("click", openCart);
 $("#closeCart").addEventListener("click", closeCart);
 $("#overlay").addEventListener("click", closeCart);
 function openWishlist() {
   closeAccountMenu();
   showToast(wishlist ? `${wishlist} saved item${wishlist === 1 ? "" : "s"}.` : "Your wishlist is empty.");
 }
-$("#wishlistBtn").addEventListener("click", openWishlist);
 $("#searchInput").addEventListener("input", event => {
   const query = event.target.value.toLowerCase();
   document.querySelectorAll(".product").forEach(product => { product.style.display = product.dataset.name.toLowerCase().includes(query) ? "block" : "none"; });
@@ -334,6 +338,7 @@ function openLanguage() { closeAccountMenu(); languageOverlay.classList.add("sho
 function closeLanguage() { languageOverlay.classList.remove("show"); languageModal.classList.remove("open"); }
 $("#openLanguageBtn").addEventListener("click", openLanguage);
 $("#openWishlistBtn").addEventListener("click", openWishlist);
+$("#languageClose").addEventListener("click", closeLanguage);
 languageOverlay.addEventListener("click", closeLanguage);
 document.querySelectorAll(".language-option").forEach(button => button.addEventListener("click", () => { localStorage.setItem("vk-language", button.dataset.language); document.documentElement.lang = button.dataset.language; closeLanguage(); showToast(`${button.textContent} selected.`); }));
 $("#deleteAccountBtn").addEventListener("click", async () => {
