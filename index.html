@@ -7,7 +7,14 @@
   <title>VK Nutrition — Fuel Your Strength</title>
   <link rel="icon" type="image/png" href="./VK logo.png">
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <link rel="stylesheet" href="./style.css?v=16">
+  <script>
+    (() => {
+      const saved = localStorage.getItem("vk-theme");
+      const theme = saved || (matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+      document.documentElement.dataset.theme = theme;
+    })();
+  </script>
+  <link rel="stylesheet" href="./style.css?v=17">
 
 </head>
 <body>
@@ -34,6 +41,7 @@
             <button type="button" id="openLanguageBtn">🌐 Language</button>
             <button type="button" id="openWishlistBtn">♡ Wishlist <span class="menu-count" id="accountWishlistCount">(0)</span></button>
             <button type="button" id="openCartBtn">🛒 Shopping Cart <span class="menu-count" id="accountCartCount">(0)</span></button>
+            <button type="button" id="appearanceBtn"><span id="appearanceIcon">☀</span> <span id="appearanceLabel">Light Mode</span></button>
             <div class="menu-divider"></div>
             <button type="button" id="logoutBtn" class="danger">↪ Log Out</button>
           </div>
@@ -264,6 +272,6 @@
     </div>
   </div>
 
- <script src="./script.js?v=20"></script>
+ <script src="./script.js?v=21"></script>
 </body>
 </html>
