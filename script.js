@@ -172,19 +172,56 @@ async function requestOtp(mode) {
   if (!/^\S+@\S+\.\S+$/.test(email)) return showToast("Enter a valid email address.");
   if (!validMobile(mobile)) return showToast("Enter a valid 10-digit mobile number.");
   const phone = normalizeMobile(mobile);
-  let options = { shouldCreateUser: false };
-  if (isSignUp) {
-    const first_name = $("#suName").value.trim(), last_name = $("#suSurname").value.trim();
-    if (!first_name || !last_name) return showToast("Enter your name and surname.");
-    options = { shouldCreateUser: true, data: { first_name, last_name, mobile: phone } };
-  }
   const button = $(`#${mode}SendOtp`);
-  button.disabled = true; button.textContent = "Sending…";
-  const { error } = await supabaseClient.auth.signInWithOtp({ email, options });
-  button.disabled = false; button.textContent = "Resend Email OTP";
-  if (error) { console.error("[VK] email OTP error", error); return showToast(error.message); }
-  setOtpVisible(mode, true); otpHint(mode, email);
-  showToast("Email OTP sent. Check your inbox and spam folder.");
+  button.disabled = true;
+  button.textContent = "Sending…";
+
+  try {
+    let error;
+
+    if (isSignUp) {
+      const first_name = $("#suName").value.trim();
+      const last_name = $("#suSurname").value.trim();
+      if (!first_name || !last_name) {
+        showToast("Enter your name and surname.");
+        return;
+      }
+
+      // SIGN UP: create a new Supabase user, then email a numeric OTP.
+      ({ error } = await supabaseClient.auth.signInWithOtp({
+        email,
+        options: {
+          shouldCreateUser: true,
+          data: { first_name, last_name, mobile: phone }
+        }
+      }));
+    } else {
+      // SIGN IN: never create an account; email an OTP only to an existing user.
+      ({ error } = await supabaseClient.auth.signInWithOtp({
+        email,
+        options: { shouldCreateUser: false }
+      }));
+    }
+
+    if (error) {
+      console.error("[VK] email OTP error", error);
+      const message = /error sending confirmation email/i.test(error.message || "")
+        ? "Supabase could not send the email. Check the Brevo SMTP Login, SMTP Key, and verified sender email."
+        : error.message || "Could not send the OTP. Please try again.";
+      showToast(message);
+      return;
+    }
+
+    setOtpVisible(mode, true);
+    otpHint(mode, email);
+    showToast("Email OTP sent. Check your inbox and spam folder.");
+  } catch (error) {
+    console.error("[VK] unexpected OTP error", error);
+    showToast("Connection problem. Please reload and try again.");
+  } finally {
+    button.disabled = false;
+    button.textContent = "Resend Email OTP";
+  }
 }
 $("#siSendOtp").addEventListener("click", () => requestOtp("si"));
 $("#suSendOtp").addEventListener("click", () => requestOtp("su"));
