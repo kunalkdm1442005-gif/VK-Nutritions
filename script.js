@@ -83,7 +83,11 @@ document.querySelectorAll(".wish").forEach(button => button.addEventListener("cl
 $("#cartBtn").addEventListener("click", () => { $("#drawer").classList.add("open"); $("#overlay").classList.add("show"); });
 $("#closeCart").addEventListener("click", closeCart);
 $("#overlay").addEventListener("click", closeCart);
-$("#wishlistBtn").addEventListener("click", () => showToast(wishlist ? `${wishlist} saved item${wishlist === 1 ? "" : "s"}.` : "Your wishlist is empty."));
+function openWishlist() {
+  closeAccountMenu();
+  showToast(wishlist ? `${wishlist} saved item${wishlist === 1 ? "" : "s"}.` : "Your wishlist is empty.");
+}
+$("#wishlistBtn").addEventListener("click", openWishlist);
 $("#searchInput").addEventListener("input", event => {
   const query = event.target.value.toLowerCase();
   document.querySelectorAll(".product").forEach(product => { product.style.display = product.dataset.name.toLowerCase().includes(query) ? "block" : "none"; });
@@ -329,7 +333,7 @@ const languageOverlay = $("#languageOverlay"), languageModal = $("#languageModal
 function openLanguage() { closeAccountMenu(); languageOverlay.classList.add("show"); languageModal.classList.add("open"); }
 function closeLanguage() { languageOverlay.classList.remove("show"); languageModal.classList.remove("open"); }
 $("#openLanguageBtn").addEventListener("click", openLanguage);
-$("#languageClose").addEventListener("click", closeLanguage);
+$("#openWishlistBtn").addEventListener("click", openWishlist);
 languageOverlay.addEventListener("click", closeLanguage);
 document.querySelectorAll(".language-option").forEach(button => button.addEventListener("click", () => { localStorage.setItem("vk-language", button.dataset.language); document.documentElement.lang = button.dataset.language; closeLanguage(); showToast(`${button.textContent} selected.`); }));
 $("#deleteAccountBtn").addEventListener("click", async () => {
