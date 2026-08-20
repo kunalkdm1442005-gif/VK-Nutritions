@@ -141,12 +141,7 @@ function closeAccountMenu() {
   $("#accountMenu").classList.remove("open");
   $("#accountBtn").setAttribute("aria-expanded", "false");
 }
-function closeHamburgerMenu() {
-  const menu = document.querySelector(".mobile-menu");
-  if (menu) menu.removeAttribute("open");
-}
 function toggleAccountMenu() {
-  closeHamburgerMenu();
   const menu = $("#accountMenu");
   const isOpen = menu.classList.toggle("open");
   $("#accountBtn").setAttribute("aria-expanded", String(isOpen));
@@ -157,20 +152,14 @@ function handleAccountButton(event) {
   toggleAccountMenu();
 }
 $("#accountBtn").addEventListener("click", handleAccountButton);
-const hamburgerMenu = document.querySelector(".mobile-menu");
-hamburgerMenu.addEventListener("toggle", () => {
-  if (hamburgerMenu.open) closeAccountMenu();
-});
 document.addEventListener("click", event => {
   const menu = $("#accountMenu");
   const desktopButton = $("#accountBtn");
   if (!menu.contains(event.target) && !desktopButton.contains(event.target)) closeAccountMenu();
-  if (hamburgerMenu && !hamburgerMenu.contains(event.target)) closeHamburgerMenu();
 });
 document.addEventListener("keydown", event => {
   if (event.key === "Escape") {
     closeAccountMenu();
-    closeHamburgerMenu();
   }
 });
 $("#logoutBtn").addEventListener("click", async () => {
@@ -290,7 +279,6 @@ historyOverlay.addEventListener("click", closeHistory);
 async function openHistory(type) {
   if (!currentUser) return openAuth();
   closeAccountMenu();
-  closeHamburgerMenu();
   const config = {
     orders: { title: "Order History", subtitle: "Your saved order requests.", table: "order_history", select: "items,total_amount,status,created_at", order: "created_at" },
     views: { title: "View History", subtitle: "Products you viewed while signed in.", table: "view_history", select: "product_name,product_price,viewed_at", order: "viewed_at" },
@@ -317,7 +305,6 @@ const settingsOverlay = $("#settingsOverlay"), settingsModal = $("#settingsModal
 function openSettings() {
   if (!currentUser) return openAuth();
   closeAccountMenu();
-  closeHamburgerMenu();
   $("#setName").value = currentUser.first_name || "";
   $("#setSurname").value = currentUser.last_name || "";
   $("#setEmail").value = currentUser.email || "";
@@ -326,7 +313,6 @@ function openSettings() {
 function closeSettings() { settingsOverlay.classList.remove("show"); settingsModal.classList.remove("open"); }
 $("#openProfileBtn").addEventListener("click", openSettings);
 $("#openSettingsBtn").addEventListener("click", openSettings);
-$("#openSettingsBtnMobile").addEventListener("click", openSettings);
 $("#settingsClose").addEventListener("click", closeSettings);
 settingsOverlay.addEventListener("click", closeSettings);
 $("#settingsForm").addEventListener("submit", async event => {
@@ -340,7 +326,7 @@ $("#settingsForm").addEventListener("submit", async event => {
 });
 
 const languageOverlay = $("#languageOverlay"), languageModal = $("#languageModal");
-function openLanguage() { closeAccountMenu(); closeHamburgerMenu(); languageOverlay.classList.add("show"); languageModal.classList.add("open"); }
+function openLanguage() { closeAccountMenu(); languageOverlay.classList.add("show"); languageModal.classList.add("open"); }
 function closeLanguage() { languageOverlay.classList.remove("show"); languageModal.classList.remove("open"); }
 $("#openLanguageBtn").addEventListener("click", openLanguage);
 $("#languageClose").addEventListener("click", closeLanguage);
