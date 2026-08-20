@@ -206,7 +206,7 @@ async function requestOtp(mode) {
     if (error) {
       console.error("[VK] email OTP error", error);
       const message = /error sending confirmation email/i.test(error.message || "")
-        ? "Supabase could not send the email. Check the Brevo SMTP Login, SMTP Key, and verified sender email."
+       ? "Supabase could not send the email. Check the Resend API key, SMTP settings, and verified sender domain."
         : error.message || "Could not send the OTP. Please try again.";
       showToast(message);
       return;
