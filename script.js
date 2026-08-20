@@ -8,6 +8,22 @@ let currentUser = null;
 let wishlist = 0;
 let supabaseClient = null;
 
+/* ---------- Appearance preference ---------- */
+function applyTheme(theme) {
+  const nextTheme = theme === "dark" ? "dark" : "light";
+  document.documentElement.dataset.theme = nextTheme;
+  localStorage.setItem("vk-theme", nextTheme);
+  const icon = $("#appearanceIcon"), label = $("#appearanceLabel");
+  if (icon && label) {
+    icon.textContent = nextTheme === "dark" ? "☀" : "🌙";
+    label.textContent = nextTheme === "dark" ? "Light Mode" : "Dark Mode";
+  }
+}
+function toggleTheme() {
+  applyTheme(document.documentElement.dataset.theme === "dark" ? "light" : "dark");
+}
+applyTheme(document.documentElement.dataset.theme || "light");
+
 try {
   if (!window.supabase?.createClient) throw new Error("Supabase library did not load.");
   supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
@@ -338,6 +354,7 @@ function openLanguage() { closeAccountMenu(); languageOverlay.classList.add("sho
 function closeLanguage() { languageOverlay.classList.remove("show"); languageModal.classList.remove("open"); }
 $("#openLanguageBtn").addEventListener("click", openLanguage);
 $("#openWishlistBtn").addEventListener("click", openWishlist);
+$("#appearanceBtn").addEventListener("click", toggleTheme);
 $("#languageClose").addEventListener("click", closeLanguage);
 languageOverlay.addEventListener("click", closeLanguage);
 document.querySelectorAll(".language-option").forEach(button => button.addEventListener("click", () => { localStorage.setItem("vk-language", button.dataset.language); document.documentElement.lang = button.dataset.language; closeLanguage(); showToast(`${button.textContent} selected.`); }));
