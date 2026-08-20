@@ -161,6 +161,7 @@
     .account-menu-head span{display:block;font-size:11.5px;color:var(--muted);margin-top:2px}
     .account-menu button{width:100%;text-align:left;background:transparent;border:0;color:#fff;padding:10px 12px;border-radius:9px;font-size:13px;font-weight:700;display:flex;align-items:center;gap:9px}
     .account-menu button:hover{background:#10272d;color:var(--cyan)}
+    .account-menu .menu-count{margin-left:auto;color:var(--muted);font-size:12px;font-weight:800}
     .account-menu button.danger:hover{color:#ff6a6a}
     .account-menu .menu-divider{height:1px;background:var(--line);margin:6px 4px}
     .wishlist-menu{position:fixed;top:86px;right:20px;width:290px;background:var(--surface);border:1px solid var(--line);border-radius:14px;box-shadow:var(--shadow);padding:8px;opacity:0;pointer-events:none;transform:translateY(-6px);transition:.18s;z-index:110}
