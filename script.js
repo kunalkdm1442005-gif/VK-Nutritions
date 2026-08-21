@@ -203,7 +203,7 @@ document.addEventListener("keydown", event => {
 });
 
 /* ---------- Responsive navigation ---------- */
-const mobileNavPanel = $("#mobileNavPanel"), mobileNavToggle = $("#mobileNavToggle"), mobileSearchBtn = $("#mobileSearchBtn");
+var mobileNavPanel = $("#mobileNavPanel"), mobileNavToggle = $("#mobileNavToggle"), mobileSearchBtn = $("#mobileSearchBtn");
 function closeMobileNavigation() {
   if (!mobileNavPanel) return;
   mobileNavPanel.hidden = true;
@@ -306,7 +306,7 @@ async function verifyOtp(mode) {
   const token = $(`#${mode}Otp`).value.trim();
   if (!token) return showToast("Enter the OTP from your email.");
   const { data, error } = await supabaseClient.auth.verifyOtp({ email, token, type: "email" });
-  if (error) return showToast("That OTP is invalid or has expired. Request a new code.");
+  if (error) { console.error("[VK] verify OTP error", error); return showToast("That OTP is invalid or has expired. Request a new code."); }
   await hydrateUser(data.user);
   await supabaseClient.from("login_events").insert({ user_id: data.user.id });
   closeAuth(); showToast(mode === "su" ? "Your account is ready." : "Signed in successfully.");
