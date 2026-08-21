@@ -10,11 +10,11 @@
   <script>
     (() => {
       const saved = localStorage.getItem("vk-theme");
-      const theme = saved || (matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+      const theme = saved || "light";
       document.documentElement.dataset.theme = theme;
     })();
   </script>
-  <link rel="stylesheet" href="./style.css?v=18">
+  <link rel="stylesheet" href="./style.css?v=19">
 
 </head>
 <body>
@@ -50,6 +50,7 @@
         </div>
       </div>
       <button class="mobile-header-btn mobile-search-btn" id="mobileSearchBtn" type="button" aria-label="Open search">⌕</button>
+      <button class="header-theme-btn" id="headerThemeBtn" type="button" aria-label="Switch to dark mode">🌙</button>
     </nav>
   </header>
   <div class="announcement-bar" role="status" aria-label="Delivery offer">
@@ -290,6 +291,6 @@
     </div>
   </div>
 
- <script src="./script.js?v=23"></script>
+ <script src="./script.js?v=24"></script>
 </body>
 </html>
