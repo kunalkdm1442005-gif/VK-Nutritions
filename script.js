@@ -144,6 +144,7 @@ function setLoggedOut() {
   desktop.className = "account-btn";
   desktop.innerHTML = "♙";
   desktop.setAttribute("aria-label", "Login or create account");
+  $("#accountBottomLabel").textContent = "Login";
   closeAccountMenu();
 }
 function setLoggedIn(user) {
@@ -154,6 +155,7 @@ function setLoggedIn(user) {
   desktop.className = "account-btn";
   desktop.innerHTML = `<span class="account-avatar">${initial}</span>`;
   desktop.setAttribute("aria-label", `Open account for ${label}`);
+  $("#accountBottomLabel").textContent = "Account";
   $("#accountMenuName").textContent = [user.first_name, user.last_name].filter(Boolean).join(" ") || "Signed in";
   $("#accountMenuSub").textContent = user.email || "";
 }
@@ -190,12 +192,40 @@ document.addEventListener("click", event => {
   const menu = $("#accountMenu");
   const desktopButton = $("#accountBtn");
   if (!menu.contains(event.target) && !desktopButton.contains(event.target)) closeAccountMenu();
+  if (mobileNavPanel && !mobileNavPanel.contains(event.target) && !mobileNavToggle.contains(event.target)) closeMobileNavigation();
+  if (!document.querySelector(".search")?.contains(event.target) && !mobileSearchBtn?.contains(event.target)) document.querySelector(".search")?.classList.remove("mobile-open");
 });
 document.addEventListener("keydown", event => {
   if (event.key === "Escape") {
     closeAccountMenu();
+    closeMobileNavigation();
   }
 });
+
+/* ---------- Responsive navigation ---------- */
+const mobileNavPanel = $("#mobileNavPanel"), mobileNavToggle = $("#mobileNavToggle"), mobileSearchBtn = $("#mobileSearchBtn");
+function closeMobileNavigation() {
+  if (!mobileNavPanel) return;
+  mobileNavPanel.hidden = true;
+  mobileNavToggle?.setAttribute("aria-expanded", "false");
+}
+function toggleMobileNavigation() {
+  const isOpen = mobileNavPanel.hidden;
+  mobileNavPanel.hidden = !isOpen;
+  mobileNavToggle.setAttribute("aria-expanded", String(isOpen));
+}
+mobileNavToggle.addEventListener("click", event => { event.stopPropagation(); toggleMobileNavigation(); });
+mobileNavPanel.addEventListener("click", () => closeMobileNavigation());
+mobileSearchBtn.addEventListener("click", event => {
+  event.stopPropagation();
+  closeMobileNavigation();
+  const search = document.querySelector(".search");
+  search.classList.toggle("mobile-open");
+  if (search.classList.contains("mobile-open")) $("#searchInput").focus();
+});
+$("#bottomCategoryBtn").addEventListener("click", () => { closeMobileNavigation(); $("#categories").scrollIntoView({ behavior: "smooth" }); });
+$("#bottomTrackBtn").addEventListener("click", () => openHistory("orders"));
+$("#mobileTrackBtn").addEventListener("click", () => openHistory("orders"));
 $("#logoutBtn").addEventListener("click", async () => {
   if (!requireClient()) return;
   await supabaseClient.auth.signOut();
