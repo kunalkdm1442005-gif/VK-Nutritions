@@ -25,9 +25,14 @@
         <a class="active" href="#home">Home</a><a href="#shop">Shop</a><a href="#categories">Categories</a><a href="#offers">Offers</a>
       </div>
       <label class="search"><input id="searchInput" type="search" placeholder="Search products..." aria-label="Search products"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg></label>
+     <div class="nav-links">
+        <a class="active" href="#home">Home</a><a href="#shop">Shop</a><a href="#categories">Categories</a><a href="#offers">Offers</a>
+      </div>
+      <label class="search"><input id="searchInput" type="search" placeholder="Search products..." aria-label="Search products"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg></label>
       <div class="nav-actions">
       <div class="account-wrap">
           <button class="account-btn" id="accountBtn" aria-label="Login or create account" aria-controls="accountMenu" aria-expanded="false">♙</button>
+          <span class="account-bottom-label" id="accountBottomLabel">Login</span>
           <div class="account-menu" id="accountMenu">
             <div class="account-menu-head">
               <strong id="accountMenuName">Signed in</strong>
@@ -47,8 +52,15 @@
           </div>
         </div>
       </div>
+      <button class="mobile-header-btn mobile-search-btn" id="mobileSearchBtn" type="button" aria-label="Open search">⌕</button>
     </nav>
   </header>
+  <div class="announcement-bar" role="status" aria-label="Delivery offer">
+    <div class="announcement-track"><span>★ Prepay your order and get FREE delivery. ★</span><span aria-hidden="true">★ Prepay your order and get FREE delivery. ★</span></div>
+  </div>
+  <div class="mobile-nav-panel" id="mobileNavPanel" hidden>
+    <a href="#home">Home</a><a href="#shop">Shop</a><a href="#categories">Categories</a><a href="#offers">Offers</a><button type="button" id="mobileTrackBtn">⌖ Track Order</button>
+  </div>
 
   <main>
     <section class="hero" id="home">
@@ -184,6 +196,13 @@
     </div>
   </footer>
 
+  <nav class="mobile-bottom-nav" aria-label="Quick navigation">
+    <button type="button" id="bottomCategoryBtn"><span>▦</span><small>Category</small></button>
+    <a href="#home" class="active"><span>⌂</span><small>Home</small></a>
+    <button type="button" id="bottomTrackBtn"><span>⌖</span><small>Track Order</small></button>
+    <span class="bottom-account-slot" aria-hidden="true"></span>
+  </nav>
+
   <div class="overlay" id="overlay"></div>
   <aside class="drawer" id="drawer" aria-label="Shopping cart">
     <div class="drawer-head"><h2>Your Cart <span id="drawerCount" style="color:var(--lime)">(0)</span></h2><button class="close" id="closeCart" aria-label="Close cart">×</button></div>
@@ -273,6 +292,11 @@
       <button class="language-option" type="button" data-language="kn">?????</button>
     </div>
   </div>
+
+ <script src="./script.js?v=22"></script>
+</body>
+</html>
+
 
  <script src="./script.js?v=22"></script>
 </body>
