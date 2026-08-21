@@ -239,6 +239,16 @@
       --theme-border:#E5E5E5;
       --theme-input:#FFFFFF;
       --theme-shadow:0 14px 35px rgba(17,17,17,.10);
+      --ink:#FFFFFF;
+      --surface:#FFFFFF;
+      --surface-2:#F7F7F7;
+      --white:#111111;
+      --muted:#555555;
+      --line:#E5E5E5;
+      --cyan:#FACC15;
+      --cyan-dark:#EAB308;
+      --cyan-glow:rgba(250,204,21,.24);
+      --orange:#FACC15;
     }
     body,header,.stats,section,.main-footer,.product,.category,.trust,.review,.drawer,.auth-modal,.account-menu,.search input,.field input,.language-option,.category-section,.why,.product-image,.promo-art,.newsletter input{
       transition:background-color .2s ease,color .2s ease,border-color .2s ease,box-shadow .2s ease;
@@ -297,3 +307,39 @@
     :root[data-theme="light"] .history-item strong{color:#111}
     :root[data-theme="light"] .history-item span,:root[data-theme="light"] .history-empty{color:#555}
     :root[data-theme="light"] .overlay{background:rgba(17,17,17,.45)}
+
+    /* Responsive storefront navigation */
+    .mobile-header-btn,.mobile-nav-panel,.mobile-bottom-nav,.account-bottom-label{display:none}
+    .announcement-bar{width:100%;overflow:hidden;background:var(--lime);color:#111;border-bottom:1px solid rgba(17,17,17,.12);font-size:12px;font-weight:900;letter-spacing:.04em;white-space:nowrap}
+    .announcement-track{display:flex;width:max-content;animation:vk-marquee 24s linear infinite}
+    .announcement-track span{display:block;padding:9px 28px}
+    @keyframes vk-marquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+    .mobile-nav-panel{position:fixed;top:76px;left:14px;right:14px;z-index:210;padding:10px;background:var(--surface);border:1px solid var(--line);border-radius:12px;box-shadow:var(--shadow)}
+    .mobile-nav-panel[hidden]{display:none}
+    .mobile-nav-panel a,.mobile-nav-panel button{display:block;width:100%;padding:13px 14px;border:0;border-radius:8px;background:transparent;color:var(--white);text-align:left;font-size:14px;font-weight:800}
+    .mobile-nav-panel a:hover,.mobile-nav-panel button:hover{background:#FFF8D6;color:#111}
+    .mobile-bottom-nav{display:none}
+    @media(prefers-reduced-motion:reduce){.announcement-track{animation:none}.announcement-track span:last-child{display:none}}
+    @media(max-width:767px){
+      body{padding-bottom:76px}
+      .nav{position:relative;justify-content:center}
+      .logo{position:absolute;left:50%;margin:0;transform:translateX(-50%);z-index:2}
+      .mobile-header-btn{display:grid;place-items:center;width:38px;height:38px;padding:0;border:1px solid var(--line);border-radius:9px;background:transparent;color:var(--white);font-size:21px;line-height:1;z-index:3}
+      .mobile-header-btn:first-child{position:absolute;left:0}
+      .mobile-search-btn{position:absolute;right:0}
+      .nav-links{display:none}
+      .nav-actions{position:static;width:0;height:0}
+      .search{display:none}
+      .search.mobile-open{display:block;position:fixed;top:80px;left:14px;right:14px;z-index:220;max-width:none;margin:0}
+      .search.mobile-open input{height:46px;background:var(--surface);color:var(--white)}
+      .account-wrap{position:fixed;right:0;bottom:0;z-index:305;width:25%;height:76px;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:1px;background:var(--surface);border-top:1px solid var(--line)}
+      .account-bottom-label{display:block;color:var(--white);font-size:10px;font-weight:800;line-height:1}
+      .account-wrap .account-menu{position:fixed;top:auto;right:10px;bottom:78px;width:min(330px,calc(100vw - 20px));max-height:calc(100dvh - 96px);overflow-y:auto;z-index:320}
+      .mobile-bottom-nav{position:fixed;left:0;right:0;bottom:0;z-index:300;height:76px;display:grid;grid-template-columns:repeat(4,1fr);padding:7px 0 env(safe-area-inset-bottom);background:var(--surface);border-top:1px solid var(--line);box-shadow:0 -5px 20px rgba(0,0,0,.10)}
+      .mobile-bottom-nav button,.mobile-bottom-nav a,.bottom-account-slot{min-width:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;border:0;background:transparent;color:var(--muted);font-size:21px;text-decoration:none}
+      .mobile-bottom-nav small{font-size:10px;font-weight:800;white-space:nowrap}
+      .mobile-bottom-nav button:hover,.mobile-bottom-nav a:hover,.mobile-bottom-nav a.active{color:var(--lime)}
+      .categories{display:flex;overflow-x:auto;scroll-snap-type:x proximity;padding:4px 2px 12px}
+      .category{flex:0 0 154px;scroll-snap-align:start}
+      .hero-content{padding:40px 0 48px}
+    }
