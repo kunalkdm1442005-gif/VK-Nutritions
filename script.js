@@ -18,6 +18,11 @@ function applyTheme(theme) {
     icon.textContent = nextTheme === "dark" ? "☀" : "🌙";
     label.textContent = nextTheme === "dark" ? "Light Mode" : "Dark Mode";
   }
+  const headerThemeBtn = $("#headerThemeBtn");
+  if (headerThemeBtn) {
+    headerThemeBtn.textContent = nextTheme === "dark" ? "☀" : "🌙";
+    headerThemeBtn.setAttribute("aria-label", nextTheme === "dark" ? "Switch to light mode" : "Switch to dark mode");
+  }
 }
 function toggleTheme() {
   applyTheme(document.documentElement.dataset.theme === "dark" ? "light" : "dark");
@@ -223,6 +228,7 @@ mobileSearchBtn.addEventListener("click", event => {
   search.classList.toggle("mobile-open");
   if (search.classList.contains("mobile-open")) $("#searchInput").focus();
 });
+$("#headerThemeBtn").addEventListener("click", toggleTheme);
 $("#bottomCategoryBtn").addEventListener("click", () => { closeMobileNavigation(); $("#categories").scrollIntoView({ behavior: "smooth" }); });
 $("#bottomTrackBtn").addEventListener("click", () => openHistory("orders"));
 $("#mobileTrackBtn").addEventListener("click", () => openHistory("orders"));
