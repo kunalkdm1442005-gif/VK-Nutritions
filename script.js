@@ -209,6 +209,14 @@ document.addEventListener("keydown", event => {
 
 /* ---------- Responsive navigation ---------- */
 var mobileNavPanel = $("#mobileNavPanel"), mobileNavToggle = $("#mobileNavToggle"), mobileSearchBtn = $("#mobileSearchBtn");
+const accountWrap = $(".account-wrap"), navActions = $(".nav-actions"), bottomAccountSlot = $("#bottomAccountSlot");
+function placeAccountControl() {
+  if (!accountWrap) return;
+  const target = window.matchMedia("(max-width: 767px)").matches ? bottomAccountSlot : navActions;
+  if (target && accountWrap.parentElement !== target) target.append(accountWrap);
+}
+placeAccountControl();
+window.addEventListener("resize", placeAccountControl);
 function closeMobileNavigation() {
   if (!mobileNavPanel) return;
   mobileNavPanel.hidden = true;
@@ -219,9 +227,9 @@ function toggleMobileNavigation() {
   mobileNavPanel.hidden = !isOpen;
   mobileNavToggle.setAttribute("aria-expanded", String(isOpen));
 }
-mobileNavToggle.addEventListener("click", event => { event.stopPropagation(); toggleMobileNavigation(); });
-mobileNavPanel.addEventListener("click", () => closeMobileNavigation());
-mobileSearchBtn.addEventListener("click", event => {
+mobileNavToggle?.addEventListener("click", event => { event.stopPropagation(); toggleMobileNavigation(); });
+mobileNavPanel?.addEventListener("click", () => closeMobileNavigation());
+mobileSearchBtn?.addEventListener("click", event => {
   event.stopPropagation();
   closeMobileNavigation();
   const search = document.querySelector(".search");
