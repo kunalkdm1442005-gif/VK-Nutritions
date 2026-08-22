@@ -42,9 +42,9 @@
     .btn-login{background:var(--lime);color:#171200;border:1px solid var(--lime);border-radius:9px;height:42px;padding:0 20px;font-size:13px;font-weight:900;letter-spacing:.02em;transition:.2s}
     .btn-login:hover{background:var(--lime-dark);transform:translateY(-1px)}
     .mobile-only{display:none}
-    .hero{position:relative;isolation:isolate;overflow:hidden;background:#080b09}
+    .hero{position:relative;isolation:isolate;overflow:hidden;background:#080b09;padding:0;margin:0}
     .hero:before{display:none}
-    .hero-slideshow{position:relative;width:100%;aspect-ratio:16 / 9;overflow:hidden;background:#080b09}
+    .hero-slideshow{position:relative;width:100%;aspect-ratio:16 / 9;overflow:hidden;background:#080b09;padding:0;margin:0;display:block;line-height:0}
     .hero-inner{display:flex;justify-content:center;position:relative;z-index:2}
     .hero-content{width:min(820px,100%);padding:58px 0 64px;text-align:center}
     .eyebrow{color:var(--lime);font-size:12px;letter-spacing:.16em;text-transform:uppercase;font-weight:900;display:flex;align-items:center;gap:10px}
