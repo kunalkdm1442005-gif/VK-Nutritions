@@ -4,6 +4,7 @@ const SUPABASE_ANON_KEY = "sb_publishable_yVu_tEIx690wZny03SmjBg_yNQX8toM";
 const $ = selector => document.querySelector(selector);
 const cart = [];
 const viewedProducts = new Set();
+const viewUpdatesInFlight = new Set();
 let currentUser = null;
 let wishlist = 0;
 const wishlistItems = new Set();
@@ -73,14 +74,8 @@ function bindCatalogueCards() {
   catalogueGrid.querySelectorAll(".buy").forEach(button => button.addEventListener("click", event => addProduct(event.currentTarget.closest(".product"), true)));
   catalogueGrid.querySelectorAll(".wish").forEach(button => button.addEventListener("click", event => {
     const card = event.currentTarget.closest(".product");
-    const id = card.dataset.id;
-    const saved = wishlistItems.has(id);
-    if (saved) wishlistItems.delete(id); else wishlistItems.add(id);
-    wishlist = wishlistItems.size;
-    event.currentTarget.classList.toggle("active", !saved);
-    event.currentTarget.textContent = saved ? "♡" : "♥";
-    $("#accountWishlistCount").textContent = `(${wishlist})`;
-    showToast(saved ? "Removed from wishlist." : "Saved to wishlist.");
+    const product = catalogueProducts.find(item => item.id === card.dataset.id);
+    if (product) toggleWishlist(product, event.currentTarget);
   }));
   catalogueGrid.querySelectorAll(".view-details").forEach(button => button.addEventListener("click", event => openProductDetails(event.currentTarget.dataset.productId)));
 }
@@ -96,6 +91,7 @@ function openProductDetails(productId) {
   $("#productDetailHighlights").innerHTML = product.highlights.map(item => `<li>${escapeHtml(item)}</li>`).join("");
   $("#productDetailSpec").textContent = product.spec;
   $("#productDetailAdd").onclick = () => addProduct({ dataset: { name: product.name, price: String(product.price) } });
+  trackProductView(product);
   $("#productDetailOverlay").classList.add("show");
   $("#productDetailModal").classList.add("open");
 }
@@ -188,8 +184,11 @@ $("#productDetailClose").addEventListener("click", closeProductDetails);
 $("#productDetailOverlay").addEventListener("click", closeProductDetails);
 document.addEventListener("keydown", event => { if (event.key === "Escape") closeProductDetails(); });
 function openWishlist() {
+  if (!currentUser) return openAuth();
   closeAccountMenu();
-  showToast(wishlist ? `${wishlist} saved item${wishlist === 1 ? "" : "s"}.` : "Your wishlist is empty.");
+  renderWishlist();
+  $("#wishlistOverlay").classList.add("show");
+  $("#wishlistModal").classList.add("open");
 }
 $("#searchInput").addEventListener("input", event => {
   catalogueQuery = event.target.value;
@@ -213,6 +212,11 @@ document.querySelectorAll(".auth-tab").forEach(button => button.addEventListener
 
 function setLoggedOut() {
   currentUser = null;
+  wishlistItems.clear();
+  wishlist = 0;
+  viewedProducts.clear();
+  updateWishlistCount();
+  renderCatalogue();
   const desktop = $("#accountBtn");
   desktop.className = "account-btn";
   desktop.innerHTML = "♙";
@@ -245,6 +249,7 @@ async function hydrateUser(authUser) {
     first_name: profile?.first_name || authUser.user_metadata?.first_name || "",
     last_name: profile?.last_name || authUser.user_metadata?.last_name || ""
   });
+  await loadWishlist();
 }
 function closeAccountMenu() {
   $("#accountMenu").classList.remove("open");
@@ -399,16 +404,120 @@ $("#siMobile").addEventListener("input", event => event.target.value = event.tar
 $("#suMobile").addEventListener("input", event => event.target.value = event.target.value.replace(/\D/g, "").slice(0, 10));
 
 /* ---------- Customer data: profile, saved orders, views, login dates ---------- */
-async function trackProductView(card) {
-  if (!currentUser || viewedProducts.has(card.dataset.name)) return;
-  viewedProducts.add(card.dataset.name);
-  const { error } = await supabaseClient.from("view_history").insert({ user_id: currentUser.id, product_name: card.dataset.name, product_price: Number(card.dataset.price) });
-  if (error) console.error("[VK] view history error", error);
+function updateWishlistCount() {
+  wishlist = wishlistItems.size;
+  const count = $("#accountWishlistCount");
+  if (count) count.textContent = `(${wishlist})`;
 }
-catalogueGrid?.addEventListener("click", event => {
-  const card = event.target.closest(".product");
-  if (card && !event.target.closest("button")) trackProductView(card);
+
+async function loadWishlist() {
+  if (!currentUser || !supabaseClient) return;
+  const { data, error } = await supabaseClient.from("wishlist_items")
+    .select("product_id").eq("user_id", currentUser.id);
+  if (error) {
+    console.error("[VK] wishlist load error", error);
+    wishlistItems.clear();
+  } else {
+    wishlistItems.clear();
+    (data || []).forEach(row => wishlistItems.add(row.product_id));
+  }
+  updateWishlistCount();
+  renderCatalogue();
+  renderWishlist();
+}
+
+async function toggleWishlist(product, button) {
+  if (!currentUser) {
+    openAuth();
+    return showToast("Sign in to save products to your wishlist.");
+  }
+  const id = product.id;
+  const saved = wishlistItems.has(id);
+  if (saved) wishlistItems.delete(id); else wishlistItems.add(id);
+  updateWishlistCount();
+  if (button) {
+    button.classList.toggle("active", !saved);
+    button.textContent = saved ? "♡" : "♥";
+  }
+  renderWishlist();
+  const result = saved
+    ? await supabaseClient.from("wishlist_items").delete().eq("user_id", currentUser.id).eq("product_id", id)
+    : await supabaseClient.from("wishlist_items").insert({ user_id: currentUser.id, product_id: id });
+  if (result.error) {
+    console.error("[VK] wishlist save error", result.error);
+    if (saved) wishlistItems.add(id); else wishlistItems.delete(id);
+    updateWishlistCount();
+    renderCatalogue();
+    renderWishlist();
+    return showToast("Wishlist could not be updated. Please try again.");
+  }
+  showToast(saved ? "Removed from wishlist." : "Saved to wishlist.");
+}
+
+async function removeWishlistProduct(productId) {
+  const product = catalogueProducts.find(item => item.id === productId);
+  if (!product || !currentUser) return;
+  const wasSaved = wishlistItems.delete(productId);
+  if (!wasSaved) return;
+  updateWishlistCount();
+  renderWishlist();
+  const { error } = await supabaseClient.from("wishlist_items").delete().eq("user_id", currentUser.id).eq("product_id", productId);
+  if (error) {
+    console.error("[VK] wishlist removal error", error);
+    wishlistItems.add(productId);
+    updateWishlistCount();
+    renderCatalogue();
+    renderWishlist();
+    return showToast("Wishlist item could not be removed.");
+  }
+  renderCatalogue();
+  showToast("Removed from wishlist.");
+}
+
+function renderWishlist() {
+  const list = $("#wishlistList");
+  if (!list) return;
+  const products = [...wishlistItems].map(id => catalogueProducts.find(product => product.id === id)).filter(Boolean);
+  if (!products.length) {
+    list.innerHTML = '<p class="wishlist-empty-state">Your Wishlist is empty.</p>';
+    return;
+  }
+  list.innerHTML = products.map(product => `<article class="wishlist-card" data-product-id="${escapeHtml(product.id)}">
+    <img src="${escapeHtml(product.image)}" alt="${escapeHtml(product.name)}">
+    <div class="wishlist-card-copy"><strong>${escapeHtml(product.name)}</strong><span>${escapeHtml(product.pack)}</span><b>${money(product.price)}</b>
+      <div class="wishlist-card-actions"><button type="button" data-wishlist-action="view">View Product</button><button type="button" data-wishlist-action="cart">Add to Cart</button><button type="button" data-wishlist-action="remove">Remove ♡</button></div>
+    </div>
+  </article>`).join("");
+}
+
+$("#wishlistList")?.addEventListener("click", event => {
+  const button = event.target.closest("button[data-wishlist-action]");
+  const card = event.target.closest("[data-product-id]");
+  if (!button || !card) return;
+  const product = catalogueProducts.find(item => item.id === card.dataset.productId);
+  if (!product) return;
+  if (button.dataset.wishlistAction === "view") { closeWishlist(); openProductDetails(product.id); }
+  else if (button.dataset.wishlistAction === "cart") addProduct({ dataset: { name: product.name, price: String(product.price) } });
+  else removeWishlistProduct(product.id);
 });
+
+async function trackProductView(product) {
+  if (!currentUser || !product || viewUpdatesInFlight.has(product.id)) return;
+  viewUpdatesInFlight.add(product.id);
+  try {
+    const { error } = await supabaseClient.from("view_history").upsert({
+      user_id: currentUser.id,
+      product_id: product.id,
+      product_name: product.name,
+      product_price: Number(product.price),
+      viewed_at: new Date().toISOString()
+    }, { onConflict: "user_id,product_id" });
+    if (error) console.error("[VK] view history error", error);
+    else viewedProducts.add(product.id);
+  } finally {
+    viewUpdatesInFlight.delete(product.id);
+  }
+}
 $("#checkoutBtn").addEventListener("click", async () => {
   if (!cart.length) return showToast("Your cart is empty.");
   if (!currentUser) { openAuth(); return showToast("Sign in to save your order."); }
@@ -423,24 +532,69 @@ const historyOverlay = $("#historyOverlay"), historyModal = $("#historyModal");
 function closeHistory() { historyOverlay.classList.remove("show"); historyModal.classList.remove("open"); }
 $("#historyClose").addEventListener("click", closeHistory);
 historyOverlay.addEventListener("click", closeHistory);
+const wishlistOverlay = $("#wishlistOverlay"), wishlistModal = $("#wishlistModal");
+function closeWishlist() { wishlistOverlay.classList.remove("show"); wishlistModal.classList.remove("open"); }
+$("#wishlistClose").addEventListener("click", closeWishlist);
+wishlistOverlay.addEventListener("click", closeWishlist);
+
+function formatHistoryDate(value) {
+  return new Date(value).toLocaleString("en-IN", { dateStyle: "medium", timeStyle: "short" });
+}
+function renderViewHistory(rows) {
+  const list = $("#historyList");
+  if (!rows?.length) {
+    list.innerHTML = '<p class="history-empty">You haven\'t viewed any products yet.</p>';
+    return;
+  }
+  list.innerHTML = rows.map(row => {
+    const product = catalogueProducts.find(item => item.id === row.product_id) || {
+      id: row.product_id || "",
+      name: row.product_name || "Product",
+      price: Number(row.product_price || 0),
+      pack: "",
+      image: ""
+    };
+    return `<article class="history-product" data-product-id="${escapeHtml(product.id)}">
+      ${product.image ? `<img src="${escapeHtml(product.image)}" alt="${escapeHtml(product.name)}">` : ""}
+      <div class="history-product-copy"><strong>${escapeHtml(product.name)}</strong><span>${escapeHtml(product.pack || "Product details")}</span><b>${money(product.price)}</b><small>Viewed ${formatHistoryDate(row.viewed_at)}</small>
+        <div class="history-product-actions">${product.id ? '<button type="button" data-history-action="view">View Product</button>' : ""}<button type="button" data-history-action="cart">Add to Cart</button></div>
+      </div>
+    </article>`;
+  }).join("");
+}
+$("#historyList")?.addEventListener("click", event => {
+  const button = event.target.closest("button[data-history-action]");
+  const card = event.target.closest("[data-product-id]");
+  if (!button || !card) return;
+  const product = catalogueProducts.find(item => item.id === card.dataset.productId);
+  if (!product) return;
+  if (button.dataset.historyAction === "view") { closeHistory(); openProductDetails(product.id); }
+  else addProduct({ dataset: { name: product.name, price: String(product.price) } });
+});
 async function openHistory(type) {
   if (!currentUser) return openAuth();
   closeAccountMenu();
   const config = {
     orders: { title: "Order History", subtitle: "Your saved order requests.", table: "order_history", select: "items,total_amount,status,created_at", order: "created_at" },
-    views: { title: "View History", subtitle: "Products you viewed while signed in.", table: "view_history", select: "product_name,product_price,viewed_at", order: "viewed_at" },
+    views: { title: "View History", subtitle: "Products you viewed while signed in.", table: "view_history", select: "product_id,product_name,product_price,viewed_at", order: "viewed_at" },
     logins: { title: "Login History", subtitle: "Your recent account access.", table: "login_events", select: "created_at", order: "created_at" }
   }[type];
   $("#historyTitle").textContent = config.title; $("#historySub").textContent = config.subtitle;
   $("#historyList").innerHTML = '<p class="history-empty">Loading your saved data…</p>';
   historyOverlay.classList.add("show"); historyModal.classList.add("open");
   const { data, error } = await supabaseClient.from(config.table).select(config.select).order(config.order, { ascending: false }).limit(30);
-  if (error) { console.error("[VK] history error", error); $("#historyList").innerHTML = '<p class="history-empty">Your data is not available yet. Run supabase-setup.sql first.</p>'; return; }
+  if (error) {
+    console.error("[VK] history error", error);
+    $("#historyList").innerHTML = type === "views"
+      ? '<p class="history-empty">You haven\'t viewed any products yet.</p>'
+      : '<p class="history-empty">No saved data yet.</p>';
+    return;
+  }
+  if (type === "views") return renderViewHistory(data);
   if (!data?.length) { $("#historyList").innerHTML = '<p class="history-empty">No saved data yet.</p>'; return; }
   $("#historyList").innerHTML = data.map(row => {
-    const date = new Date(row.created_at || row.viewed_at).toLocaleString("en-IN", { dateStyle: "medium", timeStyle: "short" });
+    const date = formatHistoryDate(row.created_at || row.viewed_at);
     if (type === "orders") return `<article class="history-item"><strong>${escapeHtml(row.status)} order · ${money(row.total_amount)}</strong><span>${row.items.length} item(s) · ${date}</span></article>`;
-    if (type === "views") return `<article class="history-item"><strong>${escapeHtml(row.product_name)}</strong><span>${money(row.product_price)} · ${date}</span></article>`;
     return `<article class="history-item"><strong>Signed in</strong><span>${date}</span></article>`;
   }).join("");
 }
