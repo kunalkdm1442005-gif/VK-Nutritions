@@ -316,10 +316,11 @@
     .announcement-track{display:flex;width:max-content;animation:vk-marquee 24s linear infinite}
     .announcement-track span{display:block;padding:9px 28px}
     @keyframes vk-marquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}
-    .mobile-nav-panel{position:fixed;top:76px;left:14px;right:14px;z-index:210;padding:10px;background:var(--surface);border:1px solid var(--line);border-radius:12px;box-shadow:var(--shadow)}
+    .mobile-nav-panel{position:fixed;top:76px;left:14px;right:14px;z-index:210;max-height:calc(100dvh - 96px);overflow-y:auto;overscroll-behavior:contain;padding:10px;background:var(--surface);border:1px solid var(--line);border-radius:12px;box-shadow:var(--shadow)}
     .mobile-nav-panel[hidden]{display:none}
     .mobile-nav-panel a,.mobile-nav-panel button{display:block;width:100%;padding:13px 14px;border:0;border-radius:8px;background:transparent;color:var(--white);text-align:left;font-size:14px;font-weight:800}
     .mobile-nav-panel a:hover,.mobile-nav-panel button:hover{background:#FFF8D6;color:#111}
+    .mobile-menu-heading{margin:8px 8px 4px;padding:12px 6px 8px;border-top:1px solid var(--line);color:var(--lime);font-size:11px;font-weight:900;letter-spacing:.1em;text-transform:uppercase}
     .mobile-bottom-nav{display:none}
     @media(prefers-reduced-motion:reduce){.announcement-track{animation:none}.announcement-track span:last-child{display:none}}
     @media(max-width:767px){
@@ -330,7 +331,8 @@
       .mobile-header-btn:first-child{position:absolute;left:0}
       .mobile-search-btn{position:absolute;right:0}
       .header-theme-btn{position:absolute;right:0;width:38px;height:38px;font-size:17px;z-index:4}
-      .mobile-search-btn{right:46px}
+      .mobile-search-btn{right:0}
+      .mobile-nav-panel:not([hidden]){display:block}
       .nav-links{display:none}
       .nav-actions{position:static;width:0;height:0}
       .search{display:none}
@@ -407,8 +409,8 @@
        header and lower the visible artwork slightly without moving controls. */
     header .nav>.logo{height:100%;overflow:hidden;align-items:center;justify-content:center}
     header .nav>.logo .logo-img{
-     height:calc(100% - 2px);width:auto;max-width:50vw;max-height:none;
-      object-fit:contain;display:block;transform:translateY(2px);
+     height:calc(100% - 8px);width:auto;max-width:50vw;max-height:none;
+      object-fit:contain;display:block;transform:translateY(1px);
     }
     @media(max-width:767px){
       .mobile-search-btn{border:0!important;background:transparent!important;box-shadow:none!important;border-radius:0!important}
