@@ -403,10 +403,14 @@
     :root[data-theme="light"] .wishlist-card,:root[data-theme="light"] .history-product{background:#f7f7f7;border-color:var(--theme-border)}
     :root[data-theme="light"] .wishlist-card-actions button,:root[data-theme="light"] .history-product-actions button{color:#111;border-color:#d4d4d4}
     @media(max-width:620px){.wishlist-modal{width:min(100% - 18px,560px);max-height:92vh;padding:24px 18px 20px}.wishlist-grid{grid-template-columns:1fr;max-height:62vh}.wishlist-card>img,.history-product>img{width:78px;height:96px;flex-basis:78px}.history-product{padding:10px}.wishlist-card-actions button,.history-product-actions button{min-height:34px}}
-/* Larger centered VK Nutrition logo on phones only */
+    /* Wide reference-style mobile header with a larger, truly centered logo */
     @media(max-width:767px){
-      header .nav>.logo .logo-img{height:64px;width:auto;max-width:min(190px,44vw)}
+     header .nav{height:88px}
+      header .nav>.logo{width:min(160px,42vw);height:78px;justify-content:center}
+      header .nav>.logo .logo-img{width:100%;height:auto;max-width:none;max-height:78px;object-fit:contain}
+      .mobile-nav-panel{top:88px}
+      .search.mobile-open{top:96px}
     }
     @media(max-width:360px){
-      header .nav>.logo .logo-img{height:58px;max-width:42vw}
+       header .nav>.logo{width:42vw;max-width:138px}
     }
