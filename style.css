@@ -403,3 +403,10 @@
     :root[data-theme="light"] .wishlist-card,:root[data-theme="light"] .history-product{background:#f7f7f7;border-color:var(--theme-border)}
     :root[data-theme="light"] .wishlist-card-actions button,:root[data-theme="light"] .history-product-actions button{color:#111;border-color:#d4d4d4}
     @media(max-width:620px){.wishlist-modal{width:min(100% - 18px,560px);max-height:92vh;padding:24px 18px 20px}.wishlist-grid{grid-template-columns:1fr;max-height:62vh}.wishlist-card>img,.history-product>img{width:78px;height:96px;flex-basis:78px}.history-product{padding:10px}.wishlist-card-actions button,.history-product-actions button{min-height:34px}}
+/* Larger centered VK Nutrition logo on phones only */
+    @media(max-width:767px){
+      header .nav>.logo .logo-img{height:64px;width:auto;max-width:min(190px,44vw)}
+    }
+    @media(max-width:360px){
+      header .nav>.logo .logo-img{height:58px;max-width:42vw}
+    }
