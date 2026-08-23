@@ -29,9 +29,20 @@ create table if not exists public.order_history (
 create table if not exists public.view_history (
   id bigint generated always as identity primary key,
   user_id uuid not null references auth.users(id) on delete cascade,
+  product_id text,
   product_name text not null,
   product_price numeric(12,2) not null check (product_price >= 0),
   viewed_at timestamptz not null default now()
+);
+alter table public.view_history add column if not exists product_id text;
+create unique index if not exists view_history_user_product_unique on public.view_history(user_id, product_id);
+
+create table if not exists public.wishlist_items (
+  id bigint generated always as identity primary key,
+  user_id uuid not null references auth.users(id) on delete cascade,
+  product_id text not null,
+  created_at timestamptz not null default now(),
+  unique (user_id, product_id)
 );
 create table if not exists public.login_events (
   id bigint generated always as identity primary key,
@@ -42,6 +53,7 @@ create table if not exists public.login_events (
 alter table public.profiles enable row level security;
 alter table public.order_history enable row level security;
 alter table public.view_history enable row level security;
+alter table public.wishlist_items enable row level security;
 alter table public.login_events enable row level security;
 
 drop policy if exists "Users read their own profile" on public.profiles;
@@ -55,9 +67,21 @@ create policy "Users read own orders" on public.order_history for select using (
 create policy "Users create own orders" on public.order_history for insert with check (auth.uid() = user_id);
 
 drop policy if exists "Users read own views" on public.view_history;
-drop policy if exists "Users create own views" on public.view_history for select using (auth.uid() = user_id);
+drop policy if exists "Users create own views" on public.view_history;
+drop policy if exists "Users update own views" on public.view_history;
 create policy "Users read own views" on public.view_history for select using (auth.uid() = user_id);
 create policy "Users create own views" on public.view_history for insert with check (auth.uid() = user_id);
+create policy "Users update own views" on public.view_history for update using (auth.uid() = user_id) with check (auth.uid() = user_id);
+
+drop policy if exists "Users read own wishlist" on public.wishlist_items;
+drop policy if exists "Users create own wishlist" on public.wishlist_items;
+drop policy if exists "Users delete own wishlist" on public.wishlist_items;
+create policy "Users read own wishlist" on public.wishlist_items for select using (auth.uid() = user_id);
+create policy "Users create own wishlist" on public.wishlist_items for insert with check (auth.uid() = user_id);
+create policy "Users delete own wishlist" on public.wishlist_items for delete using (auth.uid() = user_id);
+
+grant select, insert, update on public.view_history to authenticated;
+grant select, insert, delete on public.wishlist_items to authenticated;
 
 drop policy if exists "Users read own login events" on public.login_events;
 drop policy if exists "Users create own login events" on public.login_events;
