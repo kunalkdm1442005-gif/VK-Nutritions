@@ -6,6 +6,7 @@ const cart = [];
 const viewedProducts = new Set();
 let currentUser = null;
 let wishlist = 0;
+const wishlistItems = new Set();
 let supabaseClient = null;
 
 /* ---------- Appearance preference ---------- */
@@ -41,6 +42,67 @@ try {
 
 const money = value => `₹${Number(value).toLocaleString("en-IN")}`;
 const escapeHtml = value => String(value).replace(/[&<>'"]/g, character => ({ "&":"&amp;", "<":"&lt;", ">":"&gt;", "'":"&#39;", '"':"&quot;" }[character]));
+const catalogueProducts = Array.isArray(window.VK_CATALOGUE) ? window.VK_CATALOGUE : [];
+let catalogueQuery = "";
+let catalogueCategory = "";
+const catalogueGrid = $("#productGrid");
+function filteredCatalogue() {
+  const query = catalogueQuery.trim().toLowerCase();
+  return catalogueProducts.filter(product => {
+    const matchesCategory = !catalogueCategory || product.category === catalogueCategory;
+    const haystack = `${product.name} ${product.category} ${product.pack}`.toLowerCase();
+    return matchesCategory && (!query || haystack.includes(query));
+  });
+}
+function renderCatalogue() {
+  if (!catalogueGrid) return;
+  const products = filteredCatalogue();
+  catalogueGrid.innerHTML = products.map(product => `<article class="product catalogue-product" data-id="${escapeHtml(product.id)}" data-name="${escapeHtml(product.name)}" data-price="${product.price}" data-category="${escapeHtml(product.category)}">
+    <div class="product-image"><button class="wish${wishlistItems.has(product.id) ? " active" : ""}" type="button" aria-label="Add ${escapeHtml(product.name)} to wishlist">${wishlistItems.has(product.id) ? "♥" : "♡"}</button><img class="product-photo" src="${escapeHtml(product.image)}" alt="${escapeHtml(product.name)}" loading="lazy"></div>
+    <div class="product-info"><div class="brand">VK Nutrition Catalogue</div><h3>${escapeHtml(product.name)}</h3><div class="catalogue-category">${escapeHtml(product.category)}</div><div class="variant">${escapeHtml(product.pack)}</div><ul class="catalogue-highlights">${product.highlights.slice(0, 3).map(item => `<li>${escapeHtml(item)}</li>`).join("")}</ul><div class="prices"><span class="price">${money(product.price)}</span></div><div class="card-actions"><button class="view-details" type="button" data-product-id="${escapeHtml(product.id)}">VIEW DETAILS</button><button class="add" type="button">ADD TO CART</button><button class="buy" type="button">BUY NOW</button></div></div>
+  </article>`).join("");
+  const resultCount = $("#catalogueResultCount");
+  if (resultCount) resultCount.textContent = `${products.length} product${products.length === 1 ? "" : "s"}${catalogueCategory ? ` in ${catalogueCategory}` : ""}`;
+  const clearButton = $("#clearCatalogueFilter");
+  if (clearButton) clearButton.hidden = !catalogueCategory && !catalogueQuery;
+  bindCatalogueCards();
+}
+function bindCatalogueCards() {
+  if (!catalogueGrid) return;
+  catalogueGrid.querySelectorAll(".add").forEach(button => button.addEventListener("click", event => addProduct(event.currentTarget.closest(".product"))));
+  catalogueGrid.querySelectorAll(".buy").forEach(button => button.addEventListener("click", event => addProduct(event.currentTarget.closest(".product"), true)));
+  catalogueGrid.querySelectorAll(".wish").forEach(button => button.addEventListener("click", event => {
+    const card = event.currentTarget.closest(".product");
+    const id = card.dataset.id;
+    const saved = wishlistItems.has(id);
+    if (saved) wishlistItems.delete(id); else wishlistItems.add(id);
+    wishlist = wishlistItems.size;
+    event.currentTarget.classList.toggle("active", !saved);
+    event.currentTarget.textContent = saved ? "♡" : "♥";
+    $("#accountWishlistCount").textContent = `(${wishlist})`;
+    showToast(saved ? "Removed from wishlist." : "Saved to wishlist.");
+  }));
+  catalogueGrid.querySelectorAll(".view-details").forEach(button => button.addEventListener("click", event => openProductDetails(event.currentTarget.dataset.productId)));
+}
+function openProductDetails(productId) {
+  const product = catalogueProducts.find(item => item.id === productId);
+  if (!product) return;
+  $("#productDetailImage").src = product.image;
+  $("#productDetailImage").alt = product.name;
+  $("#productDetailCategory").textContent = product.category;
+  $("#productDetailTitle").textContent = product.name;
+  $("#productDetailPack").textContent = `Pack / weight: ${product.pack}`;
+  $("#productDetailPrice").textContent = money(product.price);
+  $("#productDetailHighlights").innerHTML = product.highlights.map(item => `<li>${escapeHtml(item)}</li>`).join("");
+  $("#productDetailSpec").textContent = product.spec;
+  $("#productDetailAdd").onclick = () => addProduct({ dataset: { name: product.name, price: String(product.price) } });
+  $("#productDetailOverlay").classList.add("show");
+  $("#productDetailModal").classList.add("open");
+}
+function closeProductDetails() {
+  $("#productDetailOverlay").classList.remove("show");
+  $("#productDetailModal").classList.remove("open");
+}
 function showToast(message) {
   const toast = $("#toast");
   toast.textContent = message;
@@ -100,17 +162,20 @@ function addProduct(card, openDrawer = false) {
   if (openDrawer) { $("#drawer").classList.add("open"); $("#overlay").classList.add("show"); }
 }
 function closeCart() { $("#drawer").classList.remove("open"); $("#overlay").classList.remove("show"); }
-document.querySelectorAll(".add").forEach(button => button.addEventListener("click", event => addProduct(event.currentTarget.closest(".product"))));
-document.querySelectorAll(".buy").forEach(button => button.addEventListener("click", event => addProduct(event.currentTarget.closest(".product"), true)));
-document.querySelectorAll(".wish").forEach(button => button.addEventListener("click", event => {
-  const heart = event.currentTarget;
-  heart.classList.toggle("active");
-  const saved = heart.classList.contains("active");
-  heart.textContent = saved ? "♥" : "♡";
-  wishlist += saved ? 1 : -1;
-  $("#accountWishlistCount").textContent = `(${wishlist})`;
-  showToast(saved ? "Saved to wishlist." : "Removed from wishlist.");
+document.getElementById("newArrivalsSection")?.remove();
+renderCatalogue();
+document.querySelectorAll(".category[data-category]").forEach(button => button.addEventListener("click", event => {
+  event.preventDefault();
+  catalogueCategory = button.dataset.category;
+  renderCatalogue();
+  $("#shop").scrollIntoView({ behavior: "smooth", block: "start" });
 }));
+$("#clearCatalogueFilter")?.addEventListener("click", () => {
+  catalogueCategory = "";
+  catalogueQuery = "";
+  $("#searchInput").value = "";
+  renderCatalogue();
+});
 function openCart() {
   closeAccountMenu();
   $("#drawer").classList.add("open");
@@ -119,13 +184,16 @@ function openCart() {
 $("#openCartBtn").addEventListener("click", openCart);
 $("#closeCart").addEventListener("click", closeCart);
 $("#overlay").addEventListener("click", closeCart);
+$("#productDetailClose").addEventListener("click", closeProductDetails);
+$("#productDetailOverlay").addEventListener("click", closeProductDetails);
+document.addEventListener("keydown", event => { if (event.key === "Escape") closeProductDetails(); });
 function openWishlist() {
   closeAccountMenu();
   showToast(wishlist ? `${wishlist} saved item${wishlist === 1 ? "" : "s"}.` : "Your wishlist is empty.");
 }
 $("#searchInput").addEventListener("input", event => {
-  const query = event.target.value.toLowerCase();
-  document.querySelectorAll(".product").forEach(product => { product.style.display = product.dataset.name.toLowerCase().includes(query) ? "block" : "none"; });
+  catalogueQuery = event.target.value;
+  renderCatalogue();
 });
 document.querySelector(".newsletter button").addEventListener("click", () => showToast("Thanks — you're on the VK Nutrition list."));
 
@@ -337,9 +405,10 @@ async function trackProductView(card) {
   const { error } = await supabaseClient.from("view_history").insert({ user_id: currentUser.id, product_name: card.dataset.name, product_price: Number(card.dataset.price) });
   if (error) console.error("[VK] view history error", error);
 }
-document.querySelectorAll(".product").forEach(card => card.addEventListener("click", event => {
-  if (!event.target.closest("button")) trackProductView(card);
-}));
+catalogueGrid?.addEventListener("click", event => {
+  const card = event.target.closest(".product");
+  if (card && !event.target.closest("button")) trackProductView(card);
+});
 $("#checkoutBtn").addEventListener("click", async () => {
   if (!cart.length) return showToast("Your cart is empty.");
   if (!currentUser) { openAuth(); return showToast("Sign in to save your order."); }
