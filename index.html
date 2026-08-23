@@ -98,24 +98,8 @@
     <section id="shop">
       <div class="container">
         <div class="section-head"><div><div class="eyebrow">Train with confidence</div><h2>Best Sellers</h2><p>Popular choices from the VK Nutrition collection.</p></div><a href="#shop" class="view-all">VIEW ALL PRODUCTS →</a></div>
-        <div class="product-grid" id="productGrid">
-          <article class="product" data-name="VK Whey Protein Premium" data-price="2499">
-            <div class="product-image"><span class="offer">20% OFF</span><button class="wish" aria-label="Add to wishlist">♡</button><div class="mini-tub"><div class="mini-label"><small>VK NUTRITION</small>WHEY<br>PROTEIN<span>CHOCOLATE</span></div></div></div>
-            <div class="product-info"><div class="brand">VK Nutrition</div><h3>Whey Protein Premium</h3><div class="variant">Chocolate · 1 kg</div><div class="rate"><b>★★★★★</b><span>4.8 (124)</span></div><div class="prices"><span class="price">₹2,499</span><span class="mrp">₹3,099</span><span class="discount">20% OFF</span></div><div class="card-actions"><button class="add">ADD TO CART</button><button class="buy">BUY NOW</button></div></div>
-          </article>
-          <article class="product" data-name="VK Creatine Monohydrate" data-price="899">
-            <div class="product-image"><span class="offer">15% OFF</span><button class="wish" aria-label="Add to wishlist">♡</button><div class="mini-tub flavor-blue"><div class="mini-label"><small>VK NUTRITION</small>PURE<br>CREATINE<span>UNFLAVOURED</span></div></div></div>
-            <div class="product-info"><div class="brand">VK Nutrition</div><h3>Creatine Monohydrate</h3><div class="variant">Unflavoured · 250 g</div><div class="rate"><b>★★★★★</b><span>4.9 (86)</span></div><div class="prices"><span class="price">₹899</span><span class="mrp">₹1,059</span><span class="discount">15% OFF</span></div><div class="card-actions"><button class="add">ADD TO CART</button><button class="buy">BUY NOW</button></div></div>
-          </article>
-          <article class="product" data-name="VK Pre Workout Rush" data-price="1399">
-            <div class="product-image"><span class="offer">18% OFF</span><button class="wish" aria-label="Add to wishlist">♡</button><div class="mini-tub flavor-red"><div class="mini-label"><small>VK NUTRITION</small>PRE<br>WORKOUT<span>FRUIT PUNCH</span></div></div></div>
-            <div class="product-info"><div class="brand">VK Nutrition</div><h3>Pre-Workout Rush</h3><div class="variant">Fruit Punch · 300 g</div><div class="rate"><b>★★★★★</b><span>4.7 (72)</span></div><div class="prices"><span class="price">₹1,399</span><span class="mrp">₹1,699</span><span class="discount">18% OFF</span></div><div class="card-actions"><button class="add">ADD TO CART</button><button class="buy">BUY NOW</button></div></div>
-          </article>
-          <article class="product" data-name="VK Mass Gainer" data-price="2199">
-            <div class="product-image"><span class="offer">25% OFF</span><button class="wish" aria-label="Add to wishlist">♡</button><div class="mini-pouch"><div class="mini-label"><small>VK NUTRITION</small>MASS<br>GAINER<span>VANILLA · 3 KG</span></div></div></div>
-            <div class="product-info"><div class="brand">VK Nutrition</div><h3>Mass Gainer</h3><div class="variant">Vanilla · 3 kg</div><div class="rate"><b>★★★★★</b><span>4.6 (59)</span></div><div class="prices"><span class="price">₹2,199</span><span class="mrp">₹2,949</span><span class="discount">25% OFF</span></div><div class="card-actions"><button class="add">ADD TO CART</button><button class="buy">BUY NOW</button></div></div>
-          </article>
-        </div>
+        <div class="catalogue-toolbar"><span id="catalogueResultCount">Loading catalogue…</span><button type="button" id="clearCatalogueFilter" hidden>Clear filter</button></div>
+        <div class="product-grid" id="productGrid"></div>
       </div>
     </section>
 
@@ -123,18 +107,18 @@
       <div class="container">
         <div class="section-head"><div><div class="eyebrow">Find your formula</div><h2>Shop By Category</h2></div><a href="#shop" class="view-all">EXPLORE ALL →</a></div>
         <div class="categories">
-          <a class="category" href="#shop"><span class="cat-icon">🥛</span><h3>Whey Protein</h3><p>Build & recover</p></a>
-          <a class="category" href="#shop"><span class="cat-icon">⚡</span><h3>Whey Isolate</h3><p>Lean performance</p></a>
-          <a class="category" href="#shop"><span class="cat-icon">🏋️</span><h3>Mass Gainers</h3><p>Power your progress</p></a>
-          <a class="category" href="#shop"><span class="cat-icon">🔥</span><h3>Pre-Workout</h3><p>Train with intensity</p></a>
-          <a class="category" href="#shop"><span class="cat-icon">◈</span><h3>Creatine</h3><p>Performance support</p></a>
-          <a class="category" href="#shop"><span class="cat-icon">✚</span><h3>BCAA / EAA</h3><p>Every rep matters</p></a>
-          <a class="category" href="#shop"><span class="cat-icon">◌</span><h3>Glutamine</h3><p>Recovery support</p></a>
-          <a class="category" href="#shop"><span class="cat-icon">☀</span><h3>Vitamins & Minerals</h3><p>Daily foundation</p></a>
-          <a class="category" href="#shop"><span class="cat-icon">↻</span><h3>Recovery</h3><p>Reset & rebuild</p></a>
-          <a class="category" href="#shop"><span class="cat-icon">▰</span><h3>Protein Bars</h3><p>Nutrition on the go</p></a>
-          <a class="category" href="#shop"><span class="cat-icon">?</span><h3>Gym Accessories</h3><p>Complete your kit</p></a>
-          <a class="category" href="#shop"><span class="cat-icon">♡</span><h3>Health & Wellness</h3><p>Feel your best</p></a>
+          <a class="category" data-category="Whey Protein" href="#shop"><span class="cat-icon">🥛</span><h3>Whey Protein</h3><p>Build & recover</p></a>
+          <a class="category" data-category="Whey Isolate" href="#shop"><span class="cat-icon">⚡</span><h3>Whey Isolate</h3><p>Lean performance</p></a>
+          <a class="category" data-category="Mass Gainers" href="#shop"><span class="cat-icon">🏋️</span><h3>Mass Gainers</h3><p>Power your progress</p></a>
+          <a class="category" data-category="Pre-Workout" href="#shop"><span class="cat-icon">🔥</span><h3>Pre-Workout</h3><p>Train with intensity</p></a>
+          <a class="category" data-category="Creatine / Amino Acids" href="#shop"><span class="cat-icon">◈</span><h3>Creatine / Amino Acids</h3><p>Performance support</p></a>
+          <a class="category" data-category="BCAA / EAA" href="#shop"><span class="cat-icon">✚</span><h3>BCAA / EAA</h3><p>Every rep matters</p></a>
+          <a class="category" data-category="Peanut Butter" href="#shop"><span class="cat-icon">🥜</span><h3>Peanut Butter</h3><p>Simple fuel</p></a>
+          <a class="category" data-category="Vitamins & Minerals" href="#shop"><span class="cat-icon">☀</span><h3>Vitamins & Minerals</h3><p>Daily foundation</p></a>
+          <a class="category" data-category="Anabolic Supplements" href="#shop"><span class="cat-icon">↗</span><h3>Anabolic Supplements</h3><p>Verify before use</p></a>
+          <a class="category" data-category="Health & Wellness" href="#shop"><span class="cat-icon">♡</span><h3>Health & Wellness</h3><p>Feel your best</p></a>
+          <a class="category" data-category="Amino Acids" href="#shop"><span class="cat-icon">◌</span><h3>Amino Acids</h3><p>Recovery support</p></a>
+          <a class="category" data-category="Gym Accessories" href="#shop"><span class="cat-icon">▰</span><h3>Gym Accessories</h3><p>Complete your kit</p></a>
         </div>
       </div>
     </section>
@@ -148,7 +132,7 @@
       </div>
     </section>
 
-    <section>
+    <section id="newArrivalsSection">
       <div class="container">
         <div class="section-head"><div><div class="eyebrow">Just landed</div><h2>New Arrivals</h2></div><a href="#shop" class="view-all">SHOP NEW ARRIVALS →</a></div>
         <div class="product-grid">
@@ -293,6 +277,26 @@
     </div>
   </div>
 
- <script src="./script.js?v=24"></script>
+  <div class="catalogue-overlay" id="productDetailOverlay"></div>
+  <div class="catalogue-modal" id="productDetailModal" role="dialog" aria-modal="true" aria-labelledby="productDetailTitle">
+    <button class="auth-close" id="productDetailClose" type="button" aria-label="Close product details">×</button>
+    <div class="catalogue-detail-grid">
+      <div class="catalogue-detail-image"><img id="productDetailImage" src="" alt=""></div>
+      <div class="catalogue-detail-copy">
+        <div class="brand" id="productDetailCategory"></div>
+        <h2 id="productDetailTitle"></h2>
+        <p class="catalogue-detail-pack" id="productDetailPack"></p>
+        <div class="prices"><span class="price" id="productDetailPrice"></span></div>
+        <h3>Key Nutrition / Specification</h3>
+        <ul id="productDetailHighlights"></ul>
+        <p class="catalogue-detail-note">Nutrition formulas can vary by flavour, country and reformulation. Confirm the exact pack label before publishing or using values for a specific SKU.</p>
+        <button class="btn btn-primary full" id="productDetailAdd" type="button">ADD TO CART →</button>
+      </div>
+    </div>
+    <div class="catalogue-detail-spec"><h3>Full specification from the supplied catalogue</h3><p id="productDetailSpec"></p></div>
+  </div>
+
+ <script src="./catalogue-data.js?v=1"></script>
+ <script src="./script.js?v=25"></script>
 </body>
 </html>
