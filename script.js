@@ -310,7 +310,7 @@ mobileSearchBtn?.addEventListener("click", event => {
   search.classList.toggle("mobile-open");
   if (search.classList.contains("mobile-open")) $("#searchInput").focus();
 });
-$("#headerThemeBtn").addEventListener("click", toggleTheme);
+$("#headerThemeBtn")?.addEventListener("click", toggleTheme);
 $("#bottomCategoryBtn").addEventListener("click", () => { closeMobileNavigation(); $("#categories").scrollIntoView({ behavior: "smooth" }); });
 $("#bottomTrackBtn").addEventListener("click", () => openHistory("orders"));
 $("#mobileTrackBtn").addEventListener("click", () => openHistory("orders"));
