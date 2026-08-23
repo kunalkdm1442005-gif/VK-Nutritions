@@ -1,405 +1,707 @@
-    :root{
-      --ink:#0F172A;
-      --surface:#172033;
-      --surface-2:#1E293B;
-      --line:rgba(255,255,255,.12);
-      --muted:#CBD5E1;
-      --white:#FFFFFF;
-      --lime:#FACC15;
-      --lime-dark:#EAB308;
-      --cyan:#FACC15;
-      --cyan-dark:#EAB308;
-      --cyan-glow:rgba(250,204,21,.28);
-      --orange:#FACC15;
-      --shadow:0 18px 55px rgba(0,0,0,.28);
-      --radius:18px;
-    }
-    *{box-sizing:border-box}
-    html{scroll-behavior:smooth}
-    body{margin:0;background:var(--ink);color:var(--white);font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;overflow-x:hidden}
-    button,input,select{font:inherit}
-    button{cursor:pointer}
-    a{text-decoration:none;color:inherit}
-    .container{width:min(1240px,calc(100% - 40px));margin:auto}
-    header{position:sticky;top:0;z-index:310;background:rgba(10,13,12,.87);backdrop-filter:blur(18px);border-bottom:1px solid var(--line)}
-    .nav{height:76px;display:flex;align-items:center;gap:34px}
-    .logo{display:flex;align-items:center;gap:9px;font-weight:950;letter-spacing:-1.7px;font-size:24px;line-height:.8;white-space:nowrap}
-    .logo-img{height:44px;width:auto;display:block;object-fit:contain}
-    .logo span{color:var(--lime)}
-    .nav-links{display:flex;align-items:center;gap:25px;margin-left:22px;font-weight:700;font-size:14px;color:#d8ddd9}
-    .nav-links a{transition:.2s}
-    .nav-links a:hover,.nav-links a.active{color:var(--lime)}
-    .search{position:relative;flex:1;max-width:270px;margin-left:auto}
-    .search input{width:100%;height:42px;border:1px solid var(--line);border-radius:9px;background:#161b18;color:#fff;padding:0 38px 0 14px;outline:none}
-    .search input:focus{border-color:var(--cyan);box-shadow:0 0 0 3px var(--cyan-glow)}
-    .search svg{position:absolute;right:12px;top:12px;color:var(--cyan)}
-    .nav-actions{display:flex;gap:8px}
-    .header-theme-btn{width:42px;height:42px;display:grid;place-items:center;padding:0;border:1px solid var(--line);border-radius:50%;background:transparent;color:var(--white);font-size:18px}
-    .header-theme-btn:hover{border-color:var(--lime);color:var(--lime);background:#FFF8D6}
-    .icon-btn{width:42px;height:42px;display:grid;place-items:center;border:1px solid var(--line);border-radius:9px;background:transparent;color:white;position:relative;transition:.2s}
-    .icon-btn:hover{border-color:var(--cyan);color:var(--cyan)}
-    .badge{position:absolute;right:-4px;top:-4px;width:17px;height:17px;border-radius:99px;background:var(--lime);color:#10140c;font:800 10px/17px Inter;text-align:center}
-    .btn-login{background:var(--lime);color:#171200;border:1px solid var(--lime);border-radius:9px;height:42px;padding:0 20px;font-size:13px;font-weight:900;letter-spacing:.02em;transition:.2s}
-    .btn-login:hover{background:var(--lime-dark);transform:translateY(-1px)}
-    .mobile-only{display:none}
-    .hero{position:relative;isolation:isolate;overflow:hidden;background:#080b09;padding:0;margin:0}
-    .hero:before{display:none}
-    .hero-slideshow{position:relative;width:100%;aspect-ratio:16 / 9;overflow:hidden;background:#080b09;padding:0;margin:0;display:block;line-height:0}
-    .hero-inner{display:flex;justify-content:center;position:relative;z-index:2}
-    .hero-content{width:100%;padding:58px 0 64px;display:grid;grid-template-columns:minmax(0,670px) auto;align-items:center;justify-content:space-between;gap:48px;text-align:left}
-    .eyebrow{color:var(--lime);font-size:12px;letter-spacing:.16em;text-transform:uppercase;font-weight:900;display:flex;align-items:center;gap:10px}
-    .eyebrow:before{content:"";width:28px;height:2px;background:var(--lime)}
-    h1{font-size:clamp(49px,6.15vw,84px);line-height:.94;letter-spacing:-.065em;margin:17px 0 22px;max-width:670px;text-transform:uppercase}
-    h1 em{font-style:normal;color:var(--lime)}
-    .hero p{max-width:620px;margin:0;font-size:17px;line-height:1.65;color:#c4ccc6}
-    .hero-actions{display:flex;justify-content:flex-end;gap:12px;flex-wrap:wrap}
-    .btn{border:1px solid transparent;padding:14px 21px;border-radius:8px;display:inline-flex;align-items:center;justify-content:center;gap:10px;font-size:13px;font-weight:900;letter-spacing:.02em;transition:transform .2s,background .2s,border .2s}
-    .btn:hover{transform:translateY(-2px)}
-    .btn-primary{background:var(--lime);color:#122000}.btn-primary:hover{background:#dcff6c}
-    .btn-dark{background:transparent;border-color:var(--cyan);color:var(--cyan)}.btn-dark:hover{background:var(--cyan);border-color:var(--cyan);color:#06171d}
-    .hero-products{position:absolute;right:0;bottom:-14px;width:48%;height:100%;pointer-events:none}
-    .slide{position:absolute;inset:0;width:100%;height:100%;display:block;object-fit:cover;object-position:center;background:#080b09;opacity:0;transition:opacity .7s ease}
-    .slide.active{opacity:1}
-    .slideshow-dots{position:absolute;left:50%;bottom:16px;z-index:3;display:flex;gap:8px;transform:translateX(-50%)}
-    .slideshow-dot{width:9px;height:9px;border:0;padding:0;border-radius:50%;background:rgba(255,255,255,.45);box-shadow:0 1px 4px rgba(0,0,0,.4);cursor:pointer}
-    .slideshow-dot.active{background:var(--cyan);box-shadow:0 0 10px var(--cyan-glow);transform:scale(1.25)}
-    .hero-ring{position:absolute;border:1px solid rgba(200,255,40,.25);border-radius:50%;width:470px;height:470px;right:20px;top:72px}
-    .hero-ring:after{content:"PERFORMANCE • QUALITY • STRENGTH •";position:absolute;inset:15px;border-radius:50%;border:1px dashed rgba(255,255,255,.16);color:var(--lime);font-size:11px;letter-spacing:7px;padding:92px 15px;transform:rotate(-28deg)}
-    .tub{position:absolute;width:245px;height:270px;right:120px;bottom:70px;border-radius:22px 22px 34px 34px;background:linear-gradient(105deg,#161a18 0 30%,#2d3530 45%,#111412 70%);box-shadow:25px 30px 40px rgba(0,0,0,.4);transform:rotate(-8deg)}
-    .tub:before{content:"";position:absolute;left:-9px;top:-20px;width:263px;height:38px;border-radius:13px 13px 5px 5px;background:linear-gradient(#303833,#151a17);border:1px solid #4b554d}
-    .tub .label{position:absolute;top:67px;left:0;width:100%;height:123px;background:var(--lime);color:#122000;padding:15px 18px;font-weight:1000;line-height:.85;font-size:32px;letter-spacing:-2px}
-    .tub .label small{display:block;font-size:9px;letter-spacing:2px;margin-bottom:12px}.tub .label b{color:#fff;text-shadow:1px 1px #0d1500}.tub .label span{font-size:12px;letter-spacing:1px;display:block;margin-top:11px}
-    .shaker{position:absolute;right:15px;bottom:91px;width:97px;height:217px;border:2px solid rgba(255,255,255,.42);border-top:0;border-radius:12px 12px 24px 24px;background:linear-gradient(100deg,rgba(255,255,255,.2),rgba(255,255,255,.03));transform:rotate(13deg)}
-    .shaker:before{content:"";position:absolute;left:9px;top:-25px;width:75px;height:28px;border-radius:7px 7px 2px 2px;background:#242b27;border:1px solid #606b61}.shaker:after{content:"VK";position:absolute;top:70px;left:19px;color:var(--lime);font-size:34px;font-weight:1000;font-style:italic}
-    .stats{border-top:1px solid var(--line);background:#101411}
-    .stats .container{display:grid;grid-template-columns:repeat(4,1fr)}
-    .stat{padding:22px 25px;border-right:1px solid var(--line);font-size:12px;color:var(--muted);font-weight:650}.stat:first-child{border-left:1px solid var(--line)}
-    .stat strong{font-size:19px;color:var(--white);display:block;margin-bottom:4px}
-    section{padding:91px 0}
-    .section-head{display:flex;align-items:end;justify-content:space-between;gap:20px;margin-bottom:30px}
-    .section-head h2{font-size:clamp(29px,3vw,42px);line-height:1;letter-spacing:-.05em;text-transform:uppercase;margin:9px 0 0}
-    .section-head p{color:var(--muted);margin:9px 0 0;font-size:14px}
-    .view-all{color:var(--lime);font-size:13px;font-weight:850;white-space:nowrap;border-bottom:1px solid rgba(200,255,40,.4);padding-bottom:4px}
-    .product-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:17px}
-    .product{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;transition:.25s;position:relative}
-    .product:hover{transform:translateY(-7px);border-color:rgba(200,255,40,.5);box-shadow:var(--shadow)}
-    .product-image{height:248px;position:relative;display:grid;place-items:center;overflow:hidden;background:linear-gradient(145deg,#2a332c,#131715 75%)}
-    .product-image:before{content:"";position:absolute;width:195px;height:195px;border-radius:50%;border:1px solid rgba(200,255,40,.2);transform:translate(20px,-10px)}
-    .mini-tub{height:176px;width:150px;position:relative;z-index:1;border-radius:14px 14px 25px 25px;background:linear-gradient(105deg,#111412 20%,#454e47 48%,#101311 80%);box-shadow:14px 18px 19px rgba(0,0,0,.35)}
-    .mini-tub:before{content:"";position:absolute;top:-13px;left:-5px;width:160px;height:25px;background:#232a25;border-radius:8px 8px 3px 3px;border:1px solid #4b564d}
-    .mini-label{position:absolute;top:48px;width:100%;height:75px;background:var(--lime);color:#112000;padding:8px 10px;font-size:21px;font-weight:1000;line-height:.85;letter-spacing:-1.3px}
-    .mini-label small{display:block;font-size:7px;letter-spacing:1.2px;margin-bottom:7px}.mini-label span{display:block;font-size:8px;letter-spacing:1px;margin-top:7px}
-    .flavor-red .mini-label{background:#ff632c;color:#281006}.flavor-blue .mini-label{background:var(--cyan);color:#061b23}.flavor-purple .mini-label{background:#be91ff;color:#211033}
-    .mini-pouch{width:135px;height:184px;z-index:1;clip-path:polygon(8% 0,92% 0,100% 100%,0 100%);background:linear-gradient(90deg,#262c29,#121513 50%,#343c36);padding-top:55px;box-shadow:10px 17px 20px #0005}
-    .mini-pouch .mini-label{position:relative;top:auto;height:77px}
-    .offer{position:absolute;top:13px;left:13px;z-index:3;background:var(--orange);font-size:10px;padding:6px 8px;border-radius:5px;font-weight:900}
-    .wish{position:absolute;right:13px;top:13px;z-index:3;width:33px;height:33px;border:1px solid rgba(255,255,255,.2);border-radius:50%;background:#101410a8;color:#fff;font-size:18px;transition:.2s}
-    .wish.active,.wish:hover{color:var(--lime);border-color:var(--lime)}
-    .product-info{padding:16px}
-    .brand{font-size:10px;text-transform:uppercase;letter-spacing:.12em;color:var(--lime);font-weight:850}
-    .product h3{font-size:15px;letter-spacing:-.025em;margin:7px 0 5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-    .variant{font-size:12px;color:var(--muted);min-height:17px}
-    .rate{font-size:12px;margin:11px 0;color:#d6ddd7}.rate b{color:#ffd34d;letter-spacing:1px}.rate span{color:var(--muted);margin-left:4px}
-    .prices{display:flex;gap:8px;align-items:baseline}.price{font-size:17px;font-weight:900}.mrp{font-size:12px;color:#8e9791;text-decoration:line-through}.discount{color:var(--lime);font-size:11px;font-weight:850}
-    .card-actions{display:flex;gap:8px;margin-top:14px}.card-actions button{flex:1;padding:10px 8px;border-radius:6px;border:1px solid #3a443c;background:transparent;color:#fff;font-size:11px;font-weight:850}.card-actions .add{border-color:var(--lime);color:var(--lime)}.card-actions button:hover{background:var(--lime);color:#102000}
-    .category-section{background:#111612;border-block:1px solid var(--line)}
-    .categories{display:grid;grid-template-columns:repeat(6,1fr);gap:12px}
-    .category{min-height:143px;padding:18px;border:1px solid var(--line);border-radius:13px;background:linear-gradient(145deg,#202923,#131814);position:relative;overflow:hidden;transition:.25s}
-    .category:hover{border-color:var(--lime);transform:translateY(-4px)}.category:hover .cat-icon{transform:scale(1.1) rotate(-7deg)}
-    .category h3{margin:51px 0 0;font-size:15px;letter-spacing:-.03em}.category p{margin:4px 0 0;color:var(--muted);font-size:11px}
-    .cat-icon{position:absolute;right:14px;top:15px;font-size:39px;transition:.25s;filter:grayscale(1) brightness(1.8)}
-    .promo{display:grid;grid-template-columns:1.2fr .8fr;min-height:350px;border-radius:20px;overflow:hidden;background:#d5ff48;color:#0d1608}
-    .promo-copy{padding:55px;position:relative}.promo-copy h2{font-size:45px;max-width:450px;line-height:.92;letter-spacing:-.06em;text-transform:uppercase;margin:14px 0}.promo-copy p{max-width:400px;font-weight:600;color:#334121;line-height:1.5;font-size:14px}.promo-copy .btn{background:#111b0d;color:#fff;margin-top:12px}
-    .promo-art{position:relative;background:linear-gradient(125deg,#192315,#394f1a);overflow:hidden}.promo-art:before{content:"20%";position:absolute;right:27px;top:25px;color:rgba(200,255,40,.22);font-size:125px;font-weight:1000;letter-spacing:-12px}.promo-tub{transform:scale(1.15) rotate(10deg);bottom:35px;right:100px}.promo-pouch{position:absolute;right:18px;bottom:17px;transform:rotate(13deg)}
-    .why{background:linear-gradient(135deg,#101410,#171f19)}
-    .trust-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
-    .trust{padding:25px;background:#151b17;border:1px solid var(--line);border-radius:14px}.trust-icon{font-size:25px;color:var(--lime)}.trust h3{font-size:16px;margin:15px 0 8px}.trust p{color:var(--muted);font-size:13px;line-height:1.55;margin:0}
-    .reviews{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px}.review{padding:24px;border:1px solid var(--line);border-radius:14px;background:#141914}.review .quote{color:var(--lime);font-size:30px;line-height:.4}.review p{font-size:14px;line-height:1.65;color:#d4dbd5}.review footer{display:flex;gap:10px;align-items:center;margin-top:17px;font-size:13px;font-weight:800}.avatar{width:31px;height:31px;border-radius:50%;background:linear-gradient(135deg,#d0ff45,#4f7422);color:#0b1307;display:grid;place-items:center;font-size:11px}
-    footer.main-footer{background:#080a09;border-top:1px solid var(--line);padding:55px 0 20px}.footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1.2fr;gap:35px}.footer-grid p,.footer-grid li{color:#8f9992;font-size:13px;line-height:1.7}.footer-grid ul{list-style:none;padding:0;margin:14px 0}.footer-grid h4{font-size:13px;text-transform:uppercase;letter-spacing:.1em;margin:4px 0 10px}.newsletter{display:flex;margin-top:15px}.newsletter input{min-width:0;border:1px solid #303832;background:#151a17;color:white;padding:11px;border-radius:6px 0 0 6px;outline:none}.newsletter button{border:0;background:var(--lime);padding:0 12px;font-size:12px;font-weight:900;border-radius:0 6px 6px 0}.legal{padding-top:32px;margin-top:25px;border-top:1px solid var(--line);font-size:11px;color:#738078;display:flex;justify-content:space-between;gap:15px}
-    .toast{position:fixed;right:20px;bottom:20px;z-index:100;background:var(--lime);color:#142000;padding:14px 18px;border-radius:9px;font-size:13px;font-weight:850;box-shadow:var(--shadow);transform:translateY(100px);opacity:0;transition:.3s}.toast.show{transform:translateY(0);opacity:1}
-    .drawer{position:fixed;z-index:50;right:0;top:0;height:100vh;width:min(410px,100%);background:#101410;border-left:1px solid var(--line);transform:translateX(100%);transition:.35s;box-shadow:-15px 0 40px #0008;padding:21px;display:flex;flex-direction:column}.drawer.open{transform:translateX(0)}.drawer-head{display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--line);padding-bottom:18px}.drawer h2{font-size:23px;margin:0}.close{background:none;border:0;color:#fff;font-size:25px}.cart-items{flex:1;overflow:auto}.cart-item{display:flex;gap:12px;padding:17px 0;border-bottom:1px solid var(--line)}.cart-thumb{width:55px;height:65px;background:#283129;border-radius:8px;display:grid;place-items:center;font-size:25px}.cart-item h4{font-size:13px;margin:3px 0}.cart-item p{font-size:12px;color:var(--muted);margin:4px 0}.cart-bottom{padding-top:16px}.cart-total{display:flex;justify-content:space-between;font-size:17px;font-weight:900;margin-bottom:14px}.full{width:100%}
-    .overlay{position:fixed;z-index:40;inset:0;background:#0009;opacity:0;pointer-events:none;transition:.25s}.overlay.show{opacity:1;pointer-events:auto}
-    .auth-overlay{position:fixed;z-index:1000;inset:0;background:#000c;opacity:0;pointer-events:none;transition:.25s;backdrop-filter:blur(3px)}.auth-overlay.show{opacity:1;pointer-events:auto}
-    .auth-modal{position:fixed;z-index:1001;left:50%;top:50%;width:min(430px,calc(100% - 32px));max-height:88vh;overflow:auto;background:var(--surface);border:1px solid var(--line);border-radius:20px;box-shadow:0 30px 80px #000a;padding:30px 28px 32px;transform:translate(-50%,-46%) scale(.96);opacity:0;pointer-events:none;transition:.25s}
-    .auth-modal.open{transform:translate(-50%,-50%) scale(1);opacity:1;pointer-events:auto}
-    .auth-close{position:absolute;right:16px;top:16px;width:34px;height:34px;border-radius:50%;border:1px solid var(--line);background:transparent;color:#fff;font-size:19px;line-height:1}
-    .auth-close:hover{border-color:var(--lime);color:var(--lime)}
-    .auth-head{text-align:center;margin-bottom:20px}
-    .auth-logo{height:38px;margin-bottom:14px}
-    .auth-head h2{margin:0 0 6px;font-size:23px;letter-spacing:-.03em}
-    .auth-sub{margin:0;font-size:12.5px;color:var(--muted);line-height:1.5}
-    .auth-tabs{display:flex;background:#1a201d;border:1px solid var(--line);border-radius:11px;padding:4px;margin-bottom:22px}
-    .auth-tab{flex:1;border:0;background:transparent;color:var(--muted);padding:10px 0;border-radius:8px;font-size:13px;font-weight:850}
-    .auth-tab.active{background:var(--lime);color:#171200}
-    .auth-panel{display:flex;flex-direction:column;gap:14px}
-    .auth-panel[hidden]{display:none}
-    .field{display:flex;flex-direction:column;gap:6px}
-    .field.otp-field[hidden]{display:none}
-    .field-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-    .field label{font-size:12px;font-weight:800;color:#d8ddd9;letter-spacing:.01em}
-    .field label span{color:var(--muted);font-weight:600}
-    .field input{height:44px;border-radius:9px;border:1px solid var(--line);background:#161b18;color:#fff;padding:0 13px;outline:none;width:100%}
-    .field input:focus{border-color:var(--lime)}
-    .otp-row{display:flex;gap:8px}
-    .otp-row input{flex:1;min-width:0}
-    .otp-btn{white-space:nowrap;border:1px solid var(--lime);color:var(--lime);background:transparent;border-radius:9px;padding:0 14px;font-size:12px;font-weight:850;transition:.2s}
-    .otp-btn:hover:not(:disabled){background:var(--lime);color:#171200}
-    .otp-btn:disabled{opacity:.55;cursor:not-allowed;border-color:var(--line);color:var(--muted)}
-    .auth-divider{display:flex;align-items:center;gap:10px;color:var(--muted);font-size:11.5px;text-transform:uppercase;letter-spacing:.06em;margin:2px 0}
-    .auth-divider:before,.auth-divider:after{content:"";flex:1;height:1px;background:var(--line)}
-    .account-controls{position:relative;display:flex;align-items:center}
-    .account-wrap{position:relative;display:flex;align-items:center}
-    .account-btn.mobile-only{display:none}
-    .account-btn{width:42px;height:42px;padding:0;display:grid;place-items:center;background:transparent;color:var(--cyan);border:1px solid transparent;border-radius:50%;font-size:13px;font-weight:900}
-    .account-btn:hover{background:transparent;border-color:var(--cyan);color:var(--cyan)}
-    .account-avatar{width:34px;height:34px;border-radius:50%;background:transparent;border:1px solid var(--cyan);color:var(--cyan);display:grid;place-items:center;font-size:13px;font-weight:900;flex-shrink:0}
-    .account-name{display:none}
-    #accountBtn:has(.account-avatar){width:42px!important;height:42px!important;padding:0!important;background:transparent!important;color:var(--cyan)!important;border:1px solid transparent!important;border-radius:50%!important;display:grid!important;place-items:center!important}
-    #accountBtn:has(.account-avatar):hover{background:transparent!important;border-color:var(--cyan)!important}
-    .account-menu{position:absolute;right:0;top:calc(100% + 10px);width:270px;background:var(--surface);border:1px solid var(--line);border-radius:14px;box-shadow:var(--shadow);padding:8px;opacity:0;pointer-events:none;transform:translateY(-6px);transition:.18s;z-index:500}
-    .account-menu.open{opacity:1;pointer-events:auto;transform:translateY(0)}
-    .account-menu-head{padding:12px 12px 10px;border-bottom:1px solid var(--line);margin-bottom:6px}
-    .account-menu-head strong{display:block;font-size:13px}
-    .account-menu-head span{display:block;font-size:11.5px;color:var(--muted);margin-top:2px}
-    .account-menu button{width:100%;text-align:left;background:transparent;border:0;color:#fff;padding:10px 12px;border-radius:9px;font-size:13px;font-weight:700;display:flex;align-items:center;gap:9px}
-    .account-menu button:hover{background:#10272d;color:var(--cyan)}
-    .account-menu .menu-count{margin-left:auto;color:var(--muted);font-size:12px;font-weight:800}
-    .account-menu button.danger:hover{color:#ff6a6a}
-    .account-menu .menu-divider{height:1px;background:var(--line);margin:6px 4px}
-    .wishlist-menu{position:fixed;top:86px;right:20px;width:290px;background:var(--surface);border:1px solid var(--line);border-radius:14px;box-shadow:var(--shadow);padding:8px;opacity:0;pointer-events:none;transform:translateY(-6px);transition:.18s;z-index:110}
-    .wishlist-menu.open{opacity:1;pointer-events:auto;transform:translateY(0)}
-    .wishlist-menu-head{padding:12px 12px 10px;border-bottom:1px solid var(--line);margin-bottom:6px}
-    .wishlist-menu-head strong{display:block;font-size:13px}.wishlist-menu-head span{display:block;font-size:11.5px;color:var(--muted);margin-top:2px}
-    .wishlist-empty{padding:15px 12px;color:var(--muted);font-size:12px;line-height:1.45}
-    .wishlist-item{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:10px 12px;border-radius:9px}
-    .wishlist-item:hover{background:#263752}.wishlist-item strong{font-size:12px}.wishlist-item button{border:0;background:transparent;color:var(--lime);font-size:12px;font-weight:800;padding:5px}
-    .settings-danger{margin-top:4px;padding-top:16px;border-top:1px solid var(--line)}
-    .settings-danger h3{font-size:13px;margin:0 0 5px;color:#ff8a8a}
-    .settings-danger p{font-size:11.5px;line-height:1.45;color:var(--muted);margin:0 0 10px}
-    .delete-account-btn{width:100%;border:1px solid rgba(255,106,106,.5);background:transparent;color:#ff8a8a;border-radius:9px;padding:10px 12px;font-size:12px;font-weight:850}
-    .delete-account-btn:hover{background:#3a1717;border-color:#ff6a6a;color:#ffb0b0}
-    .language-options{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:18px}
-    .language-option{border:1px solid var(--line);background:#161b18;color:#fff;border-radius:10px;padding:12px 10px;text-align:left;font-size:13px;font-weight:750}
-    .language-option:hover,.language-option.active{border-color:var(--cyan);color:var(--cyan);background:#10272d}
-    .settings-panel{display:flex;flex-direction:column;gap:14px}
-    .settings-panel[hidden]{display:none}
-    .history-list{display:flex;flex-direction:column;gap:9px;max-height:48vh;overflow:auto;padding-right:3px}
-    .history-item{display:flex;flex-direction:column;gap:4px;padding:13px;border:1px solid var(--line);border-radius:10px;background:var(--surface-2)}
-    .history-item strong{font-size:13px;text-transform:capitalize}.history-item span,.history-empty{font-size:12px;color:var(--muted);line-height:1.45}.history-empty{padding:18px 5px;text-align:center}
-    @media(max-width:480px){.field-row{grid-template-columns:1fr}.auth-modal{padding:26px 20px 28px}}
-    @media(max-width:950px){.nav-links{display:none}.search{margin-left:auto}.hero-content{width:100%;display:block;text-align:center}.hero-content .eyebrow{justify-content:center}.hero-content p{margin:0 auto 30px}.hero-actions{justify-content:center}.hero-products{opacity:.75}.categories{grid-template-columns:repeat(3,1fr)}.product-grid{grid-template-columns:repeat(2,1fr)}.trust-grid{grid-template-columns:repeat(2,1fr)}}
-    @media(max-width:620px){.container{width:min(100% - 28px,1240px)}.nav{height:72px;gap:7px}.logo{font-size:19px}.logo-img{height:48px;max-width:145px}.search{display:none}.icon-btn{width:37px;height:37px}.account-btn.mobile-only{width:37px;height:37px}.mobile-only{display:grid}.account-menu{position:fixed;top:82px;right:14px;width:min(290px,calc(100vw - 28px));z-index:110}.hero-content{padding:40px 0 48px}.hero-products{display:none}.slideshow-frame{right:0;bottom:-5px;width:100%;height:285px;border-radius:18px}.slideshow-dots{right:16px;bottom:12px}.hero-ring{width:280px;height:280px;right:5px;top:14px}.hero-ring:after{font-size:7px;letter-spacing:3px;padding:56px 10px}.tub{transform:scale(.73) rotate(-8deg);transform-origin:bottom right;right:67px;bottom:-4px}.shaker{transform:scale(.7) rotate(13deg);transform-origin:bottom right;right:0;bottom:5px}h1{font-size:48px}.hero p{font-size:14px;max-width:390px}.stats .container{grid-template-columns:1fr 1fr}.stat{padding:16px 12px}.stat:nth-child(odd){border-left:1px solid var(--line)}section{padding:62px 0}.section-head{align-items:flex-end}.section-head h2{font-size:29px}.product-grid{gap:10px}.product-image{height:180px}.mini-tub{transform:scale(.77)}.mini-pouch{transform:scale(.77)}.product-info{padding:12px}.product h3{font-size:13px}.card-actions{flex-direction:column}.categories{grid-template-columns:1fr 1fr;gap:10px}.category{min-height:120px}.promo{grid-template-columns:1fr;min-height:470px}.promo-copy{padding:33px 25px}.promo-copy h2{font-size:36px}.promo-art{min-height:220px}.promo-tub{right:85px;bottom:4px;transform:scale(.76) rotate(10deg);transform-origin:bottom right}.promo-pouch{right:-7px;bottom:-10px;transform:scale(.7) rotate(13deg);transform-origin:bottom right}.trust-grid,.reviews,.footer-grid{grid-template-columns:1fr}.trust-grid{gap:10px}.trust{padding:19px}.footer-grid{gap:18px}.legal{flex-direction:column}.hide-mobile{display:none}.hero-actions .btn{padding:13px 15px}.slideshow-dots{left:50%;right:auto;bottom:16px}}
-    @media(max-width:950px){.nav-actions{margin-left:auto}}
+/* VK Nutrition storefront and Supabase email-OTP authentication. */
+const SUPABASE_URL = "https://owpgbkrnimhwvgqntggq.supabase.co";
+const SUPABASE_ANON_KEY = "sb_publishable_yVu_tEIx690wZny03SmjBg_yNQX8toM";
+const $ = selector => document.querySelector(selector);
+const cart = [];
+const viewedProducts = new Set();
+const viewUpdatesInFlight = new Set();
+let currentUser = null;
+let wishlist = 0;
+const wishlistItems = new Set();
+let supabaseClient = null;
 
-    /* Deep Navy + Electric Yellow theme */
-    header{background:rgba(15,23,42,.94)}
-    .search input,.field input,.language-option{background:#1E293B}
-    .hero{background:#0F172A}
-    .btn-primary{background:var(--lime);color:#0F172A}.btn-primary:hover{background:#FDE047}
-    .btn-dark{border-color:var(--lime);color:var(--lime)}.btn-dark:hover{background:var(--lime);border-color:var(--lime);color:#0F172A}
-    .stats,.category-section{background:#111C31}
-    .product-image{background:linear-gradient(145deg,#263752,#111827 75%)}
-    .product-image:before{border-color:rgba(250,204,21,.26)}
-    .mini-tub{background:linear-gradient(105deg,#111827 20%,#334155 48%,#0F172A 80%)}
-    .mini-tub:before{background:#1E293B;border-color:#475569}
-    .mini-pouch{background:linear-gradient(90deg,#334155,#111827 50%,#475569)}
-    .wish{background:#0F172Acc}.wish.active,.wish:hover{color:var(--lime);border-color:var(--lime)}
-    .card-actions button{border-color:#475569}.card-actions .add{border-color:var(--lime);color:var(--lime)}.card-actions button:hover{background:var(--lime);color:#0F172A}
-    .category{background:linear-gradient(145deg,#24344E,#111827)}
-    .promo{background:var(--lime);color:#0F172A}.promo-copy p{color:#334155}.promo-copy .btn{background:#0F172A}.promo-art{background:linear-gradient(125deg,#0F172A,#1E3A5F)}.promo-art:before{color:rgba(255,255,255,.16)}
-    .why{background:linear-gradient(135deg,#0F172A,#1E293B)}
-    .trust,.review{background:#172033}.avatar{background:linear-gradient(135deg,#FACC15,#EAB308);color:#0F172A}
-    footer.main-footer{background:#0F172A}.newsletter input{background:#1E293B;border-color:#475569}.newsletter button{background:var(--lime);color:#0F172A}
-    .drawer{background:#0F172A}.cart-thumb{background:#1E293B}.account-menu{background:#172033}.auth-modal{background:#172033}.auth-tabs{background:#1E293B}
-    .account-menu button:hover,.language-option:hover,.language-option.active{background:#263752;color:var(--lime)}
-    @media(max-width:620px){
-      .account-wrap{display:block}
-      .account-menu{top:80px;right:max(14px,env(safe-area-inset-right));width:min(330px,calc(100vw - 28px));max-height:calc(100dvh - 96px);overflow-y:auto;overscroll-behavior:contain;z-index:110}
-      .account-menu button{min-height:46px;padding:12px;font-size:14px}
-      .account-menu-head{padding:14px 12px 12px}
-      .wishlist-menu{top:82px;right:14px;width:min(290px,calc(100vw - 28px))}
+/* ---------- Appearance preference ---------- */
+function applyTheme(theme) {
+  const nextTheme = theme === "dark" ? "dark" : "light";
+  document.documentElement.dataset.theme = nextTheme;
+  localStorage.setItem("vk-theme", nextTheme);
+  const icon = $("#appearanceIcon"), label = $("#appearanceLabel");
+  if (icon && label) {
+    icon.textContent = nextTheme === "dark" ? "☀" : "🌙";
+    label.textContent = nextTheme === "dark" ? "Light Mode" : "Dark Mode";
+  }
+  const headerThemeBtn = $("#headerThemeBtn");
+  if (headerThemeBtn) {
+    headerThemeBtn.textContent = nextTheme === "dark" ? "☀" : "🌙";
+    headerThemeBtn.setAttribute("aria-label", nextTheme === "dark" ? "Switch to light mode" : "Switch to dark mode");
+  }
+}
+function toggleTheme() {
+  applyTheme(document.documentElement.dataset.theme === "dark" ? "light" : "dark");
+}
+applyTheme(document.documentElement.dataset.theme || "light");
+
+try {
+  if (!window.supabase?.createClient) throw new Error("Supabase library did not load.");
+  supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
+    // This storefront uses a code entered in the form, not a magic-link session in the URL.
+    auth: { persistSession: true, autoRefreshToken: true, detectSessionInUrl: false }
+  });
+} catch (error) {
+  console.error("[VK] Supabase initialization failed:", error);
+}
+
+const money = value => `₹${Number(value).toLocaleString("en-IN")}`;
+const escapeHtml = value => String(value).replace(/[&<>'"]/g, character => ({ "&":"&amp;", "<":"&lt;", ">":"&gt;", "'":"&#39;", '"':"&quot;" }[character]));
+const catalogueProducts = Array.isArray(window.VK_CATALOGUE) ? window.VK_CATALOGUE : [];
+let catalogueQuery = "";
+let catalogueCategory = "";
+const catalogueGrid = $("#productGrid");
+function filteredCatalogue() {
+  const query = catalogueQuery.trim().toLowerCase();
+  return catalogueProducts.filter(product => {
+    const matchesCategory = !catalogueCategory || product.category === catalogueCategory;
+    const haystack = `${product.name} ${product.category} ${product.pack}`.toLowerCase();
+    return matchesCategory && (!query || haystack.includes(query));
+  });
+}
+function renderCatalogue() {
+  if (!catalogueGrid) return;
+  const products = filteredCatalogue();
+  catalogueGrid.innerHTML = products.map(product => `<article class="product catalogue-product" data-id="${escapeHtml(product.id)}" data-name="${escapeHtml(product.name)}" data-price="${product.price}" data-category="${escapeHtml(product.category)}">
+    <div class="product-image"><button class="wish${wishlistItems.has(product.id) ? " active" : ""}" type="button" aria-label="Add ${escapeHtml(product.name)} to wishlist">${wishlistItems.has(product.id) ? "♥" : "♡"}</button><img class="product-photo" src="${escapeHtml(product.image)}" alt="${escapeHtml(product.name)}" loading="lazy"></div>
+    <div class="product-info"><div class="brand">VK Nutrition Catalogue</div><h3>${escapeHtml(product.name)}</h3><div class="catalogue-category">${escapeHtml(product.category)}</div><div class="variant">${escapeHtml(product.pack)}</div><ul class="catalogue-highlights">${product.highlights.slice(0, 3).map(item => `<li>${escapeHtml(item)}</li>`).join("")}</ul><div class="prices"><span class="price">${money(product.price)}</span></div><div class="card-actions"><button class="view-details" type="button" data-product-id="${escapeHtml(product.id)}">VIEW DETAILS</button><button class="add" type="button">ADD TO CART</button><button class="buy" type="button">BUY NOW</button></div></div>
+  </article>`).join("");
+  const resultCount = $("#catalogueResultCount");
+  if (resultCount) resultCount.textContent = `${products.length} product${products.length === 1 ? "" : "s"}${catalogueCategory ? ` in ${catalogueCategory}` : ""}`;
+  const clearButton = $("#clearCatalogueFilter");
+  if (clearButton) clearButton.hidden = !catalogueCategory && !catalogueQuery;
+  bindCatalogueCards();
+}
+function bindCatalogueCards() {
+  if (!catalogueGrid) return;
+  catalogueGrid.querySelectorAll(".add").forEach(button => button.addEventListener("click", event => addProduct(event.currentTarget.closest(".product"))));
+  catalogueGrid.querySelectorAll(".buy").forEach(button => button.addEventListener("click", event => addProduct(event.currentTarget.closest(".product"), true)));
+  catalogueGrid.querySelectorAll(".wish").forEach(button => button.addEventListener("click", event => {
+    const card = event.currentTarget.closest(".product");
+    const product = catalogueProducts.find(item => item.id === card.dataset.id);
+    if (product) toggleWishlist(product, event.currentTarget);
+  }));
+  catalogueGrid.querySelectorAll(".view-details").forEach(button => button.addEventListener("click", event => openProductDetails(event.currentTarget.dataset.productId)));
+}
+function openProductDetails(productId) {
+  const product = catalogueProducts.find(item => item.id === productId);
+  if (!product) return;
+  $("#productDetailImage").src = product.image;
+  $("#productDetailImage").alt = product.name;
+  $("#productDetailCategory").textContent = product.category;
+  $("#productDetailTitle").textContent = product.name;
+  $("#productDetailPack").textContent = `Pack / weight: ${product.pack}`;
+  $("#productDetailPrice").textContent = money(product.price);
+  $("#productDetailHighlights").innerHTML = product.highlights.map(item => `<li>${escapeHtml(item)}</li>`).join("");
+  $("#productDetailSpec").textContent = product.spec;
+  $("#productDetailAdd").onclick = () => addProduct({ dataset: { name: product.name, price: String(product.price) } });
+  trackProductView(product);
+  $("#productDetailOverlay").classList.add("show");
+  $("#productDetailModal").classList.add("open");
+}
+function closeProductDetails() {
+  $("#productDetailOverlay").classList.remove("show");
+  $("#productDetailModal").classList.remove("open");
+}
+function showToast(message) {
+  const toast = $("#toast");
+  toast.textContent = message;
+  toast.classList.add("show");
+  clearTimeout(showToast.timer);
+  showToast.timer = setTimeout(() => toast.classList.remove("show"), 3000);
+}
+function normalizeMobile(value) { return `+91${value.replace(/\D/g, "").slice(-10)}`; }
+function validMobile(value) { return value.replace(/\D/g, "").length === 10; }
+function requireClient() {
+  if (supabaseClient) return true;
+  showToast("Account service is unavailable. Please reload and try again.");
+  return false;
+}
+
+/* ---------- Storefront ---------- */
+const slides = [...document.querySelectorAll(".slide")];
+const dots = [...document.querySelectorAll(".slideshow-dot")];
+let activeSlide = 0;
+function showSlide(index) {
+  if (!slides.length) return;
+  activeSlide = (index + slides.length) % slides.length;
+  slides.forEach((slide, i) => slide.classList.toggle("active", i === activeSlide));
+  dots.forEach((dot, i) => dot.classList.toggle("active", i === activeSlide));
+}
+ dots.forEach((dot, index) => dot.addEventListener("click", () => showSlide(index)));
+const heroSlideshow = $(".hero-slideshow");
+let swipeStartX = 0;
+if (heroSlideshow) {
+  heroSlideshow.addEventListener("touchstart", event => { swipeStartX = event.changedTouches[0].clientX; }, { passive: true });
+  heroSlideshow.addEventListener("touchend", event => {
+    const distance = event.changedTouches[0].clientX - swipeStartX;
+    if (Math.abs(distance) > 45) showSlide(activeSlide + (distance < 0 ? 1 : -1));
+  }, { passive: true });
+}
+if (slides.length > 1) { showSlide(0); setInterval(() => showSlide(activeSlide + 1), 4000); }
+
+function renderCart() {
+  const quantity = cart.reduce((total, item) => total + item.qty, 0);
+  const total = cart.reduce((sum, item) => sum + item.price * item.qty, 0);
+  $("#accountCartCount").textContent = `(${quantity})`;
+  $("#drawerCount").textContent = `(${quantity})`;
+  $("#cartTotal").textContent = money(total);
+  $("#cartItems").innerHTML = cart.length
+    ? cart.map((item, index) => `<div class="cart-item"><div class="cart-thumb">⚡</div><div style="flex:1"><h4>${escapeHtml(item.name)}</h4><p>VK Nutrition · Qty ${item.qty}</p><strong>${money(item.price * item.qty)}</strong></div><button class="close remove" data-index="${index}" aria-label="Remove ${escapeHtml(item.name)}">×</button></div>`).join("")
+    : '<p style="color:var(--muted);font-size:14px;padding-top:25px">Your cart is empty. Add products to get started.</p>';
+  document.querySelectorAll(".remove").forEach(button => button.addEventListener("click", () => {
+    cart.splice(Number(button.dataset.index), 1);
+    renderCart();
+  }));
+}
+function addProduct(card, openDrawer = false) {
+  const item = { name: card.dataset.name, price: Number(card.dataset.price), qty: 1 };
+  const existing = cart.find(entry => entry.name === item.name);
+  if (existing) existing.qty += 1; else cart.push(item);
+  renderCart(); showToast(`${item.name} added to cart.`);
+  if (openDrawer) { $("#drawer").classList.add("open"); $("#overlay").classList.add("show"); }
+}
+function closeCart() { $("#drawer").classList.remove("open"); $("#overlay").classList.remove("show"); }
+document.getElementById("newArrivalsSection")?.remove();
+renderCatalogue();
+document.querySelectorAll(".category[data-category]").forEach(button => button.addEventListener("click", event => {
+  event.preventDefault();
+  catalogueCategory = button.dataset.category;
+  renderCatalogue();
+  $("#shop").scrollIntoView({ behavior: "smooth", block: "start" });
+}));
+$("#clearCatalogueFilter")?.addEventListener("click", () => {
+  catalogueCategory = "";
+  catalogueQuery = "";
+  $("#searchInput").value = "";
+  renderCatalogue();
+});
+function openCart() {
+  closeAccountMenu();
+  $("#drawer").classList.add("open");
+  $("#overlay").classList.add("show");
+}
+$("#openCartBtn").addEventListener("click", openCart);
+$("#closeCart").addEventListener("click", closeCart);
+$("#overlay").addEventListener("click", closeCart);
+$("#productDetailClose").addEventListener("click", closeProductDetails);
+$("#productDetailOverlay").addEventListener("click", closeProductDetails);
+document.addEventListener("keydown", event => { if (event.key === "Escape") closeProductDetails(); });
+function openWishlist() {
+  if (!currentUser) return openAuth();
+  closeAccountMenu();
+  renderWishlist();
+  $("#wishlistOverlay").classList.add("show");
+  $("#wishlistModal").classList.add("open");
+}
+$("#searchInput").addEventListener("input", event => {
+  catalogueQuery = event.target.value;
+  renderCatalogue();
+});
+document.querySelector(".newsletter button").addEventListener("click", () => showToast("Thanks — you're on the VK Nutrition list."));
+
+/* ---------- Account UI ---------- */
+const authOverlay = $("#authOverlay"), authModal = $("#authModal");
+function setAuthTab(tab) {
+  document.querySelectorAll(".auth-tab").forEach(button => button.classList.toggle("active", button.dataset.tab === tab));
+  $("#signinPanel").hidden = tab !== "signin";
+  $("#signupPanel").hidden = tab !== "signup";
+  $("#authTitle").textContent = tab === "signin" ? "Welcome Back" : "Create an Account";
+}
+function openAuth(tab = "signin") { setAuthTab(tab); authOverlay.classList.add("show"); authModal.classList.add("open"); }
+function closeAuth() { authOverlay.classList.remove("show"); authModal.classList.remove("open"); }
+$("#authClose").addEventListener("click", closeAuth);
+authOverlay.addEventListener("click", closeAuth);
+document.querySelectorAll(".auth-tab").forEach(button => button.addEventListener("click", () => setAuthTab(button.dataset.tab)));
+
+function setLoggedOut() {
+  currentUser = null;
+  wishlistItems.clear();
+  wishlist = 0;
+  viewedProducts.clear();
+  updateWishlistCount();
+  renderCatalogue();
+  const desktop = $("#accountBtn");
+  desktop.className = "account-btn";
+  desktop.innerHTML = "♙";
+  desktop.setAttribute("aria-label", "Login or create account");
+  $("#accountBottomLabel").textContent = "Login";
+  closeAccountMenu();
+}
+function setLoggedIn(user) {
+  currentUser = user;
+  const label = user.first_name || user.email || "Account";
+  const initial = label.charAt(0).toUpperCase();
+  const desktop = $("#accountBtn");
+  desktop.className = "account-btn";
+  desktop.innerHTML = `<span class="account-avatar">${initial}</span>`;
+  desktop.setAttribute("aria-label", `Open account for ${label}`);
+  $("#accountBottomLabel").textContent = "Account";
+  $("#accountMenuName").textContent = [user.first_name, user.last_name].filter(Boolean).join(" ") || "Signed in";
+  $("#accountMenuSub").textContent = user.email || "";
+}
+async function hydrateUser(authUser) {
+  if (!authUser) return setLoggedOut();
+  const { data: profile, error } = await supabaseClient.from("profiles")
+    .select("first_name,last_name,email,mobile")
+    .eq("id", authUser.id).maybeSingle();
+  if (error) console.error("[VK] profile load error", error);
+  setLoggedIn({
+    id: authUser.id,
+    email: authUser.email || profile?.email || "",
+    phone: profile?.mobile || "",
+    first_name: profile?.first_name || authUser.user_metadata?.first_name || "",
+    last_name: profile?.last_name || authUser.user_metadata?.last_name || "",
+    metadata: authUser.user_metadata || {}
+  });
+  await loadWishlist();
+}
+function closeAccountMenu() {
+  $("#accountMenu").classList.remove("open");
+  $("#accountBtn").setAttribute("aria-expanded", "false");
+}
+function toggleAccountMenu() {
+  const menu = $("#accountMenu");
+  const isOpen = menu.classList.toggle("open");
+  $("#accountBtn").setAttribute("aria-expanded", String(isOpen));
+}
+function handleAccountButton(event) {
+  event.stopPropagation();
+  if (!currentUser) return openAuth();
+  toggleAccountMenu();
+}
+$("#accountBtn").addEventListener("click", handleAccountButton);
+document.addEventListener("click", event => {
+  const menu = $("#accountMenu");
+  const desktopButton = $("#accountBtn");
+  if (!menu.contains(event.target) && !desktopButton.contains(event.target)) closeAccountMenu();
+  if (mobileNavPanel && !mobileNavPanel.contains(event.target) && !mobileNavToggle.contains(event.target)) closeMobileNavigation();
+  if (!document.querySelector(".search")?.contains(event.target) && !mobileSearchBtn?.contains(event.target)) document.querySelector(".search")?.classList.remove("mobile-open");
+});
+document.addEventListener("keydown", event => {
+  if (event.key === "Escape") {
+    closeAccountMenu();
+    closeMobileNavigation();
+  }
+});
+
+/* ---------- Responsive navigation ---------- */
+var mobileNavPanel = $("#mobileNavPanel"), mobileNavToggle = $("#mobileNavToggle"), mobileSearchBtn = $("#mobileSearchBtn");
+const accountWrap = $(".account-wrap"), navActions = $(".nav-actions"), bottomAccountSlot = $("#bottomAccountSlot");
+function placeAccountControl() {
+  if (!accountWrap) return;
+  const target = window.matchMedia("(max-width: 767px)").matches ? bottomAccountSlot : navActions;
+  if (target && accountWrap.parentElement !== target) target.append(accountWrap);
+}
+placeAccountControl();
+window.addEventListener("resize", placeAccountControl);
+function closeMobileNavigation() {
+  if (!mobileNavPanel) return;
+  mobileNavPanel.hidden = true;
+  mobileNavToggle?.setAttribute("aria-expanded", "false");
+}
+function toggleMobileNavigation() {
+  const isOpen = mobileNavPanel.hidden;
+  mobileNavPanel.hidden = !isOpen;
+  mobileNavToggle.setAttribute("aria-expanded", String(isOpen));
+}
+mobileNavToggle?.addEventListener("click", event => { event.stopPropagation(); toggleMobileNavigation(); });
+mobileNavPanel?.addEventListener("click", () => closeMobileNavigation());
+mobileSearchBtn?.addEventListener("click", event => {
+  event.stopPropagation();
+  closeMobileNavigation();
+  const search = document.querySelector(".search");
+  search.classList.toggle("mobile-open");
+  if (search.classList.contains("mobile-open")) $("#searchInput").focus();
+});
+$("#headerThemeBtn").addEventListener("click", toggleTheme);
+$("#bottomCategoryBtn").addEventListener("click", () => { closeMobileNavigation(); $("#categories").scrollIntoView({ behavior: "smooth" }); });
+$("#bottomTrackBtn").addEventListener("click", () => openHistory("orders"));
+$("#mobileTrackBtn").addEventListener("click", () => openHistory("orders"));
+$("#logoutBtn").addEventListener("click", async () => {
+  if (!requireClient()) return;
+  await supabaseClient.auth.signOut();
+  setLoggedOut(); showToast("You've been logged out.");
+});
+
+/* ---------- Email OTP authentication ---------- */
+function setOtpVisible(prefix, visible) {
+  $(`#${prefix}OtpField`).hidden = !visible;
+  if (prefix === "si") $("#siVerifyOtp").hidden = !visible;
+  else $("#signUpBtn").hidden = !visible;
+}
+function otpHint(prefix, email) { $(`#${prefix}OtpHint`).textContent = `sent to ${email}`; }
+async function requestOtp(mode) {
+  if (!requireClient()) return;
+  const isSignUp = mode === "su";
+  const email = $(`#${mode}Email`).value.trim().toLowerCase();
+  const mobile = $(`#${mode}Mobile`).value;
+  if (!/^\S+@\S+\.\S+$/.test(email)) return showToast("Enter a valid email address.");
+  if (!validMobile(mobile)) return showToast("Enter a valid 10-digit mobile number.");
+  const phone = normalizeMobile(mobile);
+  const button = $(`#${mode}SendOtp`);
+  button.disabled = true;
+  button.textContent = "Sending…";
+
+  try {
+    let error;
+
+    if (isSignUp) {
+      const first_name = $("#suName").value.trim();
+      const last_name = $("#suSurname").value.trim();
+      if (!first_name || !last_name) {
+        showToast("Enter your name and surname.");
+        return;
+      }
+
+      // SIGN UP: create a new Supabase user, then email a numeric OTP.
+      ({ error } = await supabaseClient.auth.signInWithOtp({
+        email,
+        options: {
+          shouldCreateUser: true,
+          data: { first_name, last_name, mobile: phone }
+        }
+      }));
+    } else {
+      // SIGN IN: never create an account; email an OTP only to an existing user.
+      ({ error } = await supabaseClient.auth.signInWithOtp({
+        email,
+        options: { shouldCreateUser: false }
+      }));
     }
 
-    /* Theme architecture: the light palette is intentionally white/yellow;
-       the dark palette preserves the deep navy VK Nutrition appearance. */
-    :root{
-      --theme-bg:#0F172A;
-      --theme-surface:#172033;
-      --theme-surface-2:#1E293B;
-      --theme-text:#FFFFFF;
-      --theme-muted:#CBD5E1;
-      --theme-border:rgba(255,255,255,.12);
-      --theme-input:#1E293B;
-      --theme-shadow:0 18px 55px rgba(0,0,0,.28);
-    }
-    :root[data-theme="light"]{
-      --theme-bg:#FFFFFF;
-      --theme-surface:#FFFFFF;
-      --theme-surface-2:#F7F7F7;
-      --theme-text:#111111;
-      --theme-muted:#555555;
-      --theme-border:#E5E5E5;
-      --theme-input:#FFFFFF;
-      --theme-shadow:0 14px 35px rgba(17,17,17,.10);
-      --ink:#FFFFFF;
-      --surface:#FFFFFF;
-      --surface-2:#F7F7F7;
-      --white:#111111;
-      --muted:#555555;
-      --line:#E5E5E5;
-      --cyan:#FACC15;
-      --cyan-dark:#EAB308;
-      --cyan-glow:rgba(250,204,21,.24);
-      --orange:#FACC15;
-    }
-    body,header,.stats,section,.main-footer,.product,.category,.trust,.review,.drawer,.auth-modal,.account-menu,.search input,.field input,.language-option,.category-section,.why,.product-image,.promo-art,.newsletter input{
-      transition:background-color .2s ease,color .2s ease,border-color .2s ease,box-shadow .2s ease;
-    }
-    :root[data-theme="light"] body{background:var(--theme-bg);color:var(--theme-text)}
-    :root[data-theme="light"] header{background:rgba(255,255,255,.94);border-color:var(--theme-border);box-shadow:0 3px 16px rgba(17,17,17,.06)}
-    :root[data-theme="light"] .nav-links{color:#333}
-    :root[data-theme="light"] .search input{background:var(--theme-input);color:var(--theme-text);border-color:var(--theme-border)}
-    :root[data-theme="light"] .search input::placeholder{color:#777}
-    :root[data-theme="light"] .icon-btn{color:#111;border-color:var(--theme-border)}
-    :root[data-theme="light"] .icon-btn:hover{color:#111;border-color:var(--lime);background:#FFF8D6}
-    :root[data-theme="light"] .account-btn,.account-btn{color:var(--lime)}
-    :root[data-theme="light"] .hero{background:#FFF}
-    :root[data-theme="light"] .hero h1{color:#111}
-    :root[data-theme="light"] .hero p{color:#555}
-    :root[data-theme="light"] .btn-dark{background:#FFF;border-color:var(--lime);color:#111}
-    :root[data-theme="light"] .btn-dark:hover{background:var(--lime);color:#111}
-    :root[data-theme="light"] .stats{background:#FFF;border-color:var(--theme-border)}
-    :root[data-theme="light"] .stat{color:#555;border-color:var(--theme-border)}
-    :root[data-theme="light"] .stat strong,:root[data-theme="light"] h2{color:#111}
-    :root[data-theme="light"] section{background:#FFF}
-    :root[data-theme="light"] .category-section{background:#F7F7F7;border-color:var(--theme-border)}
-    :root[data-theme="light"] .product{background:#FFF;border-color:var(--theme-border);box-shadow:0 8px 25px rgba(17,17,17,.06)}
-    :root[data-theme="light"] .product:hover{border-color:var(--lime);box-shadow:var(--theme-shadow)}
-    :root[data-theme="light"] .product-image{background:linear-gradient(145deg,#FAFAFA,#F1F1F1 75%)}
-    :root[data-theme="light"] .wish{background:#FFF;color:#111;border-color:#DDD}
-    :root[data-theme="light"] .product-info h3,:root[data-theme="light"] .product-info .price{color:#111}
-    :root[data-theme="light"] .variant,:root[data-theme="light"] .rate,:root[data-theme="light"] .section-head p{color:#555}
-    :root[data-theme="light"] .card-actions button{background:#FFF;color:#111;border-color:#D4D4D4}
-    :root[data-theme="light"] .card-actions .add,:root[data-theme="light"] .card-actions .buy{border-color:var(--lime);color:#111}
-    :root[data-theme="light"] .card-actions button:hover{background:var(--lime);color:#111}
-    :root[data-theme="light"] .category{background:#FFF;border-color:var(--theme-border);box-shadow:0 6px 20px rgba(17,17,17,.05)}
-    :root[data-theme="light"] .category h3{color:#111}
-    :root[data-theme="light"] .category p{color:#555}
-    :root[data-theme="light"] .promo-art{background:linear-gradient(125deg,#FFF8D6,#F2C400)}
-    :root[data-theme="light"] .why{background:#F7F7F7}
-    :root[data-theme="light"] .trust,:root[data-theme="light"] .review{background:#FFF;border-color:var(--theme-border);box-shadow:0 6px 20px rgba(17,17,17,.05)}
-    :root[data-theme="light"] .trust p,:root[data-theme="light"] .review p{color:#555}
-    :root[data-theme="light"] footer.main-footer{background:#FFF;border-color:var(--theme-border);color:#111}
-    :root[data-theme="light"] .footer-grid p,:root[data-theme="light"] .footer-grid li,:root[data-theme="light"] .legal{color:#555}
-    :root[data-theme="light"] .newsletter input{background:#FFF;color:#111;border-color:#D8D8D8}
-    :root[data-theme="light"] .drawer,:root[data-theme="light"] .auth-modal{background:#FFF;color:#111;border-color:var(--theme-border);box-shadow:var(--theme-shadow)}
-    :root[data-theme="light"] .drawer-head,:root[data-theme="light"] .auth-close,:root[data-theme="light"] .close{color:#111;border-color:var(--theme-border)}
-    :root[data-theme="light"] .cart-thumb,:root[data-theme="light"] .auth-tabs{background:#F7F7F7}
-    :root[data-theme="light"] .field input,:root[data-theme="light"] .language-option{background:#FFF;color:#111;border-color:#D8D8D8}
-    :root[data-theme="light"] .field label,:root[data-theme="light"] .auth-tab{color:#333}
-    :root[data-theme="light"] .account-menu{background:#FFF;color:#111;border-color:var(--theme-border);box-shadow:var(--theme-shadow)}
-    :root[data-theme="light"] .account-menu button{color:#111}
-    :root[data-theme="light"] .account-menu button:hover{background:#FFF8D6;color:#111}
-    :root[data-theme="light"] .account-menu-head{border-color:var(--theme-border)}
-    :root[data-theme="light"] .account-menu-head span,:root[data-theme="light"] .account-menu .menu-count{color:#666}
-    :root[data-theme="light"] .account-menu .menu-divider{background:var(--theme-border)}
-    :root[data-theme="light"] .language-option:hover,:root[data-theme="light"] .language-option.active{background:#FFF8D6;color:#111;border-color:var(--lime)}
-    :root[data-theme="light"] .settings-danger{border-color:var(--theme-border)}
-    :root[data-theme="light"] .history-item{background:#F7F7F7;border-color:var(--theme-border)}
-    :root[data-theme="light"] .history-item strong{color:#111}
-    :root[data-theme="light"] .history-item span,:root[data-theme="light"] .history-empty{color:#555}
-    :root[data-theme="light"] .overlay{background:rgba(17,17,17,.45)}
-
-    /* Responsive storefront navigation */
-    .mobile-header-btn,.mobile-nav-panel,.mobile-bottom-nav,.account-bottom-label{display:none}
-    .announcement-bar{width:100%;overflow:hidden;background:var(--lime);color:#111;border-bottom:1px solid rgba(17,17,17,.12);font-size:12px;font-weight:900;letter-spacing:.04em;white-space:nowrap}
-    .announcement-track{display:flex;width:max-content;animation:vk-marquee 24s linear infinite}
-    .announcement-track span{display:block;padding:9px 28px}
-    @keyframes vk-marquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}
-    .mobile-nav-panel{position:fixed;top:76px;left:14px;right:14px;z-index:210;padding:10px;background:var(--surface);border:1px solid var(--line);border-radius:12px;box-shadow:var(--shadow)}
-    .mobile-nav-panel[hidden]{display:none}
-    .mobile-nav-panel a,.mobile-nav-panel button{display:block;width:100%;padding:13px 14px;border:0;border-radius:8px;background:transparent;color:var(--white);text-align:left;font-size:14px;font-weight:800}
-    .mobile-nav-panel a:hover,.mobile-nav-panel button:hover{background:#FFF8D6;color:#111}
-    .mobile-bottom-nav{display:none}
-    @media(prefers-reduced-motion:reduce){.announcement-track{animation:none}.announcement-track span:last-child{display:none}}
-    @media(max-width:767px){
-      body{padding-bottom:76px}
-      .nav{position:relative;justify-content:center}
-      .logo{position:absolute;left:50%;margin:0;transform:translateX(-50%);z-index:2}
-      .mobile-header-btn{display:grid;place-items:center;width:38px;height:38px;padding:0;border:1px solid var(--line);border-radius:9px;background:transparent;color:var(--white);font-size:21px;line-height:1;z-index:3}
-      .mobile-header-btn:first-child{position:absolute;left:0}
-      .mobile-search-btn{position:absolute;right:0}
-      .header-theme-btn{position:absolute;right:0;width:38px;height:38px;font-size:17px;z-index:4}
-      .mobile-search-btn{right:46px}
-      .nav-links{display:none}
-      .nav-actions{position:static;width:0;height:0}
-      .search{display:none}
-      .search.mobile-open{display:block;position:fixed;top:80px;left:14px;right:14px;z-index:220;max-width:none;margin:0}
-      .search.mobile-open input{height:46px;background:var(--surface);color:var(--white)}
-      .account-wrap{position:static;z-index:1;width:100%;height:100%;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:1px;background:transparent;border:0}
-      .account-bottom-label{display:block;color:var(--white);font-size:10px;font-weight:800;line-height:1}
-      .account-wrap .account-menu{position:fixed;top:auto;right:10px;bottom:78px;width:min(330px,calc(100vw - 20px));max-height:calc(100dvh - 96px);overflow-y:auto;z-index:500}
-      .mobile-bottom-nav{position:fixed;left:0;right:0;bottom:0;z-index:300;height:76px;display:grid;grid-template-columns:repeat(4,1fr);padding:7px 0 env(safe-area-inset-bottom);background:var(--surface);border-top:1px solid var(--line);box-shadow:0 -5px 20px rgba(0,0,0,.10)}
-      .mobile-bottom-nav button,.mobile-bottom-nav a,.bottom-account-slot{min-width:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;border:0;background:transparent;color:var(--muted);font-size:21px;text-decoration:none}
-      .mobile-bottom-nav small{font-size:10px;font-weight:800;white-space:nowrap}
-      .mobile-bottom-nav button:hover,.mobile-bottom-nav a:hover,.mobile-bottom-nav a.active{color:var(--lime)}
-      .categories{display:flex;overflow-x:auto;scroll-snap-type:x proximity;padding:4px 2px 12px}
-      .category{flex:0 0 154px;scroll-snap-align:start}
-      .hero-content{padding:40px 0 48px}
+    if (error) {
+      console.error("[VK] email OTP error", error);
+      const message = /error sending confirmation email/i.test(error.message || "")
+       ? "Supabase could not send the email. Check the Resend API key, SMTP settings, and verified sender domain."
+        : error.message || "Could not send the OTP. Please try again.";
+      showToast(message);
+      return;
     }
 
-    /* Supplied Word catalogue */
-    .catalogue-toolbar{display:flex;justify-content:space-between;align-items:center;gap:12px;min-height:28px;margin:-12px 0 18px;color:var(--muted);font-size:12px;font-weight:750}
-    .catalogue-toolbar button{border:1px solid var(--lime);border-radius:999px;background:transparent;color:var(--lime);padding:7px 12px;font-size:11px;font-weight:850}
-    .catalogue-toolbar button:hover{background:var(--lime);color:#111}
-    .catalogue-product .product-image{background:#f6f6f6}
-    .product-photo{position:relative;z-index:1;width:100%;height:100%;display:block;object-fit:contain;object-position:center;padding:10px}
-    .catalogue-product .product-info{display:flex;flex-direction:column;min-height:265px}
-    .catalogue-product h3{white-space:normal;overflow:visible;text-overflow:clip;line-height:1.2;min-height:36px}
-    .catalogue-category{font-size:11px;color:var(--muted);margin:2px 0 4px;font-weight:750}
-    .catalogue-highlights{margin:8px 0 0;padding-left:16px;color:var(--muted);font-size:11px;line-height:1.35;min-height:45px}
-    .catalogue-highlights li{margin:2px 0}
-    .catalogue-product .prices{margin-top:auto;padding-top:10px}
-    .catalogue-product .card-actions{margin-top:12px}
-    .catalogue-product .view-details{border-color:var(--line);color:var(--white)}
-    .catalogue-product .view-details:hover{background:var(--lime);border-color:var(--lime);color:#111}
-    .catalogue-overlay{position:fixed;inset:0;z-index:1000;background:#000b;opacity:0;pointer-events:none;transition:.2s;backdrop-filter:blur(3px)}
-    .catalogue-overlay.show{opacity:1;pointer-events:auto}
-    .catalogue-modal{position:fixed;left:50%;top:50%;z-index:1001;width:min(880px,calc(100% - 28px));max-height:90vh;overflow:auto;background:var(--surface);color:var(--white);border:1px solid var(--line);border-radius:20px;box-shadow:0 30px 80px #000a;padding:28px;transform:translate(-50%,-47%) scale(.97);opacity:0;pointer-events:none;transition:.2s}
-    .catalogue-modal.open{transform:translate(-50%,-50%) scale(1);opacity:1;pointer-events:auto}
-    .catalogue-detail-grid{display:grid;grid-template-columns:minmax(250px,.85fr) minmax(0,1.15fr);gap:28px;align-items:start}
-    .catalogue-detail-image{width:100%;height:auto;aspect-ratio:1/1;border-radius:14px;background:#f6f6f6;display:grid;place-items:center;overflow:hidden}
-    .catalogue-detail-image img{width:100%;height:100%;object-fit:contain;padding:12px}
-    .catalogue-detail-copy h2{font-size:clamp(24px,3vw,38px);line-height:1.05;margin:7px 45px 8px 0;letter-spacing:-.04em}
-    .catalogue-detail-copy h3,.catalogue-detail-spec h3{font-size:14px;text-transform:uppercase;letter-spacing:.08em;margin:22px 0 9px;color:var(--lime)}
-    .catalogue-detail-pack{color:var(--muted);font-size:13px;margin:0 0 12px}
-    .catalogue-detail-copy ul{margin:0;padding-left:19px;color:var(--muted);font-size:13px;line-height:1.55}
-    .catalogue-detail-copy li{margin:5px 0}
-    .catalogue-detail-note{color:var(--muted);font-size:11px;line-height:1.5;margin:18px 0}
-    .catalogue-detail-spec{border-top:1px solid var(--line);margin-top:26px;padding-top:2px}
-    .catalogue-detail-spec p{color:var(--muted);font-size:13px;line-height:1.65;margin:0}
-    :root[data-theme="light"] .catalogue-product .product-image,:root[data-theme="light"] .catalogue-detail-image{background:#f5f5f5}
-    :root[data-theme="light"] .catalogue-product .view-details{color:#111;border-color:#d4d4d4}
-    :root[data-theme="light"] .catalogue-product .view-details:hover{color:#111}
-    @media(max-width:950px){.catalogue-product .product-image{height:220px}.catalogue-detail-grid{grid-template-columns:1fr 1fr;gap:18px}}
-    @media(max-width:620px){.catalogue-toolbar{margin:-8px 0 14px}.catalogue-product .product-image{height:190px}.catalogue-product .product-info{min-height:290px;padding:12px}.catalogue-highlights{font-size:10px}.catalogue-product .card-actions{flex-direction:column}.catalogue-modal{padding:24px 18px 20px;width:min(100% - 18px,560px);max-height:92vh}.catalogue-detail-grid{grid-template-columns:1fr;gap:16px}.catalogue-detail-copy h2{font-size:27px}.catalogue-detail-copy h3{margin-top:16px}}
+    setOtpVisible(mode, true);
+    otpHint(mode, email);
+    showToast("Email OTP sent. Check your inbox and spam folder.");
+  } catch (error) {
+    console.error("[VK] unexpected OTP error", error);
+    showToast("Connection problem. Please reload and try again.");
+  } finally {
+    button.disabled = false;
+    button.textContent = "Resend Email OTP";
+  }
+}
+$("#siSendOtp").addEventListener("click", () => requestOtp("si"));
+$("#suSendOtp").addEventListener("click", () => requestOtp("su"));
+async function verifyOtp(mode) {
+  if (!requireClient()) return;
+  const email = $(`#${mode}Email`).value.trim().toLowerCase();
+  const token = $(`#${mode}Otp`).value.trim();
+  if (!token) return showToast("Enter the OTP from your email.");
+  const { data, error } = await supabaseClient.auth.verifyOtp({ email, token, type: "email" });
+  if (error) { console.error("[VK] verify OTP error", error); return showToast("That OTP is invalid or has expired. Request a new code."); }
+  await hydrateUser(data.user);
+  await supabaseClient.from("login_events").insert({ user_id: data.user.id });
+  closeAuth(); showToast(mode === "su" ? "Your account is ready." : "Signed in successfully.");
+}
+$("#signinPanel").addEventListener("submit", event => { event.preventDefault(); verifyOtp("si"); });
+$("#signupPanel").addEventListener("submit", event => { event.preventDefault(); verifyOtp("su"); });
+$("#siMobile").addEventListener("input", event => event.target.value = event.target.value.replace(/\D/g, "").slice(0, 10));
+$("#suMobile").addEventListener("input", event => event.target.value = event.target.value.replace(/\D/g, "").slice(0, 10));
 
-    /* Persistent wishlist and recently-viewed product panels */
-    .wishlist-modal{width:min(780px,calc(100% - 28px));max-height:90vh;overflow:auto}
-    .wishlist-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;max-height:58vh;overflow:auto;padding:2px}
-    .wishlist-card,.history-product{display:flex;gap:12px;min-width:0;padding:12px;border:1px solid var(--line);border-radius:12px;background:var(--surface-2)}
-    .wishlist-card>img,.history-product>img{width:92px;height:110px;flex:0 0 92px;object-fit:contain;border-radius:8px;background:#f5f5f5}
-    .wishlist-card-copy,.history-product-copy{min-width:0;display:flex;flex-direction:column;gap:4px}
-    .wishlist-card-copy strong,.history-product-copy strong{font-size:13px;line-height:1.3}
-    .wishlist-card-copy span,.history-product-copy span,.history-product-copy small{font-size:11px;color:var(--muted)}
-    .wishlist-card-copy b,.history-product-copy b{font-size:14px;color:var(--lime);margin-top:2px}
-    .wishlist-card-actions,.history-product-actions{display:flex;flex-wrap:wrap;gap:5px;margin-top:auto;padding-top:7px}
-    .wishlist-card-actions button,.history-product-actions button{border:1px solid var(--line);border-radius:7px;background:transparent;color:var(--white);font-size:10px;font-weight:800;padding:7px 8px}
-    .wishlist-card-actions button:hover,.history-product-actions button:hover{border-color:var(--lime);color:var(--lime)}
-    .wishlist-empty-state{grid-column:1/-1;text-align:center;color:var(--muted);padding:28px 10px}
-    .history-product{align-items:stretch}
-    .history-product-copy small{margin-top:2px}
-    .history-product-actions{margin-top:auto}
-    :root[data-theme="light"] .wishlist-card,:root[data-theme="light"] .history-product{background:#f7f7f7;border-color:var(--theme-border)}
-    :root[data-theme="light"] .wishlist-card-actions button,:root[data-theme="light"] .history-product-actions button{color:#111;border-color:#d4d4d4}
-    @media(max-width:620px){.wishlist-modal{width:min(100% - 18px,560px);max-height:92vh;padding:24px 18px 20px}.wishlist-grid{grid-template-columns:1fr;max-height:62vh}.wishlist-card>img,.history-product>img{width:78px;height:96px;flex-basis:78px}.history-product{padding:10px}.wishlist-card-actions button,.history-product-actions button{min-height:34px}}
+/* ---------- Customer data: profile, saved orders, views, login dates ---------- */
+function updateWishlistCount() {
+  wishlist = wishlistItems.size;
+  const count = $("#accountWishlistCount");
+  if (count) count.textContent = `(${wishlist})`;
+}
+
+function userStorageKey(field) {
+  return currentUser ? `vk-user-${currentUser.id}-${field}` : "";
+}
+function readUserArray(field) {
+  if (!currentUser) return [];
+  const metadataValue = currentUser.metadata?.[field];
+  if (Array.isArray(metadataValue)) return metadataValue;
+  try {
+    const saved = JSON.parse(localStorage.getItem(userStorageKey(field)) || "[]");
+    return Array.isArray(saved) ? saved : [];
+  } catch (error) {
+    console.warn(`[VK] could not read ${field} fallback`, error);
+    return [];
+  }
+}
+async function persistUserArray(field, value) {
+  if (!currentUser) return false;
+  const cleanValue = Array.isArray(value) ? value : [];
+  localStorage.setItem(userStorageKey(field), JSON.stringify(cleanValue));
+  currentUser.metadata = { ...(currentUser.metadata || {}), [field]: cleanValue };
+  const { data, error } = await supabaseClient.auth.updateUser({ data: { [field]: cleanValue } });
+  if (error) {
+    console.warn(`[VK] ${field} saved locally because Auth metadata update failed`, error);
+    return false;
+  }
+  currentUser.metadata = data.user?.user_metadata || currentUser.metadata;
+  return true;
+}
+
+async function loadWishlist() {
+  if (!currentUser || !supabaseClient) return;
+  const { data, error } = await supabaseClient.from("wishlist_items")
+    .select("product_id").eq("user_id", currentUser.id);
+  const metadataIds = readUserArray("vk_wishlist").filter(id => typeof id === "string");
+  if (error) {
+    console.warn("[VK] wishlist table unavailable; using Supabase Auth metadata", error);
+    wishlistItems.clear();
+    metadataIds.forEach(id => wishlistItems.add(id));
+  } else {
+    wishlistItems.clear();
+    const ids = data?.length ? data.map(row => row.product_id) : metadataIds;
+    ids.forEach(id => wishlistItems.add(id));
+  }
+  updateWishlistCount();
+  renderCatalogue();
+  renderWishlist();
+}
+
+async function toggleWishlist(product, button) {
+  if (!currentUser) {
+    openAuth();
+    return showToast("Sign in to save products to your wishlist.");
+  }
+  const id = product.id;
+  const saved = wishlistItems.has(id);
+  if (saved) wishlistItems.delete(id); else wishlistItems.add(id);
+  updateWishlistCount();
+  if (button) {
+    button.classList.toggle("active", !saved);
+    button.textContent = saved ? "♡" : "♥";
+  }
+  renderWishlist();
+  const result = saved
+    ? await supabaseClient.from("wishlist_items").delete().eq("user_id", currentUser.id).eq("product_id", id)
+    : await supabaseClient.from("wishlist_items").insert({ user_id: currentUser.id, product_id: id });
+  await persistUserArray("vk_wishlist", [...wishlistItems]);
+  if (result.error) {
+    console.warn("[VK] wishlist table unavailable; saved through Supabase Auth metadata", result.error);
+  }
+  renderCatalogue();
+  showToast(saved ? "Removed from wishlist." : "Saved to wishlist.");
+}
+
+async function removeWishlistProduct(productId) {
+  const product = catalogueProducts.find(item => item.id === productId);
+  if (!product || !currentUser) return;
+  const wasSaved = wishlistItems.delete(productId);
+  if (!wasSaved) return;
+  updateWishlistCount();
+  renderWishlist();
+  const { error } = await supabaseClient.from("wishlist_items").delete().eq("user_id", currentUser.id).eq("product_id", productId);
+  await persistUserArray("vk_wishlist", [...wishlistItems]);
+  if (error) {
+    console.warn("[VK] wishlist table unavailable; removal saved through Supabase Auth metadata", error);
+  }
+  renderCatalogue();
+  showToast("Removed from wishlist.");
+}
+
+function renderWishlist() {
+  const list = $("#wishlistList");
+  if (!list) return;
+  const products = [...wishlistItems].map(id => catalogueProducts.find(product => product.id === id)).filter(Boolean);
+  if (!products.length) {
+    list.innerHTML = '<p class="wishlist-empty-state">Your Wishlist is empty.</p>';
+    return;
+  }
+  list.innerHTML = products.map(product => `<article class="wishlist-card" data-product-id="${escapeHtml(product.id)}">
+    <img src="${escapeHtml(product.image)}" alt="${escapeHtml(product.name)}">
+    <div class="wishlist-card-copy"><strong>${escapeHtml(product.name)}</strong><span>${escapeHtml(product.pack)}</span><b>${money(product.price)}</b>
+      <div class="wishlist-card-actions"><button type="button" data-wishlist-action="view">View Product</button><button type="button" data-wishlist-action="cart">Add to Cart</button><button type="button" data-wishlist-action="remove">Remove ♡</button></div>
+    </div>
+  </article>`).join("");
+}
+
+$("#wishlistList")?.addEventListener("click", event => {
+  const button = event.target.closest("button[data-wishlist-action]");
+  const card = event.target.closest("[data-product-id]");
+  if (!button || !card) return;
+  const product = catalogueProducts.find(item => item.id === card.dataset.productId);
+  if (!product) return;
+  if (button.dataset.wishlistAction === "view") { closeWishlist(); openProductDetails(product.id); }
+  else if (button.dataset.wishlistAction === "cart") addProduct({ dataset: { name: product.name, price: String(product.price) } });
+  else removeWishlistProduct(product.id);
+});
+
+async function trackProductView(product) {
+  if (!currentUser || !product || viewUpdatesInFlight.has(product.id)) return;
+  viewUpdatesInFlight.add(product.id);
+  try {
+    const viewedAt = new Date().toISOString();
+    const metadataRows = readUserArray("vk_view_history")
+      .filter(row => row && row.product_id !== product.id);
+    await persistUserArray("vk_view_history", [
+      { product_id: product.id, viewed_at: viewedAt },
+      ...metadataRows
+    ].slice(0, 50));
+    const { error } = await supabaseClient.from("view_history").upsert({
+      user_id: currentUser.id,
+      product_id: product.id,
+      product_name: product.name,
+      product_price: Number(product.price),
+      viewed_at: viewedAt
+    }, { onConflict: "user_id,product_id" });
+    if (error) console.warn("[VK] view history table unavailable; saved through Supabase Auth metadata", error);
+    viewedProducts.add(product.id);
+  } finally {
+    viewUpdatesInFlight.delete(product.id);
+  }
+}
+$("#checkoutBtn").addEventListener("click", async () => {
+  if (!cart.length) return showToast("Your cart is empty.");
+  if (!currentUser) { openAuth(); return showToast("Sign in to save your order."); }
+  const total = cart.reduce((sum, item) => sum + item.price * item.qty, 0);
+  const { error } = await supabaseClient.from("order_history").insert({ user_id: currentUser.id, items: cart, total_amount: total, status: "pending" });
+  if (error) { console.error("[VK] order save error", error); return showToast("Could not save your order. Please try again."); }
+  cart.splice(0, cart.length); renderCart(); closeCart();
+  showToast("Order saved. Payment confirmation can be added next.");
+});
+
+const historyOverlay = $("#historyOverlay"), historyModal = $("#historyModal");
+function closeHistory() { historyOverlay.classList.remove("show"); historyModal.classList.remove("open"); }
+$("#historyClose").addEventListener("click", closeHistory);
+historyOverlay.addEventListener("click", closeHistory);
+const wishlistOverlay = $("#wishlistOverlay"), wishlistModal = $("#wishlistModal");
+function closeWishlist() { wishlistOverlay.classList.remove("show"); wishlistModal.classList.remove("open"); }
+$("#wishlistClose").addEventListener("click", closeWishlist);
+wishlistOverlay.addEventListener("click", closeWishlist);
+
+function formatHistoryDate(value) {
+  return new Date(value).toLocaleString("en-IN", { dateStyle: "medium", timeStyle: "short" });
+}
+function renderViewHistory(rows) {
+  const list = $("#historyList");
+  if (!rows?.length) {
+    list.innerHTML = '<p class="history-empty">You haven\'t viewed any products yet.</p>';
+    return;
+  }
+  list.innerHTML = rows.map(row => {
+    const product = catalogueProducts.find(item => item.id === row.product_id) || {
+      id: row.product_id || "",
+      name: row.product_name || "Product",
+      price: Number(row.product_price || 0),
+      pack: "",
+      image: ""
+    };
+    return `<article class="history-product" data-product-id="${escapeHtml(product.id)}">
+      ${product.image ? `<img src="${escapeHtml(product.image)}" alt="${escapeHtml(product.name)}">` : ""}
+      <div class="history-product-copy"><strong>${escapeHtml(product.name)}</strong><span>${escapeHtml(product.pack || "Product details")}</span><b>${money(product.price)}</b><small>Viewed ${formatHistoryDate(row.viewed_at)}</small>
+        <div class="history-product-actions">${product.id ? '<button type="button" data-history-action="view">View Product</button>' : ""}<button type="button" data-history-action="cart">Add to Cart</button></div>
+      </div>
+    </article>`;
+  }).join("");
+}
+$("#historyList")?.addEventListener("click", event => {
+  const button = event.target.closest("button[data-history-action]");
+  const card = event.target.closest("[data-product-id]");
+  if (!button || !card) return;
+  const product = catalogueProducts.find(item => item.id === card.dataset.productId);
+  if (!product) return;
+  if (button.dataset.historyAction === "view") { closeHistory(); openProductDetails(product.id); }
+  else addProduct({ dataset: { name: product.name, price: String(product.price) } });
+});
+function mergedViewHistory(tableRows, metadataRows) {
+  const rowsByProduct = new Map();
+  [...(tableRows || []), ...(metadataRows || [])].forEach((row, index) => {
+    if (!row) return;
+    const key = row.product_id || `legacy-${index}-${row.product_name || "product"}`;
+    const existing = rowsByProduct.get(key);
+    if (!existing) return rowsByProduct.set(key, row);
+    const newestViewedAt = new Date(existing.viewed_at) >= new Date(row.viewed_at) ? existing.viewed_at : row.viewed_at;
+    rowsByProduct.set(key, {
+      ...existing,
+      ...row,
+      product_name: row.product_name || existing.product_name,
+      product_price: row.product_price ?? existing.product_price,
+      viewed_at: newestViewedAt
+    });
+  });
+  return [...rowsByProduct.values()]
+    .sort((left, right) => new Date(right.viewed_at) - new Date(left.viewed_at))
+    .slice(0, 30);
+}
+async function openHistory(type) {
+  if (!currentUser) return openAuth();
+  closeAccountMenu();
+  const config = {
+    orders: { title: "Order History", subtitle: "Your saved order requests.", table: "order_history", select: "items,total_amount,status,created_at", order: "created_at" },
+    views: { title: "View History", subtitle: "Products you viewed while signed in.", table: "view_history", select: "product_id,product_name,product_price,viewed_at", order: "viewed_at" },
+    logins: { title: "Login History", subtitle: "Your recent account access.", table: "login_events", select: "created_at", order: "created_at" }
+  }[type];
+  $("#historyTitle").textContent = config.title; $("#historySub").textContent = config.subtitle;
+  $("#historyList").innerHTML = '<p class="history-empty">Loading your saved data…</p>';
+  historyOverlay.classList.add("show"); historyModal.classList.add("open");
+  const { data, error } = await supabaseClient.from(config.table).select(config.select).order(config.order, { ascending: false }).limit(30);
+  if (type === "views") {
+    if (error) console.warn("[VK] view history table unavailable; using Supabase Auth metadata", error);
+    return renderViewHistory(mergedViewHistory(error ? [] : data, readUserArray("vk_view_history")));
+  }
+  if (error) {
+    console.error("[VK] history error", error);
+    $("#historyList").innerHTML = '<p class="history-empty">No saved data yet.</p>';
+    return;
+  }
+  if (!data?.length) { $("#historyList").innerHTML = '<p class="history-empty">No saved data yet.</p>'; return; }
+  $("#historyList").innerHTML = data.map(row => {
+    const date = formatHistoryDate(row.created_at || row.viewed_at);
+    if (type === "orders") return `<article class="history-item"><strong>${escapeHtml(row.status)} order · ${money(row.total_amount)}</strong><span>${row.items.length} item(s) · ${date}</span></article>`;
+    return `<article class="history-item"><strong>Signed in</strong><span>${date}</span></article>`;
+  }).join("");
+}
+$("#openOrdersBtn").addEventListener("click", () => openHistory("orders"));
+$("#openViewsBtn").addEventListener("click", () => openHistory("views"));
+$("#openLoginsBtn").addEventListener("click", () => openHistory("logins"));
+
+const settingsOverlay = $("#settingsOverlay"), settingsModal = $("#settingsModal");
+function openSettings() {
+  if (!currentUser) return openAuth();
+  closeAccountMenu();
+  $("#setName").value = currentUser.first_name || "";
+  $("#setSurname").value = currentUser.last_name || "";
+  $("#setEmail").value = currentUser.email || "";
+  settingsOverlay.classList.add("show"); settingsModal.classList.add("open");
+}
+function closeSettings() { settingsOverlay.classList.remove("show"); settingsModal.classList.remove("open"); }
+$("#openProfileBtn").addEventListener("click", openSettings);
+$("#openSettingsBtn").addEventListener("click", openSettings);
+$("#settingsClose").addEventListener("click", closeSettings);
+settingsOverlay.addEventListener("click", closeSettings);
+$("#settingsForm").addEventListener("submit", async event => {
+  event.preventDefault();
+  const first_name = $("#setName").value.trim(), last_name = $("#setSurname").value.trim();
+  if (!first_name || !last_name) return showToast("Enter your name and surname.");
+  const { error } = await supabaseClient.from("profiles").update({ first_name, last_name }).eq("id", currentUser.id);
+  if (error) return showToast("Could not save your profile.");
+  currentUser = { ...currentUser, first_name, last_name };
+  setLoggedIn(currentUser); closeSettings(); showToast("Profile saved.");
+});
+
+const languageOverlay = $("#languageOverlay"), languageModal = $("#languageModal");
+function openLanguage() { closeAccountMenu(); languageOverlay.classList.add("show"); languageModal.classList.add("open"); }
+function closeLanguage() { languageOverlay.classList.remove("show"); languageModal.classList.remove("open"); }
+$("#openLanguageBtn").addEventListener("click", openLanguage);
+$("#openWishlistBtn").addEventListener("click", openWishlist);
+$("#appearanceBtn").addEventListener("click", toggleTheme);
+$("#languageClose").addEventListener("click", closeLanguage);
+languageOverlay.addEventListener("click", closeLanguage);
+document.querySelectorAll(".language-option").forEach(button => button.addEventListener("click", () => { localStorage.setItem("vk-language", button.dataset.language); document.documentElement.lang = button.dataset.language; closeLanguage(); showToast(`${button.textContent} selected.`); }));
+$("#deleteAccountBtn").addEventListener("click", async () => {
+  if (!currentUser || !confirm("Delete your account permanently?")) return;
+  const { error } = await supabaseClient.rpc("delete_user_account");
+  if (error) return showToast("Account deletion could not be completed.");
+  await supabaseClient.auth.signOut(); closeSettings(); setLoggedOut(); showToast("Your account has been deleted.");
+});
+
+/* ---------- Persistent Supabase session ---------- */
+if (supabaseClient) {
+  supabaseClient.auth.onAuthStateChange((event, session) => {
+    if (event === "SIGNED_OUT") setLoggedOut();
+    else if (session?.user) setTimeout(() => hydrateUser(session.user), 0);
+  });
+  supabaseClient.auth.getSession().then(({ data }) => hydrateUser(data.session?.user || null));
+}
+renderCart();
