@@ -156,16 +156,6 @@
       </div>
     </section>
 
-    <section>
-      <div class="container">
-        <div class="section-head"><div><div class="eyebrow">Community powered</div><h2>What Our Customers Say</h2></div></div>
-        <div class="reviews">
-          <article class="review"><div class="quote">“</div><p>Clean shopping experience and the product details make it easy to find the right option for my routine.</p><footer><span class="avatar">AR</span><span>Arjun R. <small style="display:block;color:#8f9992;font-weight:500">Verified customer</small></span></footer></article>
-          <article class="review"><div class="quote">“</div><p>The delivery updates were straightforward, and the packaging arrived in great condition. Will shop again.</p><footer><span class="avatar">SK</span><span>Shreya K. <small style="display:block;color:#8f9992;font-weight:500">Verified customer</small></span></footer></article>
-          <article class="review"><div class="quote">“</div><p>Love the focused range and easy category navigation. It feels designed for people who take training seriously.</p><footer><span class="avatar">RV</span><span>Rohit V. <small style="display:block;color:#8f9992;font-weight:500">Verified customer</small></span></footer></article>
-        </div>
-      </div>
-    </section>
   </main>
 
   <footer class="main-footer">
@@ -227,6 +217,13 @@
       <div class="field otp-field" id="suOtpField" hidden><label for="suOtp">Email OTP <span id="suOtpHint"></span></label><input id="suOtp" type="text" inputmode="numeric" maxlength="8" autocomplete="one-time-code" placeholder="Enter the code from your email"></div>
       <button class="btn btn-dark full" id="signUpBtn" type="submit" hidden>Verify & Create Account →</button>
     </form>
+  </div>
+
+  <div class="auth-overlay" id="wishlistOverlay"></div>
+  <div class="auth-modal wishlist-modal" id="wishlistModal" role="dialog" aria-modal="true" aria-labelledby="wishlistTitle">
+    <button class="auth-close" id="wishlistClose" aria-label="Close wishlist">×</button>
+    <div class="auth-head"><img class="auth-logo" src="VK_logo-removebg-preview.png" alt="VK Nutrition"><h2 id="wishlistTitle">Wishlist</h2><p class="auth-sub">Products you saved for later.</p></div>
+    <div class="wishlist-grid" id="wishlistList"></div>
   </div>
 
   <div class="auth-overlay" id="historyOverlay"></div>
