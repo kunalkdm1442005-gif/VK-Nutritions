@@ -160,7 +160,7 @@ function addProduct(card, openDrawer = false) {
 function closeCart() { $("#drawer").classList.remove("open"); $("#overlay").classList.remove("show"); }
 document.getElementById("newArrivalsSection")?.remove();
 renderCatalogue();
-document.querySelectorAll(".category[data-category]").forEach(button => button.addEventListener("click", event => {
+document.querySelectorAll(".category[data-category], .mobile-category-link[data-category]").forEach(button => button.addEventListener("click", event => {
   event.preventDefault();
   catalogueCategory = button.dataset.category;
   renderCatalogue();
