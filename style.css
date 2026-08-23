@@ -347,3 +347,39 @@
       .category{flex:0 0 154px;scroll-snap-align:start}
       .hero-content{padding:40px 0 48px}
     }
+
+    /* Supplied Word catalogue */
+    .catalogue-toolbar{display:flex;justify-content:space-between;align-items:center;gap:12px;min-height:28px;margin:-12px 0 18px;color:var(--muted);font-size:12px;font-weight:750}
+    .catalogue-toolbar button{border:1px solid var(--lime);border-radius:999px;background:transparent;color:var(--lime);padding:7px 12px;font-size:11px;font-weight:850}
+    .catalogue-toolbar button:hover{background:var(--lime);color:#111}
+    .catalogue-product .product-image{background:#f6f6f6}
+    .product-photo{position:relative;z-index:1;width:100%;height:100%;display:block;object-fit:contain;object-position:center;padding:10px}
+    .catalogue-product .product-info{display:flex;flex-direction:column;min-height:265px}
+    .catalogue-product h3{white-space:normal;overflow:visible;text-overflow:clip;line-height:1.2;min-height:36px}
+    .catalogue-category{font-size:11px;color:var(--muted);margin:2px 0 4px;font-weight:750}
+    .catalogue-highlights{margin:8px 0 0;padding-left:16px;color:var(--muted);font-size:11px;line-height:1.35;min-height:45px}
+    .catalogue-highlights li{margin:2px 0}
+    .catalogue-product .prices{margin-top:auto;padding-top:10px}
+    .catalogue-product .card-actions{margin-top:12px}
+    .catalogue-product .view-details{border-color:var(--line);color:var(--white)}
+    .catalogue-product .view-details:hover{background:var(--lime);border-color:var(--lime);color:#111}
+    .catalogue-overlay{position:fixed;inset:0;z-index:1000;background:#000b;opacity:0;pointer-events:none;transition:.2s;backdrop-filter:blur(3px)}
+    .catalogue-overlay.show{opacity:1;pointer-events:auto}
+    .catalogue-modal{position:fixed;left:50%;top:50%;z-index:1001;width:min(880px,calc(100% - 28px));max-height:90vh;overflow:auto;background:var(--surface);color:var(--white);border:1px solid var(--line);border-radius:20px;box-shadow:0 30px 80px #000a;padding:28px;transform:translate(-50%,-47%) scale(.97);opacity:0;pointer-events:none;transition:.2s}
+    .catalogue-modal.open{transform:translate(-50%,-50%) scale(1);opacity:1;pointer-events:auto}
+    .catalogue-detail-grid{display:grid;grid-template-columns:minmax(250px,.85fr) minmax(0,1.15fr);gap:28px;align-items:start}
+    .catalogue-detail-image{height:330px;border-radius:14px;background:#f6f6f6;display:grid;place-items:center;overflow:hidden}
+    .catalogue-detail-image img{width:100%;height:100%;object-fit:contain;padding:12px}
+    .catalogue-detail-copy h2{font-size:clamp(24px,3vw,38px);line-height:1.05;margin:7px 45px 8px 0;letter-spacing:-.04em}
+    .catalogue-detail-copy h3,.catalogue-detail-spec h3{font-size:14px;text-transform:uppercase;letter-spacing:.08em;margin:22px 0 9px;color:var(--lime)}
+    .catalogue-detail-pack{color:var(--muted);font-size:13px;margin:0 0 12px}
+    .catalogue-detail-copy ul{margin:0;padding-left:19px;color:var(--muted);font-size:13px;line-height:1.55}
+    .catalogue-detail-copy li{margin:5px 0}
+    .catalogue-detail-note{color:var(--muted);font-size:11px;line-height:1.5;margin:18px 0}
+    .catalogue-detail-spec{border-top:1px solid var(--line);margin-top:26px;padding-top:2px}
+    .catalogue-detail-spec p{color:var(--muted);font-size:13px;line-height:1.65;margin:0}
+    :root[data-theme="light"] .catalogue-product .product-image,:root[data-theme="light"] .catalogue-detail-image{background:#f5f5f5}
+    :root[data-theme="light"] .catalogue-product .view-details{color:#111;border-color:#d4d4d4}
+    :root[data-theme="light"] .catalogue-product .view-details:hover{color:#111}
+    @media(max-width:950px){.catalogue-product .product-image{height:220px}.catalogue-detail-grid{grid-template-columns:1fr 1fr;gap:18px}}
+    @media(max-width:620px){.catalogue-toolbar{margin:-8px 0 14px}.catalogue-product .product-image{height:190px}.catalogue-product .product-info{min-height:290px;padding:12px}.catalogue-highlights{font-size:10px}.catalogue-product .card-actions{flex-direction:column}.catalogue-modal{padding:24px 18px 20px;width:min(100% - 18px,560px);max-height:92vh}.catalogue-detail-grid{grid-template-columns:1fr;gap:16px}.catalogue-detail-image{height:235px}.catalogue-detail-copy h2{font-size:27px}.catalogue-detail-copy h3{margin-top:16px}}
