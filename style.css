@@ -109,8 +109,10 @@
     .category h3{margin:51px 0 0;font-size:15px;letter-spacing:-.03em}.category p{margin:4px 0 0;color:var(--muted);font-size:11px}
     .cat-icon{position:absolute;right:14px;top:15px;font-size:39px;transition:.25s;filter:grayscale(1) brightness(1.8)}
     .promo{display:grid;grid-template-columns:1.2fr .8fr;min-height:350px;border-radius:20px;overflow:hidden;background:#d5ff48;color:#0d1608}
-    .promo-copy{padding:55px;position:relative}.promo-copy h2{font-size:45px;max-width:450px;line-height:.92;letter-spacing:-.06em;text-transform:uppercase;margin:14px 0}.promo-copy p{max-width:400px;font-weight:600;color:#334121;line-height:1.5;font-size:14px}.promo-copy .btn{background:#111b0d;color:#fff;margin-top:12px}
+   .promo-copy{padding:55px;position:relative}.promo-copy h2{font-size:45px;max-width:450px;line-height:.92;letter-spacing:-.06em;text-transform:uppercase;margin:14px 0}.promo-copy p{max-width:400px;font-weight:600;color:#334121;line-height:1.5;font-size:14px}.promo-copy .btn{background:#111b0d;color:#fff;margin-top:12px}
+    .promo-price{display:inline-flex;align-items:center;margin-top:14px;padding:9px 16px;border:2px solid #0F172A;border-radius:999px;background:#fff;color:#0F172A;font-size:25px;font-weight:1000;line-height:1;box-shadow:0 7px 18px rgba(15,23,42,.12)}
     .promo-art{position:relative;background:linear-gradient(125deg,#192315,#394f1a);overflow:hidden}.promo-art:before{content:"20%";position:absolute;right:27px;top:25px;color:rgba(200,255,40,.22);font-size:125px;font-weight:1000;letter-spacing:-12px}.promo-tub{transform:scale(1.15) rotate(10deg);bottom:35px;right:100px}.promo-pouch{position:absolute;right:18px;bottom:17px;transform:rotate(13deg)}
+    .promo-product-photo:before{display:none}.promo-product-photo img{display:block;width:100%;height:100%;object-fit:cover;object-position:center}
     .why{background:linear-gradient(135deg,#101410,#171f19)}
     .trust-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
     .trust{padding:25px;background:#151b17;border:1px solid var(--line);border-radius:14px}.trust-icon{font-size:25px;color:var(--lime)}.trust h3{font-size:16px;margin:15px 0 8px}.trust p{color:var(--muted);font-size:13px;line-height:1.55;margin:0}
