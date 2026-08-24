@@ -7,4 +7,4 @@
 
 The checkout creates orders with `payment_status: pending` because this project does not currently contain a live payment-gateway integration. Add payment-server code separately before changing an order to `paid`.
 
-WhatsApp notifications use a pre-filled action for `+91 84259 20360` only after the order or cancellation has been saved. No WhatsApp API token is stored in the website code.
+WhatsApp notifications use a pre-filled action for `+91 7738963610` only after the order or cancellation has been saved. No WhatsApp API token is stored in the website code.
