@@ -14,14 +14,14 @@
       document.documentElement.dataset.theme = theme;
     })();
   </script>
- <link rel="stylesheet" href="./style.css?v=20">
+  <link rel="stylesheet" href="./style.css?v=19">
 
 </head>
 <body>
   <header>
     <nav class="container nav">
       <button class="mobile-header-btn" id="mobileNavToggle" type="button" aria-label="Open navigation" aria-expanded="false">☰</button>
-      <a href="#" class="logo" aria-label="VK Nutrition home"><img class="logo-img" src="./vk_logo_2-removebg-preview.png" alt="VK Nutrition logo"></a>
+      <a href="#" class="logo" aria-label="VK Nutrition home"><img class="logo-img" src="./Final logo.png" alt="VK Nutrition logo"></a>
       <div class="nav-links">
         <a class="active" href="#home">Home</a><a href="#shop">Shop</a><a href="#categories">Categories</a><a href="#offers">Offers</a>
       </div>
@@ -50,26 +50,14 @@
         </div>
       </div>
       <button class="mobile-header-btn mobile-search-btn" id="mobileSearchBtn" type="button" aria-label="Open search">⌕</button>
+      <button class="header-theme-btn" id="headerThemeBtn" type="button" aria-label="Switch to dark mode">🌙</button>
     </nav>
   </header>
   <div class="announcement-bar" role="status" aria-label="Delivery offer">
     <div class="announcement-track"><span>★ Prepay your order and get FREE delivery. ★</span><span aria-hidden="true">★ Prepay your order and get FREE delivery. ★</span></div>
   </div>
   <div class="mobile-nav-panel" id="mobileNavPanel" hidden>
-   <a href="#home">Home</a><a href="#shop">Shop All Products</a><a href="#offers">Offers</a><button type="button" id="mobileTrackBtn">⌖ Track Order</button>
-    <div class="mobile-menu-heading">Shop by Category</div>
-    <a class="mobile-category-link" data-category="Whey Protein" href="#shop">Whey Protein</a>
-    <a class="mobile-category-link" data-category="Whey Isolate" href="#shop">Whey Isolate</a>
-    <a class="mobile-category-link" data-category="Mass Gainers" href="#shop">Mass Gainers</a>
-    <a class="mobile-category-link" data-category="Pre-Workout" href="#shop">Pre-Workout</a>
-    <a class="mobile-category-link" data-category="Creatine / Amino Acids" href="#shop">Creatine / Amino Acids</a>
-    <a class="mobile-category-link" data-category="BCAA / EAA" href="#shop">BCAA / EAA</a>
-    <a class="mobile-category-link" data-category="Peanut Butter" href="#shop">Peanut Butter</a>
-    <a class="mobile-category-link" data-category="Vitamins &amp; Minerals" href="#shop">Vitamins &amp; Minerals</a>
-    <a class="mobile-category-link" data-category="Anabolic Supplements" href="#shop">Anabolic Supplements</a>
-    <a class="mobile-category-link" data-category="Health &amp; Wellness" href="#shop">Health &amp; Wellness</a>
-    <a class="mobile-category-link" data-category="Amino Acids" href="#shop">Amino Acids</a>
-    <a class="mobile-category-link" data-category="Gym Accessories" href="#shop">Gym Accessories</a>
+    <a href="#home">Home</a><a href="#shop">Shop</a><a href="#categories">Categories</a><a href="#offers">Offers</a><button type="button" id="mobileTrackBtn">⌖ Track Order</button>
   </div>
 
   <main>
@@ -109,7 +97,7 @@
 
     <section id="shop">
       <div class="container">
-      <div class="section-head"><div><div class="eyebrow">Train with confidence</div><h2>Best Sellers</h2><p>Popular choices from the VK Nutrition collection.</p></div><a href="#categories" class="view-all">CATEGORIES →</a></div>
+        <div class="section-head"><div><div class="eyebrow">Train with confidence</div><h2>Best Sellers</h2><p>Popular choices from the VK Nutrition collection.</p></div><a href="#shop" class="view-all">VIEW ALL PRODUCTS →</a></div>
         <div class="catalogue-toolbar"><span id="catalogueResultCount">Loading catalogue…</span><button type="button" id="clearCatalogueFilter" hidden>Clear filter</button></div>
         <div class="product-grid" id="productGrid"></div>
       </div>
@@ -138,8 +126,8 @@
     <section id="offers">
       <div class="container">
         <div class="promo">
-          <div class="promo-copy"><h2>More strength.<br>More savings.</h2><p>Save on selected VK Nutrition essentials. Explore the current offer collection while it lasts.</p><div class="promo-price" aria-label="Offer price ₹2,895">₹2,895</div><a class="btn" href="#shop">RECOMMENDED BY VK NUTRITION →</a></div>
-          <div class="promo-art promo-product-photo"><img src="./catalogue-images/catalogue-01.jpg" alt="Heimac Labs Golden Whey Protein"></div>
+          <div class="promo-copy"><div class="eyebrow" style="color:#1c3503">Limited time offer</div><h2>More strength.<br>More savings.</h2><p>Save on selected VK Nutrition essentials. Explore the current offer collection while it lasts.</p><a class="btn" href="#shop">SHOP SPECIAL OFFERS →</a></div>
+          <div class="promo-art"><div class="tub promo-tub"><div class="label"><small>VK NUTRITION</small>WHEY<br><b>PROTEIN</b><span>PREMIUM BLEND</span></div></div><div class="mini-pouch promo-pouch"><div class="mini-label"><small>VK NUTRITION</small>MASS<br>GAINER<span>VANILLA</span></div></div></div>
         </div>
       </div>
     </section>
