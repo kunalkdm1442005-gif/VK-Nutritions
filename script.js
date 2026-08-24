@@ -557,15 +557,100 @@ async function trackProductView(product) {
     viewUpdatesInFlight.delete(product.id);
   }
 }
-$("#checkoutBtn").addEventListener("click", async () => {
+/* ---------- Checkout: delivery details, review and saved order ---------- */
+const VK_WHATSAPP_ORDER_NUMBER = "918425920360";
+let checkoutAddress = null;
+let checkoutBusy = false;
+const checkoutOverlay = $("#checkoutOverlay"), checkoutModal = $("#checkoutModal");
+const shippingFieldNames = ["Name", "Mobile", "Email", "Address1", "Pin", "City", "State", "Country"];
+function checkoutTotals() {
+  const subtotal = cart.reduce((sum, item) => sum + item.price * item.qty, 0);
+  return { subtotal, shipping: 0, discount: 0, total: subtotal };
+}
+function setShippingError(field, message = "") {
+  const input = $(`#ship${field}`), error = $(`#ship${field}Error`);
+  if (!input || !error) return;
+  input.closest(".checkout-field").classList.toggle("invalid", Boolean(message));
+  error.textContent = message;
+}
+function readShippingAddress() {
+  return {
+    full_name: $("#shipName").value.trim(), mobile: $("#shipMobile").value.replace(/\D/g, ""), email: $("#shipEmail").value.trim(),
+    address_line_1: $("#shipAddress1").value.trim(), address_line_2: $("#shipAddress2").value.trim(), landmark: $("#shipLandmark").value.trim(),
+    pin_code: $("#shipPin").value.replace(/\D/g, ""), city: $("#shipCity").value.trim(), state: $("#shipState").value.trim(), country: $("#shipCountry").value.trim() || "India"
+  };
+}
+function validateShippingAddress(address) {
+  shippingFieldNames.forEach(field => setShippingError(field));
+  let valid = true;
+  const checks = [
+    ["Name", address.full_name, "Enter your full name."], ["Mobile", /^\d{10}$/.test(address.mobile), "Enter a valid 10-digit mobile number."],
+    ["Email", /^\S+@\S+\.\S+$/.test(address.email), "Enter a valid email address."], ["Address1", address.address_line_1, "Enter your delivery address."],
+    ["Pin", /^\d{6}$/.test(address.pin_code), "Enter a valid 6-digit PIN code."], ["City", address.city, "Enter your city."],
+    ["State", address.state, "Enter your state."], ["Country", address.country, "Enter your country."]
+  ];
+  checks.forEach(([field, result, message]) => { if (!result) { valid = false; setShippingError(field, message); } });
+  return valid;
+}
+function fillShippingAddress(address = {}) {
+  $("#shipName").value = address.full_name || [currentUser?.first_name, currentUser?.last_name].filter(Boolean).join(" ");
+  $("#shipMobile").value = String(address.mobile || currentUser?.phone || "").replace(/^\+91/, "");
+  $("#shipEmail").value = address.email || currentUser?.email || "";
+  $("#shipAddress1").value = address.address_line_1 || ""; $("#shipAddress2").value = address.address_line_2 || "";
+  $("#shipLandmark").value = address.landmark || ""; $("#shipPin").value = address.pin_code || "";
+  $("#shipCity").value = address.city || ""; $("#shipState").value = address.state || ""; $("#shipCountry").value = address.country || "India";
+}
+async function loadDefaultAddress() {
+  if (!currentUser || !supabaseClient) return fillShippingAddress();
+  const { data, error } = await supabaseClient.from("saved_addresses").select("*").eq("user_id", currentUser.id).order("is_default", { ascending: false }).limit(1);
+  if (error) { console.warn("[VK] saved address unavailable", error); return fillShippingAddress(); }
+  fillShippingAddress(data?.[0] || {});
+}
+function openCheckout() {
   if (!cart.length) return showToast("Your cart is empty.");
-  if (!currentUser) { openAuth(); return showToast("Sign in to save your order."); }
-  const total = cart.reduce((sum, item) => sum + item.price * item.qty, 0);
-  const { error } = await supabaseClient.from("order_history").insert({ user_id: currentUser.id, items: cart, total_amount: total, status: "pending" });
-  if (error) { console.error("[VK] order save error", error); return showToast("Could not save your order. Please try again."); }
-  cart.splice(0, cart.length); renderCart(); closeCart();
-  showToast("Order saved. Payment confirmation can be added next.");
-});
+  if (!currentUser) { openAuth(); return showToast("Sign in before checkout."); }
+  checkoutAddress = null; $("#shippingForm").hidden = false; $("#checkoutReview").hidden = true;
+  $("#checkoutTitle").textContent = "Delivery Details"; $("#checkoutStepText").textContent = "Enter a delivery address before continuing to order review.";
+  checkoutOverlay.classList.add("show"); checkoutModal.classList.add("open"); loadDefaultAddress();
+}
+function closeCheckout() { if (checkoutBusy) return; checkoutOverlay.classList.remove("show"); checkoutModal.classList.remove("open"); }
+function formatAddress(address) { return [address.address_line_1, address.address_line_2, address.landmark].filter(Boolean).join(", "); }
+function whatsappLink(type, order) {
+  const address = order.shipping_address || {}; const totals = { subtotal: order.subtotal_amount ?? order.total_amount, shipping: order.shipping_charge ?? 0, discount: order.discount_amount ?? 0, total: order.final_amount ?? order.total_amount };
+  const items = (order.items || []).map(item => `${item.name} × ${item.qty} — ${money(item.price * item.qty)}`).join("\n");
+  const cancelled = type === "cancel";
+  const text = `${cancelled ? "VK NUTRITION — ORDER CANCELLED" : "NEW VK NUTRITION ORDER"}\n\nOrder ID: ${order.order_code || `VK-${order.id}`}\n\nCustomer:\n${order.customer_name || address.full_name || "Customer"}\n${order.customer_mobile || address.mobile || ""}\n\nDelivery Address:\n${formatAddress(address)}\n${address.city || ""}, ${address.state || ""} - ${address.pin_code || ""}\n\n${cancelled ? "Cancelled Items" : "Order"}:\n${items}\n\nSubtotal: ${money(totals.subtotal)}\nDelivery: ${money(totals.shipping)}\nDiscount: ${money(totals.discount)}\nTotal: ${money(totals.total)}\n\nPayment Status: ${order.payment_status || "pending"}\nOrder Status: ${cancelled ? "Cancelled" : (order.status || "Placed")}${cancelled ? `\nCancellation Date/Time: ${formatHistoryDate(order.cancelled_at || new Date().toISOString())}${order.cancellation_reason ? `\nCancellation Reason: ${order.cancellation_reason}` : ""}` : ""}`;
+  return `https://wa.me/${VK_WHATSAPP_ORDER_NUMBER}?text=${encodeURIComponent(text)}`;
+}
+function renderCheckoutReview() {
+  const totals = checkoutTotals(); const address = checkoutAddress;
+  $("#shippingForm").hidden = true; $("#checkoutReview").hidden = false;
+  $("#checkoutTitle").textContent = "Review Order"; $("#checkoutStepText").textContent = "Confirm your delivery details and order summary before payment.";
+  $("#checkoutReview").innerHTML = `<div class="checkout-review-delivery"><h3>Deliver To</h3><p><strong>${escapeHtml(address.full_name)}</strong></p><p>${escapeHtml(formatAddress(address))}</p><p>${escapeHtml(address.city)}, ${escapeHtml(address.state)} - ${escapeHtml(address.pin_code)}</p><p>+91 ${escapeHtml(address.mobile)} · ${escapeHtml(address.email)}</p></div><div class="checkout-review-summary"><h3>Order Summary</h3><div class="checkout-review-items">${cart.map(item => `<div class="checkout-review-item"><span>${escapeHtml(item.name)} × ${item.qty}</span><strong>${money(item.price * item.qty)}</strong></div>`).join("")}</div><div class="checkout-review-total"><span>Subtotal</span><span>${money(totals.subtotal)}</span></div><div class="checkout-review-item"><span>Delivery</span><span>${money(totals.shipping)}</span></div><div class="checkout-review-item"><span>Discount</span><span>${money(totals.discount)}</span></div><div class="checkout-review-total"><span>Total</span><span>${money(totals.total)}</span></div></div><div class="checkout-review-actions"><button class="btn btn-dark" id="changeAddressBtn" type="button">CHANGE ADDRESS</button><button class="btn btn-primary" id="placeOrderBtn" type="button">PROCEED TO PAYMENT →</button></div><p class="checkout-note">No live payment gateway is configured in this project. The order will be saved with payment status: Pending.</p>`;
+  $("#changeAddressBtn").addEventListener("click", () => { $("#shippingForm").hidden = false; $("#checkoutReview").hidden = true; $("#checkoutTitle").textContent = "Delivery Details"; });
+  $("#placeOrderBtn").addEventListener("click", placeCheckoutOrder);
+}
+async function saveAddressForFuture(address) {
+  if (!$("#saveAddress").checked) return;
+  const { data: existing } = await supabaseClient.from("saved_addresses").select("id").eq("user_id", currentUser.id).limit(1);
+  const payload = { user_id: currentUser.id, ...address, is_default: !(existing?.length) };
+  const { error } = await supabaseClient.from("saved_addresses").insert(payload);
+  if (error) console.warn("[VK] address was not saved for future orders", error);
+}
+function orderCode() { return `VK-${new Date().getFullYear()}-${String(Date.now()).slice(-6)}`; }
+async function placeCheckoutOrder() {
+  if (checkoutBusy || !checkoutAddress || !currentUser) return;
+  checkoutBusy = true; const button = $("#placeOrderBtn"); if (button) { button.disabled = true; button.textContent = "SAVING ORDER…"; }
+  const totals = checkoutTotals(); const createdAt = new Date().toISOString(); const code = orderCode();
+  const payload = { user_id: currentUser.id, order_code: code, customer_name: checkoutAddress.full_name, customer_email: checkoutAddress.email, customer_mobile: `+91${checkoutAddress.mobile}`, shipping_address: checkoutAddress, items: cart.map(item => ({ ...item })), total_amount: totals.total, subtotal_amount: totals.subtotal, shipping_charge: totals.shipping, discount_amount: totals.discount, final_amount: totals.total, payment_method: "pending", payment_status: "pending", status: "pending", whatsapp_order_prepared_at: createdAt };
+  const { data, error } = await supabaseClient.from("order_history").insert(payload).select().single();
+  if (error) { console.error("[VK] order save error", error); checkoutBusy = false; if (button) { button.disabled = false; button.textContent = "PROCEED TO PAYMENT →"; } return showToast("Could not create the order. Please ensure the latest Supabase setup SQL has been run."); }
+  await saveAddressForFuture(checkoutAddress); cart.splice(0, cart.length); renderCart(); closeCart();
+  $("#checkoutReview").innerHTML = `<div class="checkout-review-summary"><h3>Order Confirmed</h3><p>Your order has been saved successfully.</p><p><strong>Order ID: ${escapeHtml(data.order_code || code)}</strong></p><p>Payment status: Pending · Order status: Pending</p><a class="whatsapp-action" href="${whatsappLink("order", data)}" target="_blank" rel="noopener">OPEN WHATSAPP ORDER NOTIFICATION</a></div>`;
+  $("#checkoutTitle").textContent = "Order Confirmation"; $("#checkoutStepText").textContent = "Your pre-filled WhatsApp notification is ready for the business number."; checkoutBusy = false; showToast("Order created successfully.");
+}
+$("#checkoutBtn").addEventListener("click", openCheckout); $("#checkoutClose").addEventListener("click", closeCheckout); checkoutOverlay.addEventListener("click", closeCheckout);
+$("#shippingForm").addEventListener("submit", event => { event.preventDefault(); const address = readShippingAddress(); if (!validateShippingAddress(address)) return; checkoutAddress = address; renderCheckoutReview(); });
 
 const historyOverlay = $("#historyOverlay"), historyModal = $("#historyModal");
 function closeHistory() { historyOverlay.classList.remove("show"); historyModal.classList.remove("open"); }
@@ -610,6 +695,20 @@ $("#historyList")?.addEventListener("click", event => {
   if (button.dataset.historyAction === "view") { closeHistory(); openProductDetails(product.id); }
   else addProduct({ dataset: { name: product.name, price: String(product.price) } });
 });
+$("#historyList")?.addEventListener("click", async event => {
+  const button = event.target.closest("button[data-order-action]");
+  if (!button || button.dataset.orderAction !== "cancel" || button.disabled) return;
+  const orderId = button.dataset.orderId;
+  if (!confirm("Are you sure you want to cancel this order?")) return;
+  const cancellation_reason = prompt("Cancellation reason (optional):") || "";
+  button.disabled = true; button.textContent = "CANCELLING…";
+  const cancelled_at = new Date().toISOString();
+  const { data, error } = await supabaseClient.from("order_history").update({ status: "cancelled", cancelled_at, cancellation_reason, whatsapp_cancel_prepared_at: cancelled_at }).eq("id", orderId).eq("user_id", currentUser.id).select().single();
+  if (error) { console.error("[VK] order cancellation error", error); button.disabled = false; button.textContent = "CANCEL ORDER"; return showToast("Order cancellation could not be saved."); }
+  const link = whatsappLink("cancel", data);
+  button.closest(".history-item").insertAdjacentHTML("beforeend", `<a class="whatsapp-action" href="${link}" target="_blank" rel="noopener">OPEN WHATSAPP CANCELLATION</a>`);
+  button.remove(); showToast("Order cancelled successfully.");
+});
 function mergedViewHistory(tableRows, metadataRows) {
   const rowsByProduct = new Map();
   [...(tableRows || []), ...(metadataRows || [])].forEach((row, index) => {
@@ -634,7 +733,7 @@ async function openHistory(type) {
   if (!currentUser) return openAuth();
   closeAccountMenu();
   const config = {
-    orders: { title: "Order History", subtitle: "Your saved order requests.", table: "order_history", select: "items,total_amount,status,created_at", order: "created_at" },
+    orders: { title: "Order History", subtitle: "Your saved orders and delivery updates.", table: "order_history", select: "id,order_code,items,total_amount,final_amount,status,payment_status,customer_name,customer_mobile,shipping_address,cancelled_at,cancellation_reason,whatsapp_cancel_prepared_at,created_at", order: "created_at" },
     views: { title: "View History", subtitle: "Products you viewed while signed in.", table: "view_history", select: "product_id,product_name,product_price,viewed_at", order: "viewed_at" },
     logins: { title: "Login History", subtitle: "Your recent account access.", table: "login_events", select: "created_at", order: "created_at" }
   }[type];
@@ -654,7 +753,7 @@ async function openHistory(type) {
   if (!data?.length) { $("#historyList").innerHTML = '<p class="history-empty">No saved data yet.</p>'; return; }
   $("#historyList").innerHTML = data.map(row => {
     const date = formatHistoryDate(row.created_at || row.viewed_at);
-    if (type === "orders") return `<article class="history-item"><strong>${escapeHtml(row.status)} order · ${money(row.total_amount)}</strong><span>${row.items.length} item(s) · ${date}</span></article>`;
+    if (type === "orders") { const isCancelable = !["cancelled", "shipped", "delivered"].includes(String(row.status).toLowerCase()); return `<article class="history-item"><strong>${escapeHtml(row.order_code || `Order #${row.id}`)} · ${escapeHtml(row.status)} · ${money(row.final_amount ?? row.total_amount)}</strong><span>${row.items.length} item(s) · ${date}</span>${row.shipping_address ? `<span>Deliver to: ${escapeHtml(row.shipping_address.city || "")}, ${escapeHtml(row.shipping_address.state || "")}</span>` : ""}<span>Payment: ${escapeHtml(row.payment_status || "pending")}</span>${row.cancelled_at ? `<span>Cancelled: ${formatHistoryDate(row.cancelled_at)}${row.cancellation_reason ? ` · ${escapeHtml(row.cancellation_reason)}` : ""}</span>` : ""}${isCancelable ? `<button class="order-cancel" type="button" data-order-action="cancel" data-order-id="${row.id}">CANCEL ORDER</button>` : ""}</article>`; }
     return `<article class="history-item"><strong>Signed in</strong><span>${date}</span></article>`;
   }).join("");
 }
