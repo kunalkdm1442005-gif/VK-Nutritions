@@ -561,6 +561,7 @@ async function trackProductView(product) {
 const VK_WHATSAPP_ORDER_NUMBER = "918425920360";
 let checkoutAddress = null;
 let checkoutBusy = false;
+let checkoutRequestId = null;
 const checkoutOverlay = $("#checkoutOverlay"), checkoutModal = $("#checkoutModal");
 const shippingFieldNames = ["Name", "Mobile", "Email", "Address1", "Pin", "City", "State", "Country"];
 function checkoutTotals() {
@@ -609,7 +610,7 @@ async function loadDefaultAddress() {
 function openCheckout() {
   if (!cart.length) return showToast("Your cart is empty.");
   if (!currentUser) { openAuth(); return showToast("Sign in before checkout."); }
-  checkoutAddress = null; $("#shippingForm").hidden = false; $("#checkoutReview").hidden = true;
+  checkoutAddress = null; checkoutRequestId = null; $("#shippingForm").hidden = false; $("#checkoutReview").hidden = true;
   $("#checkoutTitle").textContent = "Delivery Details"; $("#checkoutStepText").textContent = "Enter a delivery address before continuing to order review.";
   checkoutOverlay.classList.add("show"); checkoutModal.classList.add("open"); loadDefaultAddress();
 }
@@ -626,9 +627,9 @@ function renderCheckoutReview() {
   const totals = checkoutTotals(); const address = checkoutAddress;
   $("#shippingForm").hidden = true; $("#checkoutReview").hidden = false;
   $("#checkoutTitle").textContent = "Review Order"; $("#checkoutStepText").textContent = "Confirm your delivery details and order summary before payment.";
-  $("#checkoutReview").innerHTML = `<div class="checkout-review-delivery"><h3>Deliver To</h3><p><strong>${escapeHtml(address.full_name)}</strong></p><p>${escapeHtml(formatAddress(address))}</p><p>${escapeHtml(address.city)}, ${escapeHtml(address.state)} - ${escapeHtml(address.pin_code)}</p><p>+91 ${escapeHtml(address.mobile)} · ${escapeHtml(address.email)}</p></div><div class="checkout-review-summary"><h3>Order Summary</h3><div class="checkout-review-items">${cart.map(item => `<div class="checkout-review-item"><span>${escapeHtml(item.name)} × ${item.qty}</span><strong>${money(item.price * item.qty)}</strong></div>`).join("")}</div><div class="checkout-review-total"><span>Subtotal</span><span>${money(totals.subtotal)}</span></div><div class="checkout-review-item"><span>Delivery</span><span>${money(totals.shipping)}</span></div><div class="checkout-review-item"><span>Discount</span><span>${money(totals.discount)}</span></div><div class="checkout-review-total"><span>Total</span><span>${money(totals.total)}</span></div></div><div class="checkout-review-actions"><button class="btn btn-dark" id="changeAddressBtn" type="button">CHANGE ADDRESS</button><button class="btn btn-primary" id="placeOrderBtn" type="button">PROCEED TO PAYMENT →</button></div><p class="checkout-note">No live payment gateway is configured in this project. The order will be saved with payment status: Pending.</p>`;
-  $("#changeAddressBtn").addEventListener("click", () => { $("#shippingForm").hidden = false; $("#checkoutReview").hidden = true; $("#checkoutTitle").textContent = "Delivery Details"; });
-  $("#placeOrderBtn").addEventListener("click", placeCheckoutOrder);
+  $("#checkoutReview").innerHTML = `<div class="checkout-review-delivery"><h3>Deliver To</h3><p><strong>${escapeHtml(address.full_name)}</strong></p><p>${escapeHtml(formatAddress(address))}</p><p>${escapeHtml(address.city)}, ${escapeHtml(address.state)} - ${escapeHtml(address.pin_code)}</p><p>+91 ${escapeHtml(address.mobile)} · ${escapeHtml(address.email)}</p></div><div class="checkout-review-summary"><h3>Order Summary</h3><div class="checkout-review-items">${cart.map(item => `<div class="checkout-review-item"><span>${escapeHtml(item.name)} × ${item.qty}</span><strong>${money(item.price * item.qty)}</strong></div>`).join("")}</div><div class="checkout-review-total"><span>Subtotal</span><span>${money(totals.subtotal)}</span></div><div class="checkout-review-item"><span>Delivery</span><span>${money(totals.shipping)}</span></div><div class="checkout-review-item"><span>Discount</span><span>${money(totals.discount)}</span></div><div class="checkout-review-total"><span>Total</span><span>${money(totals.total)}</span></div></div><div class="checkout-review-actions"><button class="btn btn-dark" id="changeAddressBtn" type="button">CHANGE ADDRESS</button><button class="btn btn-primary" id="placeOrderBtn" type="button">PROCEED TO PAYMENT →</button></div><p class="checkout-note">Payments are processed securely by Razorpay. Your order is placed only after server-side payment verification.</p>`;
+  $("#changeAddressBtn").addEventListener("click", () => { checkoutRequestId = null; $("#shippingForm").hidden = false; $("#checkoutReview").hidden = true; $("#checkoutTitle").textContent = "Delivery Details"; });
+  $("#placeOrderBtn").addEventListener("click", startRazorpayPayment);
 }
 async function saveAddressForFuture(address) {
   if (!$("#saveAddress").checked) return;
@@ -637,17 +638,60 @@ async function saveAddressForFuture(address) {
   const { error } = await supabaseClient.from("saved_addresses").insert(payload);
   if (error) console.warn("[VK] address was not saved for future orders", error);
 }
-function orderCode() { return `VK-${new Date().getFullYear()}-${String(Date.now()).slice(-6)}`; }
-async function placeCheckoutOrder() {
-  if (checkoutBusy || !checkoutAddress || !currentUser) return;
-  checkoutBusy = true; const button = $("#placeOrderBtn"); if (button) { button.disabled = true; button.textContent = "SAVING ORDER…"; }
-  const totals = checkoutTotals(); const createdAt = new Date().toISOString(); const code = orderCode();
-  const payload = { user_id: currentUser.id, order_code: code, customer_name: checkoutAddress.full_name, customer_email: checkoutAddress.email, customer_mobile: `+91${checkoutAddress.mobile}`, shipping_address: checkoutAddress, items: cart.map(item => ({ ...item })), total_amount: totals.total, subtotal_amount: totals.subtotal, shipping_charge: totals.shipping, discount_amount: totals.discount, final_amount: totals.total, payment_method: "pending", payment_status: "pending", status: "pending", whatsapp_order_prepared_at: createdAt };
-  const { data, error } = await supabaseClient.from("order_history").insert(payload).select().single();
-  if (error) { console.error("[VK] order save error", error); checkoutBusy = false; if (button) { button.disabled = false; button.textContent = "PROCEED TO PAYMENT →"; } return showToast("Could not create the order. Please ensure the latest Supabase setup SQL has been run."); }
-  await saveAddressForFuture(checkoutAddress); cart.splice(0, cart.length); renderCart(); closeCart();
-  $("#checkoutReview").innerHTML = `<div class="checkout-review-summary"><h3>Order Confirmed</h3><p>Your order has been saved successfully.</p><p><strong>Order ID: ${escapeHtml(data.order_code || code)}</strong></p><p>Payment status: Pending · Order status: Pending</p><a class="whatsapp-action" href="${whatsappLink("order", data)}" target="_blank" rel="noopener">OPEN WHATSAPP ORDER NOTIFICATION</a></div>`;
-  $("#checkoutTitle").textContent = "Order Confirmation"; $("#checkoutStepText").textContent = "Your pre-filled WhatsApp notification is ready for the business number."; checkoutBusy = false; showToast("Order created successfully.");
+function checkoutItemsForServer() { return cart.map(item => ({ product_id: item.id, quantity: Number(item.qty) })); }
+function newCheckoutRequestId() { return window.crypto?.randomUUID ? window.crypto.randomUUID() : `00000000-0000-4000-8000-${Date.now().toString().padStart(12, "0")}`; }
+function setPaymentButton(text, disabled) { const button = $("#placeOrderBtn"); if (button) { button.textContent = text; button.disabled = disabled; } }
+function edgeFunctionMessage(error, data, fallback) { return data?.error || error?.message || fallback; }
+function showPaidOrderConfirmation(order) {
+  cart.splice(0, cart.length); renderCart(); closeCart(); checkoutBusy = false; checkoutRequestId = null;
+  $("#checkoutReview").innerHTML = `<div class="checkout-review-summary"><h3>Payment Successful</h3><p>Your payment was verified securely and your order is now placed.</p><p><strong>Order ID: ${escapeHtml(order.order_code || `VK-${order.id}`)}</strong></p><p>Payment status: Paid · Order status: Placed</p><p>${escapeHtml(formatAddress(order.shipping_address || {}))}</p><a class="whatsapp-action" href="${whatsappLink("order", order)}" target="_blank" rel="noopener">OPEN WHATSAPP ORDER NOTIFICATION</a></div>`;
+  $("#checkoutTitle").textContent = "Order Confirmation"; $("#checkoutStepText").textContent = "Payment has been verified. Your order is available in Order History and Track Order."; showToast("Payment successful. Your order has been placed.");
+}
+async function verifyRazorpayPayment(order, response) {
+  setPaymentButton("VERIFYING PAYMENT…", true);
+  const { data, error } = await supabaseClient.functions.invoke("verify-razorpay-payment", { body: { internal_order_id: order.id, ...response } });
+  if (error || !data?.verified) {
+    console.error("[VK] Razorpay payment verification error", error || data);
+    checkoutBusy = false; setPaymentButton("RETRY PAYMENT →", false);
+    return showToast(edgeFunctionMessage(error, data, "Payment was not completed. Please try again."));
+  }
+  showPaidOrderConfirmation(data.order);
+}
+async function recordRazorpayFailure(order, response) {
+  if (!response?.error?.metadata?.payment_id) return;
+  const { error } = await supabaseClient.functions.invoke("record-razorpay-payment-failure", { body: { internal_order_id: order.id, razorpay_payment_id: response.error.metadata.payment_id } });
+  if (error) console.warn("[VK] Razorpay failure could not be recorded", error);
+}
+async function startRazorpayPayment() {
+  if (checkoutBusy || !checkoutAddress || !currentUser || !cart.length) return;
+  checkoutBusy = true; setPaymentButton("PREPARING SECURE PAYMENT…", true);
+  checkoutRequestId ||= newCheckoutRequestId();
+  const { data, error } = await supabaseClient.functions.invoke("create-razorpay-order", { body: { checkout_request_id: checkoutRequestId, shipping_address: checkoutAddress, items: checkoutItemsForServer() } });
+  if (error || !data?.razorpay_order_id || !data?.key_id) {
+    console.error("[VK] Razorpay order creation error", error || data);
+    checkoutBusy = false; setPaymentButton("PROCEED TO PAYMENT →", false);
+    return showToast(edgeFunctionMessage(error, data, "Could not prepare payment. Please try again."));
+  }
+  await saveAddressForFuture(checkoutAddress);
+  if (!window.Razorpay) {
+    checkoutBusy = false; setPaymentButton("PROCEED TO PAYMENT →", false);
+    return showToast("Secure payment could not be loaded. Check your connection and try again.");
+  }
+  const payment = new window.Razorpay({
+    key: data.key_id,
+    amount: data.amount_paise,
+    currency: data.currency || "INR",
+    name: "VK Nutrition",
+    description: `Order ${data.order.order_code}`,
+    order_id: data.razorpay_order_id,
+    prefill: { name: data.order.customer_name, email: data.order.customer_email, contact: data.order.customer_mobile },
+    notes: { internal_order_id: String(data.order.id), internal_order_code: data.order.order_code },
+    theme: { color: "#facc15" },
+    handler: response => verifyRazorpayPayment(data.order, response),
+    modal: { ondismiss: () => { if (checkoutBusy) { checkoutBusy = false; setPaymentButton("RETRY PAYMENT →", false); showToast("Payment was not completed. You can try again."); } } }
+  });
+  payment.on("payment.failed", async response => { await recordRazorpayFailure(data.order, response); checkoutBusy = false; setPaymentButton("RETRY PAYMENT →", false); showToast("Payment was not completed. Please try again."); });
+  payment.open();
 }
 $("#checkoutBtn").addEventListener("click", openCheckout); $("#checkoutClose").addEventListener("click", closeCheckout); checkoutOverlay.addEventListener("click", closeCheckout);
 $("#shippingForm").addEventListener("submit", event => { event.preventDefault(); const address = readShippingAddress(); if (!validateShippingAddress(address)) return; checkoutAddress = address; renderCheckoutReview(); });
@@ -702,10 +746,10 @@ $("#historyList")?.addEventListener("click", async event => {
   if (!confirm("Are you sure you want to cancel this order?")) return;
   const cancellation_reason = prompt("Cancellation reason (optional):") || "";
   button.disabled = true; button.textContent = "CANCELLING…";
-  const cancelled_at = new Date().toISOString();
-  const { data, error } = await supabaseClient.from("order_history").update({ status: "cancelled", cancelled_at, cancellation_reason, whatsapp_cancel_prepared_at: cancelled_at }).eq("id", orderId).eq("user_id", currentUser.id).select().single();
-  if (error) { console.error("[VK] order cancellation error", error); button.disabled = false; button.textContent = "CANCEL ORDER"; return showToast("Order cancellation could not be saved."); }
-  const link = whatsappLink("cancel", data);
+  const { data, error } = await supabaseClient.functions.invoke("cancel-order", { body: { order_id: Number(orderId), cancellation_reason } });
+  if (error || !data?.cancelled) { console.error("[VK] order cancellation error", error || data); button.disabled = false; button.textContent = "CANCEL ORDER"; return showToast(edgeFunctionMessage(error, data, "Order cancellation could not be saved.")); }
+  if (data.already_cancelled) { button.remove(); return showToast("This order was already cancelled."); }
+  const link = whatsappLink("cancel", data.order);
   button.closest(".history-item").insertAdjacentHTML("beforeend", `<a class="whatsapp-action" href="${link}" target="_blank" rel="noopener">OPEN WHATSAPP CANCELLATION</a>`);
   button.remove(); showToast("Order cancelled successfully.");
 });
@@ -733,7 +777,7 @@ async function openHistory(type) {
   if (!currentUser) return openAuth();
   closeAccountMenu();
   const config = {
-    orders: { title: "Order History", subtitle: "Your saved orders and delivery updates.", table: "order_history", select: "id,order_code,items,total_amount,final_amount,status,payment_status,customer_name,customer_mobile,shipping_address,cancelled_at,cancellation_reason,whatsapp_cancel_prepared_at,created_at", order: "created_at" },
+    orders: { title: "Order History", subtitle: "Your saved orders and delivery updates.", table: "order_history", select: "id,order_code,items,total_amount,final_amount,status,payment_status,payment_method,refund_status,customer_name,customer_mobile,shipping_address,cancelled_at,cancellation_reason,whatsapp_cancel_prepared_at,created_at", order: "created_at" },
     views: { title: "View History", subtitle: "Products you viewed while signed in.", table: "view_history", select: "product_id,product_name,product_price,viewed_at", order: "viewed_at" },
     logins: { title: "Login History", subtitle: "Your recent account access.", table: "login_events", select: "created_at", order: "created_at" }
   }[type];
@@ -753,7 +797,7 @@ async function openHistory(type) {
   if (!data?.length) { $("#historyList").innerHTML = '<p class="history-empty">No saved data yet.</p>'; return; }
   $("#historyList").innerHTML = data.map(row => {
     const date = formatHistoryDate(row.created_at || row.viewed_at);
-    if (type === "orders") { const isCancelable = !["cancelled", "shipped", "delivered"].includes(String(row.status).toLowerCase()); return `<article class="history-item"><strong>${escapeHtml(row.order_code || `Order #${row.id}`)} · ${escapeHtml(row.status)} · ${money(row.final_amount ?? row.total_amount)}</strong><span>${row.items.length} item(s) · ${date}</span>${row.shipping_address ? `<span>Deliver to: ${escapeHtml(row.shipping_address.city || "")}, ${escapeHtml(row.shipping_address.state || "")}</span>` : ""}<span>Payment: ${escapeHtml(row.payment_status || "pending")}</span>${row.cancelled_at ? `<span>Cancelled: ${formatHistoryDate(row.cancelled_at)}${row.cancellation_reason ? ` · ${escapeHtml(row.cancellation_reason)}` : ""}</span>` : ""}${isCancelable ? `<button class="order-cancel" type="button" data-order-action="cancel" data-order-id="${row.id}">CANCEL ORDER</button>` : ""}</article>`; }
+    if (type === "orders") { const isCancelable = !["cancelled", "shipped", "delivered"].includes(String(row.status).toLowerCase()); return `<article class="history-item"><strong>${escapeHtml(row.order_code || `Order #${row.id}`)} · ${escapeHtml(row.status)} · ${money(row.final_amount ?? row.total_amount)}</strong><span>${row.items.length} item(s) · ${date}</span>${row.shipping_address ? `<span>Deliver to: ${escapeHtml(row.shipping_address.city || "")}, ${escapeHtml(row.shipping_address.state || "")}</span>` : ""}<span>Payment: ${escapeHtml(row.payment_status || "pending")}${row.payment_method ? ` · ${escapeHtml(row.payment_method)}` : ""}</span>${row.refund_status ? `<span>Refund: ${escapeHtml(row.refund_status)}</span>` : ""}${row.cancelled_at ? `<span>Cancelled: ${formatHistoryDate(row.cancelled_at)}${row.cancellation_reason ? ` · ${escapeHtml(row.cancellation_reason)}` : ""}</span>` : ""}${isCancelable ? `<button class="order-cancel" type="button" data-order-action="cancel" data-order-id="${row.id}">CANCEL ORDER</button>` : ""}</article>`; }
     return `<article class="history-item"><strong>Signed in</strong><span>${date}</span></article>`;
   }).join("");
 }
