@@ -43,6 +43,9 @@ try {
 
 const money = value => `₹${Number(value).toLocaleString("en-IN")}`;
 const escapeHtml = value => String(value).replace(/[&<>'"]/g, character => ({ "&":"&amp;", "<":"&lt;", ">":"&gt;", "'":"&#39;", '"':"&quot;" }[character]));
+function cleanCatalogueText(value) {
+  return String(value).replace(/\s{2,}/g, " ").trim();
+}
 const catalogueProducts = Array.isArray(window.VK_CATALOGUE) ? window.VK_CATALOGUE : [];
 let catalogueQuery = "";
 let catalogueCategory = "";
@@ -60,7 +63,7 @@ function renderCatalogue() {
   const products = filteredCatalogue();
   catalogueGrid.innerHTML = products.map(product => `<article class="product catalogue-product" data-id="${escapeHtml(product.id)}" data-name="${escapeHtml(product.name)}" data-price="${product.price}" data-category="${escapeHtml(product.category)}">
     <div class="product-image"><button class="wish${wishlistItems.has(product.id) ? " active" : ""}" type="button" aria-label="Add ${escapeHtml(product.name)} to wishlist">${wishlistItems.has(product.id) ? "♥" : "♡"}</button><img class="product-photo" src="${escapeHtml(product.image)}" alt="${escapeHtml(product.name)}" loading="lazy"></div>
-    <div class="product-info"><div class="brand">VK Nutrition Catalogue</div><h3>${escapeHtml(product.name)}</h3><div class="catalogue-category">${escapeHtml(product.category)}</div><div class="variant">${escapeHtml(product.pack)}</div><ul class="catalogue-highlights">${product.highlights.slice(0, 3).map(item => `<li>${escapeHtml(item)}</li>`).join("")}</ul><div class="prices"><span class="price">${money(product.price)}</span></div><div class="card-actions"><button class="view-details" type="button" data-product-id="${escapeHtml(product.id)}">VIEW DETAILS</button><button class="add" type="button">ADD TO CART</button><button class="buy" type="button">BUY NOW</button></div></div>
+    <div class="product-info"><div class="brand">VK Nutrition Catalogue</div><h3>${escapeHtml(product.name)}</h3><div class="catalogue-category">${escapeHtml(product.category)}</div><div class="variant">${escapeHtml(product.pack)}</div><ul class="catalogue-highlights">${product.highlights.slice(0, 3).map(item => `<li>${escapeHtml(cleanCatalogueText(item))}</li>`).join("")}</ul><div class="prices"><span class="price">${money(product.price)}</span></div><div class="card-actions"><button class="view-details" type="button" data-product-id="${escapeHtml(product.id)}">VIEW DETAILS</button><button class="add" type="button">ADD TO CART</button><button class="buy" type="button">BUY NOW</button></div></div>
   </article>`).join("");
   const resultCount = $("#catalogueResultCount");
   if (resultCount) resultCount.textContent = `${products.length} product${products.length === 1 ? "" : "s"}${catalogueCategory ? ` in ${catalogueCategory}` : ""}`;
@@ -88,8 +91,8 @@ function openProductDetails(productId) {
   $("#productDetailTitle").textContent = product.name;
   $("#productDetailPack").textContent = `Pack / weight: ${product.pack}`;
   $("#productDetailPrice").textContent = money(product.price);
-  $("#productDetailHighlights").innerHTML = product.highlights.map(item => `<li>${escapeHtml(item)}</li>`).join("");
-  $("#productDetailSpec").textContent = product.spec;
+  $("#productDetailHighlights").innerHTML = product.highlights.map(item => `<li>${escapeHtml(cleanCatalogueText(item))}</li>`).join("");
+  $("#productDetailSpec").textContent = cleanCatalogueText(product.spec);
   $("#productDetailAdd").onclick = () => addProduct({ dataset: { name: product.name, price: String(product.price) } });
   trackProductView(product);
   $("#productDetailOverlay").classList.add("show");
@@ -140,6 +143,8 @@ function renderCart() {
   const quantity = cart.reduce((total, item) => total + item.qty, 0);
   const total = cart.reduce((sum, item) => sum + item.price * item.qty, 0);
   $("#accountCartCount").textContent = `(${quantity})`;
+  const mobileCartCount = $("#mobileCartCount");
+  if (mobileCartCount) mobileCartCount.textContent = String(quantity);
   $("#drawerCount").textContent = `(${quantity})`;
   $("#cartTotal").textContent = money(total);
   $("#cartItems").innerHTML = cart.length
@@ -160,7 +165,7 @@ function addProduct(card, openDrawer = false) {
 function closeCart() { $("#drawer").classList.remove("open"); $("#overlay").classList.remove("show"); }
 document.getElementById("newArrivalsSection")?.remove();
 renderCatalogue();
-document.querySelectorAll(".category[data-category]").forEach(button => button.addEventListener("click", event => {
+document.querySelectorAll(".category[data-category], .mobile-category-link[data-category]").forEach(button => button.addEventListener("click", event => {
   event.preventDefault();
   catalogueCategory = button.dataset.category;
   renderCatalogue();
@@ -178,6 +183,7 @@ function openCart() {
   $("#overlay").classList.add("show");
 }
 $("#openCartBtn").addEventListener("click", openCart);
+$("#mobileCartBtn")?.addEventListener("click", openCart);
 $("#closeCart").addEventListener("click", closeCart);
 $("#overlay").addEventListener("click", closeCart);
 $("#productDetailClose").addEventListener("click", closeProductDetails);
@@ -310,7 +316,7 @@ mobileSearchBtn?.addEventListener("click", event => {
   search.classList.toggle("mobile-open");
   if (search.classList.contains("mobile-open")) $("#searchInput").focus();
 });
-$("#headerThemeBtn").addEventListener("click", toggleTheme);
+$("#headerThemeBtn")?.addEventListener("click", toggleTheme);
 $("#bottomCategoryBtn").addEventListener("click", () => { closeMobileNavigation(); $("#categories").scrollIntoView({ behavior: "smooth" }); });
 $("#bottomTrackBtn").addEventListener("click", () => openHistory("orders"));
 $("#mobileTrackBtn").addEventListener("click", () => openHistory("orders"));
