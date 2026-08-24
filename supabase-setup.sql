@@ -99,10 +99,8 @@ create policy "Users update their own profile" on public.profiles for update usi
 
 drop policy if exists "Users read own orders" on public.order_history;
 drop policy if exists "Users create own orders" on public.order_history;
-create policy "Users read own orders" on public.order_history for select using (auth.uid() = user_id);
-create policy "Users create own orders" on public.order_history for insert with check (auth.uid() = user_id);
 drop policy if exists "Users update own orders" on public.order_history;
-create policy "Users update own orders" on public.order_history for update using (auth.uid() = user_id) with check (auth.uid() = user_id);
+create policy "Users read own orders" on public.order_history for select using (auth.uid() = user_id);
 
 drop policy if exists "Users read own addresses" on public.saved_addresses;
 drop policy if exists "Users create own addresses" on public.saved_addresses;
@@ -185,3 +183,37 @@ end;
 $$;
 revoke all on function public.delete_user_account() from public;
 grant execute on function public.delete_user_account() to authenticated;
+
+-- Razorpay: payment state may only be written by secure Edge Functions. Customers retain read access
+-- to their own orders, but cannot create a fake paid order or alter payment fields from the browser.
+alter table public.order_history add column if not exists checkout_request_id uuid;
+alter table public.order_history add column if not exists razorpay_order_id text;
+alter table public.order_history add column if not exists razorpay_payment_id text;
+alter table public.order_history add column if not exists payment_currency text not null default 'INR';
+alter table public.order_history add column if not exists payment_amount_paise bigint;
+alter table public.order_history add column if not exists payment_verified_at timestamptz;
+alter table public.order_history add column if not exists payment_failure_reason text;
+alter table public.order_history add column if not exists refund_status text;
+alter table public.order_history add column if not exists razorpay_refund_id text;
+alter table public.order_history add column if not exists refund_amount_paise bigint;
+alter table public.order_history add column if not exists refund_processed_at timestamptz;
+alter table public.order_history drop constraint if exists order_history_status_check;
+alter table public.order_history add constraint order_history_status_check check (status in ('pending','paid','placed','processing','shipped','delivered','cancelled'));
+create unique index if not exists order_history_checkout_request_unique on public.order_history(checkout_request_id) where checkout_request_id is not null;
+create unique index if not exists order_history_razorpay_order_unique on public.order_history(razorpay_order_id) where razorpay_order_id is not null;
+create unique index if not exists order_history_razorpay_payment_unique on public.order_history(razorpay_payment_id) where razorpay_payment_id is not null;
+
+create table if not exists public.razorpay_webhook_events (
+  event_id text primary key,
+  event_type text not null,
+  payload jsonb not null,
+  received_at timestamptz not null default now(),
+  processed_at timestamptz
+);
+alter table public.razorpay_webhook_events add column if not exists processed_at timestamptz;
+alter table public.razorpay_webhook_events enable row level security;
+
+drop policy if exists "Users create own orders" on public.order_history;
+drop policy if exists "Users update own orders" on public.order_history;
+revoke insert, update, delete on public.order_history from authenticated;
+grant select on public.order_history to authenticated;
