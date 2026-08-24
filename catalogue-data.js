@@ -676,14 +676,14 @@ window.VK_CATALOGUE = [
     "sourceTable": 46
   },
   {
-    "id": "wellcore-micronised-creatine-monohydrate-100-g-122-g-33-servings-49",
+    "id": "wellcore-micronised-creatine-monohydrate-122-g-122-g-33-servings-49",
     "name": "Wellcore Micronised Creatine Monohydrate - 122 g",
     "category": "Creatine / Amino Acids",
     "price": 699,
     "pack": "122 g (33 servings)",
-    "spec": "100% pure micronized creatine monohydrate, unflavoured; 3 g per serving, 33 servings in the 100 g pack. Matched current listing states no added sugar, fillers or artificial colours; creatine itself contributes essentially no protein, carbohydrate or fat.",
+    "spec": "100% pure micronized creatine monohydrate, unflavoured; 3 g per serving, 33 servings in the 122 g pack. Matched current listing states no added sugar, fillers or artificial colours; creatine itself contributes essentially no protein, carbohydrate or fat.",
     "highlights": [
-      "100% pure micronized creatine monohydrate, unflavoured; 3 g per serving, 33 servings in the 100 g pack.",
+      "100% pure micronized creatine monohydrate, unflavoured; 3 g per serving, 33 servings in the 122 g pack.",
       "Matched current listing states no added sugar, fillers or artificial colours; creatine itself contributes essentially no protein, carbohydrate or fat."
     ],
     "image": "catalogue-images/catalogue-48.png",
