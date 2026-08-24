@@ -14,7 +14,7 @@
       document.documentElement.dataset.theme = theme;
     })();
   </script>
- <link rel="stylesheet" href="./style.css?v=21">
+ <link rel="stylesheet" href="./style.css?v=22">
 
 </head>
 <body>
@@ -198,6 +198,27 @@
   </aside>
   <div class="toast" id="toast">Added to your cart</div>
 
+  <div class="checkout-overlay" id="checkoutOverlay"></div>
+  <section class="checkout-modal" id="checkoutModal" role="dialog" aria-modal="true" aria-labelledby="checkoutTitle">
+    <button class="auth-close" id="checkoutClose" type="button" aria-label="Close checkout">×</button>
+    <div class="checkout-head"><p class="eyebrow">Secure checkout</p><h2 id="checkoutTitle">Delivery Details</h2><p id="checkoutStepText">Enter a delivery address before continuing to order review.</p></div>
+    <form id="shippingForm" class="shipping-form" novalidate>
+      <label class="checkout-field full">Full Name *<input id="shipName" autocomplete="name"><small class="field-error" id="shipNameError"></small></label>
+      <label class="checkout-field">Mobile Number *<input id="shipMobile" inputmode="numeric" maxlength="10" autocomplete="tel-national"><small class="field-error" id="shipMobileError"></small></label>
+      <label class="checkout-field">Email *<input id="shipEmail" type="email" autocomplete="email"><small class="field-error" id="shipEmailError"></small></label>
+      <label class="checkout-field full">Address Line 1 *<input id="shipAddress1" autocomplete="address-line1"><small class="field-error" id="shipAddress1Error"></small></label>
+      <label class="checkout-field full">Address Line 2 <input id="shipAddress2" autocomplete="address-line2"></label>
+      <label class="checkout-field full">Landmark <input id="shipLandmark"></label>
+      <label class="checkout-field">PIN Code *<input id="shipPin" inputmode="numeric" maxlength="6" autocomplete="postal-code"><small class="field-error" id="shipPinError"></small></label>
+      <label class="checkout-field">City *<input id="shipCity" autocomplete="address-level2"><small class="field-error" id="shipCityError"></small></label>
+      <label class="checkout-field">State *<input id="shipState" autocomplete="address-level1"><small class="field-error" id="shipStateError"></small></label>
+      <label class="checkout-field">Country *<input id="shipCountry" value="India" autocomplete="country-name"><small class="field-error" id="shipCountryError"></small></label>
+      <label class="save-address full"><input id="saveAddress" type="checkbox"> Save this address for future orders</label>
+      <button class="btn btn-primary full" type="submit" id="continueReviewBtn">CONTINUE TO ORDER REVIEW →</button>
+    </form>
+    <div id="checkoutReview" hidden></div>
+  </section>
+
   <div class="auth-overlay" id="authOverlay"></div>
   <div class="auth-modal" id="authModal" role="dialog" aria-modal="true" aria-labelledby="authTitle">
     <button class="auth-close" id="authClose" aria-label="Close">×</button>
@@ -307,6 +328,6 @@
   </div>
 
  <script src="./catalogue-data.js?v=1"></script>
- <script src="./script.js?v=25"></script>
+ <script src="./script.js?v=26"></script>
 </body>
 </html>
