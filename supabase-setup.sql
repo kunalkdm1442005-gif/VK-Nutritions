@@ -26,6 +26,41 @@ create table if not exists public.order_history (
   status text not null default 'pending' check (status in ('pending','paid','processing','shipped','delivered','cancelled')),
   created_at timestamptz not null default now()
 );
+-- Delivery address snapshots remain attached to each order even if a customer later changes an address.
+alter table public.order_history add column if not exists order_code text;
+alter table public.order_history add column if not exists customer_name text;
+alter table public.order_history add column if not exists customer_email text;
+alter table public.order_history add column if not exists customer_mobile text;
+alter table public.order_history add column if not exists shipping_address jsonb;
+alter table public.order_history add column if not exists subtotal_amount numeric(12,2);
+alter table public.order_history add column if not exists shipping_charge numeric(12,2) not null default 0;
+alter table public.order_history add column if not exists discount_amount numeric(12,2) not null default 0;
+alter table public.order_history add column if not exists final_amount numeric(12,2);
+alter table public.order_history add column if not exists payment_method text not null default 'pending';
+alter table public.order_history add column if not exists payment_status text not null default 'pending';
+alter table public.order_history add column if not exists cancelled_at timestamptz;
+alter table public.order_history add column if not exists cancellation_reason text;
+alter table public.order_history add column if not exists whatsapp_order_prepared_at timestamptz;
+alter table public.order_history add column if not exists whatsapp_cancel_prepared_at timestamptz;
+create unique index if not exists order_history_order_code_unique on public.order_history(order_code) where order_code is not null;
+
+create table if not exists public.saved_addresses (
+  id bigint generated always as identity primary key,
+  user_id uuid not null references auth.users(id) on delete cascade,
+  full_name text not null,
+  mobile text not null,
+  email text not null,
+  address_line_1 text not null,
+  address_line_2 text,
+  landmark text,
+  city text not null,
+  state text not null,
+  pin_code text not null,
+  country text not null default 'India',
+  is_default boolean not null default false,
+  created_at timestamptz not null default now(),
+  updated_at timestamptz not null default now()
+);
 create table if not exists public.view_history (
   id bigint generated always as identity primary key,
   user_id uuid not null references auth.users(id) on delete cascade,
@@ -52,6 +87,7 @@ create table if not exists public.login_events (
 
 alter table public.profiles enable row level security;
 alter table public.order_history enable row level security;
+alter table public.saved_addresses enable row level security;
 alter table public.view_history enable row level security;
 alter table public.wishlist_items enable row level security;
 alter table public.login_events enable row level security;
@@ -65,6 +101,17 @@ drop policy if exists "Users read own orders" on public.order_history;
 drop policy if exists "Users create own orders" on public.order_history;
 create policy "Users read own orders" on public.order_history for select using (auth.uid() = user_id);
 create policy "Users create own orders" on public.order_history for insert with check (auth.uid() = user_id);
+drop policy if exists "Users update own orders" on public.order_history;
+create policy "Users update own orders" on public.order_history for update using (auth.uid() = user_id) with check (auth.uid() = user_id);
+
+drop policy if exists "Users read own addresses" on public.saved_addresses;
+drop policy if exists "Users create own addresses" on public.saved_addresses;
+drop policy if exists "Users update own addresses" on public.saved_addresses;
+drop policy if exists "Users delete own addresses" on public.saved_addresses;
+create policy "Users read own addresses" on public.saved_addresses for select using (auth.uid() = user_id);
+create policy "Users create own addresses" on public.saved_addresses for insert with check (auth.uid() = user_id);
+create policy "Users update own addresses" on public.saved_addresses for update using (auth.uid() = user_id) with check (auth.uid() = user_id);
+create policy "Users delete own addresses" on public.saved_addresses for delete using (auth.uid() = user_id);
 
 drop policy if exists "Users read own views" on public.view_history;
 drop policy if exists "Users create own views" on public.view_history;
@@ -82,6 +129,8 @@ create policy "Users delete own wishlist" on public.wishlist_items for delete us
 
 grant select, insert, update on public.view_history to authenticated;
 grant select, insert, delete on public.wishlist_items to authenticated;
+grant select, insert, update, delete on public.saved_addresses to authenticated;
+grant update on public.order_history to authenticated;
 
 drop policy if exists "Users read own login events" on public.login_events;
 drop policy if exists "Users create own login events" on public.login_events;
