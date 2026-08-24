@@ -1,0 +1,8 @@
+# Local and production secrets must never be committed to GitHub.
+.env
+.env.*
+!.env.example
+!supabase/.env.example
+supabase/.env
+supabase/functions/.env
+supabase/functions/.env.*
