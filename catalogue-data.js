@@ -677,7 +677,7 @@ window.VK_CATALOGUE = [
   },
   {
     "id": "wellcore-micronised-creatine-monohydrate-100-g-122-g-33-servings-49",
-    "name": "Wellcore Micronised Creatine Monohydrate - 100 g",
+    "name": "Wellcore Micronised Creatine Monohydrate - 122 g",
     "category": "Creatine / Amino Acids",
     "price": 699,
     "pack": "122 g (33 servings)",
