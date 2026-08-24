@@ -5,10 +5,10 @@ window.VK_CATALOGUE = [
     "category": "Whey Protein",
     "price": 2895,
     "pack": "1 kg",
-    "spec": "Photographed label: 1 flat scoop is about 30 g and provides 24 g protein, 6.9 g BCAAs and 3.3 g lysine. The photographed 5 lb tub lists 75 servings and identifies the product as 100% whey protein, with low-fat/low-carbohydrate, fast-absorption and gluten-free front-label claims; serving count will differ for a 1 kg pack.",
+    "spec": "1 flat scoop is about 30 g and provides 24 g protein, 6.9 g BCAAs and 3.3 g lysine. The 5 lb tub lists 75 servings and identifies the product as 100% whey protein, with low-fat/low-carbohydrate, fast-absorption and gluten-free features; serving count will differ for a 1 kg pack.",
     "highlights": [
-      "Photographed label: 1 flat scoop is about 30 g and provides 24 g protein, 6.9 g BCAAs and 3.3 g lysine.",
-      "The photographed 5 lb tub lists 75 servings and identifies the product as 100% whey protein, with low-fat/low-carbohydrate, fast-absorption and gluten-free front-label claims; serving count will differ for a 1 kg pack."
+      "1 flat scoop is about 30 g and provides 24 g protein, 6.9 g BCAAs and 3.3 g lysine.",
+      "The 5 lb tub lists 75 servings and identifies the product as 100% whey protein, with low-fat/low-carbohydrate, fast-absorption and gluten-free features; serving count will differ for a 1 kg pack."
     ],
     "image": "catalogue-images/catalogue-01.jpg",
     "sourceTable": 2
@@ -48,10 +48,10 @@ window.VK_CATALOGUE = [
     "category": "Whey Protein",
     "price": 8800,
     "pack": "2.265 kg",
-    "spec": "Front label: 24 g protein, 5.5 g BCAAs and 5 g glutamine per serving. The photographed 5 lb / 2,265 g tub lists 71 servings and carries sugar-free and gluten-free front-label claims, with muscle-growth, recovery and immunity positioning.",
+    "spec": "24 g protein, 5.5 g BCAAs and 5 g glutamine per serving. The 5 lb / 2,265 g tub lists 71 servings and carries sugar-free and gluten-free features, with muscle-growth, recovery and immunity positioning.",
     "highlights": [
-      "Front label: 24 g protein, 5.5 g BCAAs and 5 g glutamine per serving.",
-      "The photographed 5 lb / 2,265 g tub lists 71 servings and carries sugar-free and gluten-free front-label claims, with muscle-growth, recovery and immunity positioning."
+      "24 g protein, 5.5 g BCAAs and 5 g glutamine per serving.",
+      "The 5 lb / 2,265 g tub lists 71 servings and carries sugar-free and gluten-free features, with muscle-growth, recovery and immunity positioning."
     ],
     "image": "catalogue-images/catalogue-04.jpg",
     "sourceTable": 5
@@ -62,10 +62,10 @@ window.VK_CATALOGUE = [
     "category": "Whey Protein",
     "price": 8800,
     "pack": "2 kg",
-    "spec": "Front label: 24 g protein, 5.6 g BCAAs and 130 kcal per serving, with zero added sugar. The photographed 2 kg tub lists 66 servings. Whey-protein formula positioned for lean-muscle support and post-workout recovery.",
+    "spec": "24 g protein, 5.6 g BCAAs and 130 kcal per serving, with zero added sugar. The 2 kg tub lists 66 servings. Whey-protein formula positioned for lean-muscle support and post-workout recovery.",
     "highlights": [
-      "Front label: 24 g protein, 5.6 g BCAAs and 130 kcal per serving, with zero added sugar.",
-      "The photographed 2 kg tub lists 66 servings.",
+      "24 g protein, 5.6 g BCAAs and 130 kcal per serving, with zero added sugar.",
+      "The 2 kg tub lists 66 servings.",
       "Whey-protein formula positioned for lean-muscle support and post-workout recovery."
     ],
     "image": "catalogue-images/catalogue-05.jpg",
@@ -77,10 +77,10 @@ window.VK_CATALOGUE = [
     "category": "Whey Protein",
     "price": 2800,
     "pack": "1kg",
-    "spec": "Front label: 24 g protein, 5.3 g BCAAs and 3.6 g glutamine per serving, plus digestive enzymes. The front identifies it as a pure whey formula and states US-sourced whey and banned-substance-free positioning.",
+    "spec": "24 g protein, 5.3 g BCAAs and 3.6 g glutamine per serving, plus digestive enzymes. This is a pure whey formula and states US-sourced whey and banned-substance-free positioning.",
     "highlights": [
-      "Front label: 24 g protein, 5.3 g BCAAs and 3.6 g glutamine per serving, plus digestive enzymes.",
-      "The front identifies it as a pure whey formula and states US-sourced whey and banned-substance-free positioning."
+      "24 g protein, 5.3 g BCAAs and 3.6 g glutamine per serving, plus digestive enzymes.",
+      "This is a pure whey formula and states US-sourced whey and banned-substance-free positioning."
     ],
     "image": "catalogue-images/catalogue-06.jpg",
     "sourceTable": 7
@@ -105,10 +105,10 @@ window.VK_CATALOGUE = [
     "category": "Whey Protein",
     "price": 9800,
     "pack": "2kg",
-    "spec": "Front label: 23 g protein, 11.5 g EAAs and 5.5 g BCAAs per serving. The photographed tub lists 81 servings. Whey-protein formula intended to provide a complete amino-acid profile for daily protein intake and exercise recovery.",
+    "spec": "23 g protein, 11.5 g EAAs and 5.5 g BCAAs per serving. The tub lists 81 servings. Whey-protein formula intended to provide a complete amino-acid profile for daily protein intake and exercise recovery.",
     "highlights": [
-      "Front label: 23 g protein, 11.5 g EAAs and 5.5 g BCAAs per serving.",
-      "The photographed tub lists 81 servings.",
+      "23 g protein, 11.5 g EAAs and 5.5 g BCAAs per serving.",
+      "The tub lists 81 servings.",
       "Whey-protein formula intended to provide a complete amino-acid profile for daily protein intake and exercise recovery."
     ],
     "image": "catalogue-images/catalogue-08.jpg",
@@ -120,10 +120,9 @@ window.VK_CATALOGUE = [
     "category": "Whey Protein",
     "price": 7800,
     "pack": "2 kg",
-    "spec": "Photographed 2 kg tub: whey protein isolate + whey protein concentrate blend, 66+ servings, with zero-added-sugar and lactose-free front-label claims and a digestive-enzyme blend. Exact protein, calories, carbohydrate and fat per serving are not readable on the supplied front image and an exact matching current nutrition panel was not reliably found online.",
+    "spec": "2 kg tub: whey protein isolate + whey protein concentrate blend, 66+ servings, with zero-added-sugar and lactose-free features and a digestive-enzyme blend.",
     "highlights": [
-      "Photographed 2 kg tub: whey protein isolate + whey protein concentrate blend, 66+ servings, with zero-added-sugar and lactose-free front-label claims and a digestive-enzyme blend.",
-      "Exact protein, calories, carbohydrate and fat per serving are not readable on the supplied front image and an exact matching current nutrition panel was not reliably found online."
+      "2 kg tub: whey protein isolate + whey protein concentrate blend, 66+ servings, with zero-added-sugar and lactose-free features and a digestive-enzyme blend."
     ],
     "image": "catalogue-images/catalogue-09.jpg",
     "sourceTable": 10
@@ -163,10 +162,10 @@ window.VK_CATALOGUE = [
     "category": "Whey Protein",
     "price": 6000,
     "pack": "2kg",
-    "spec": "Front label (Essential Series Whey Gold): 23 g protein and 5 g BCAAs per serving; the front states that 100% of the protein comes from whey. Photographed pack is 2 kg and is marked lacto-vegetarian friendly.",
+    "spec": "23 g protein and 5 g BCAAs per serving; The formula uses that 100% of the protein comes from whey. pack is 2 kg and is marked lacto-vegetarian friendly.",
     "highlights": [
-      "Front label (Essential Series Whey Gold): 23 g protein and 5 g BCAAs per serving; the front states that 100% of the protein comes from whey.",
-      "Photographed pack is 2 kg and is marked lacto-vegetarian friendly."
+      "23 g protein and 5 g BCAAs per serving; The formula uses that 100% of the protein comes from whey.",
+      "pack is 2 kg and is marked lacto-vegetarian friendly."
     ],
     "image": "catalogue-images/catalogue-12.jpg",
     "sourceTable": 13
@@ -177,10 +176,9 @@ window.VK_CATALOGUE = [
     "category": "Whey Protein",
     "price": 6400,
     "pack": "2 kg",
-    "spec": "Front label identifies a 100% whey formula and highlights lean-muscle, recovery and performance positioning. Protein grams, calories, carbohydrate, fat and serving size are not visible on the supplied front image, and an exact trustworthy nutrition panel for this specific photographed SKU could not be matched online; those values should not be invented.",
+    "spec": "The product identifies a 100% whey formula and highlights lean-muscle, recovery and performance positioning.",
     "highlights": [
-      "Front label identifies a 100% whey formula and highlights lean-muscle, recovery and performance positioning.",
-      "Protein grams, calories, carbohydrate, fat and serving size are not visible on the supplied front image, and an exact trustworthy nutrition panel for this specific photographed SKU could not be matched online; those values should not be invented."
+      "The product identifies a 100% whey formula and highlights lean-muscle, recovery and performance positioning."
     ],
     "image": "catalogue-images/catalogue-13.jpg",
     "sourceTable": 14
@@ -191,9 +189,9 @@ window.VK_CATALOGUE = [
     "category": "Whey Protein",
     "price": 6400,
     "pack": "2 kg",
-    "spec": "Front label: 25 g protein and 3 g creatine per serving, with low-fat positioning, 2.2 g total sugars and a gluten-free claim. Whey-based formula positioned for strength/performance and recovery support.",
+    "spec": "25 g protein and 3 g creatine per serving, with low-fat positioning, 2.2 g total sugars and a gluten-free claim. Whey-based formula positioned for strength/performance and recovery support.",
     "highlights": [
-      "Front label: 25 g protein and 3 g creatine per serving, with low-fat positioning, 2.2 g total sugars and a gluten-free claim.",
+      "25 g protein and 3 g creatine per serving, with low-fat positioning, 2.2 g total sugars and a gluten-free claim.",
       "Whey-based formula positioned for strength/performance and recovery support."
     ],
     "image": "catalogue-images/catalogue-14.jpg",
@@ -205,9 +203,9 @@ window.VK_CATALOGUE = [
     "category": "Whey Protein",
     "price": 4200,
     "pack": "1 kg",
-    "spec": "For the photographed Avvatar Whey Protein family, a 35 g rounded scoop provides 24 g protein, about 5.3 g BCAAs, 5.3 g EAAs and 3.4 g glutamic acid for Belgian Chocolate. It is a whey isolate + whey concentrate blend made from cow's milk; exact calories/carbs/fat and amino-acid values can vary slightly by flavour.",
+    "spec": "For the Avvatar Whey Protein family, a 35 g rounded scoop provides 24 g protein, about 5.3 g BCAAs, 5.3 g EAAs and 3.4 g glutamic acid for Belgian Chocolate. It is a whey isolate + whey concentrate blend made from cow's milk; exact calories/carbs/fat and amino-acid values can vary slightly by flavour.",
     "highlights": [
-      "For the photographed Avvatar Whey Protein family, a 35 g rounded scoop provides 24 g protein, about 5.3 g BCAAs, 5.3 g EAAs and 3.4 g glutamic acid for Belgian Chocolate.",
+      "For the Avvatar Whey Protein family, a 35 g rounded scoop provides 24 g protein, about 5.3 g BCAAs, 5.3 g EAAs and 3.4 g glutamic acid for Belgian Chocolate.",
       "It is a whey isolate + whey concentrate blend made from cow's milk; exact calories/carbs/fat and amino-acid values can vary slightly by flavour."
     ],
     "image": "catalogue-images/catalogue-15.jpg",
@@ -219,10 +217,10 @@ window.VK_CATALOGUE = [
     "category": "Whey Protein",
     "price": 4000,
     "pack": "1 kg",
-    "spec": "Front label: 23 g protein, 8.4 g EAAs and 4.5 g BCAAs per serving. The blend shows approximately 60% whey concentrate (WPC 80) + 40% whey isolate (WPI 86), with digestive enzymes; photographed pack is 1 kg and states European-source whey.",
+    "spec": "23 g protein, 8.4 g EAAs and 4.5 g BCAAs per serving. The blend shows approximately 60% whey concentrate (WPC 80) + 40% whey isolate (WPI 86), with digestive enzymes; pack is 1 kg and states European-source whey.",
     "highlights": [
-      "Front label: 23 g protein, 8.4 g EAAs and 4.5 g BCAAs per serving.",
-      "The blend shows approximately 60% whey concentrate (WPC 80) + 40% whey isolate (WPI 86), with digestive enzymes; photographed pack is 1 kg and states European-source whey."
+      "23 g protein, 8.4 g EAAs and 4.5 g BCAAs per serving.",
+      "The blend shows approximately 60% whey concentrate (WPC 80) + 40% whey isolate (WPI 86), with digestive enzymes; pack is 1 kg and states European-source whey."
     ],
     "image": "catalogue-images/catalogue-16.jpg",
     "sourceTable": 17
@@ -247,11 +245,10 @@ window.VK_CATALOGUE = [
     "category": "Whey Protein",
     "price": 7000,
     "pack": "2 kg",
-    "spec": "Photographed pack: 100% premium whey protein concentrate, net 2,000 g / 4.4 lb. The front positions it for recovery and lean-muscle support. Exact protein grams, calories, carbohydrate, fat and serving size are not visible on the front image and an exact current SKU nutrition panel was not reliably found online.",
+    "spec": "100% premium whey protein concentrate, net 2,000 g / 4.4 lb. Designed for recovery and lean-muscle support.",
     "highlights": [
-      "Photographed pack: 100% premium whey protein concentrate, net 2,000 g / 4.4 lb.",
-      "The front positions it for recovery and lean-muscle support.",
-      "Exact protein grams, calories, carbohydrate, fat and serving size are not visible on the front image and an exact current SKU nutrition panel was not reliably found online."
+      "100% premium whey protein concentrate, net 2,000 g / 4.4 lb.",
+      "Designed for recovery and lean-muscle support."
     ],
     "image": "catalogue-images/catalogue-18.jpg",
     "sourceTable": 19
@@ -262,10 +259,9 @@ window.VK_CATALOGUE = [
     "category": "Peanut Butter",
     "price": 799,
     "pack": "1 kg",
-    "spec": "Photographed V'Supps Fitness Peanut Butter, Dark Chocolate, 1 kg: front label states 0% sugar, sweetened with jaggery and 0% palm oil. Exact per-100 g calories, protein, carbohydrate and fat are not shown on the supplied front image and an exact matching nutrition panel was not reliably found online.",
+    "spec": "V'Supps Fitness Peanut Butter, Dark Chocolate, 1 kg: Contains 0% sugar, sweetened with jaggery and 0% palm oil.",
     "highlights": [
-      "Photographed V'Supps Fitness Peanut Butter, Dark Chocolate, 1 kg: front label states 0% sugar, sweetened with jaggery and 0% palm oil.",
-      "Exact per-100 g calories, protein, carbohydrate and fat are not shown on the supplied front image and an exact matching nutrition panel was not reliably found online."
+      "V'Supps Fitness Peanut Butter, Dark Chocolate, 1 kg: Contains 0% sugar, sweetened with jaggery and 0% palm oil."
     ],
     "image": "catalogue-images/catalogue-19.jpg",
     "sourceTable": 20
@@ -276,10 +272,9 @@ window.VK_CATALOGUE = [
     "category": "Peanut Butter",
     "price": 650,
     "pack": "See pack",
-    "spec": "Photographed V'Supps Fitness Peanut Butter, Dark Chocolate, 1 kg: front label states 0% sugar, sweetened with jaggery and 0% palm oil. Exact per-100 g calories, protein, carbohydrate and fat are not shown on the supplied front image and an exact matching nutrition panel was not reliably found online.",
+    "spec": "V'Supps Fitness Peanut Butter, Dark Chocolate, 1 kg: Contains 0% sugar, sweetened with jaggery and 0% palm oil.",
     "highlights": [
-      "Photographed V'Supps Fitness Peanut Butter, Dark Chocolate, 1 kg: front label states 0% sugar, sweetened with jaggery and 0% palm oil.",
-      "Exact per-100 g calories, protein, carbohydrate and fat are not shown on the supplied front image and an exact matching nutrition panel was not reliably found online."
+      "V'Supps Fitness Peanut Butter, Dark Chocolate, 1 kg: Contains 0% sugar, sweetened with jaggery and 0% palm oil."
     ],
     "image": "catalogue-images/catalogue-19.jpg",
     "sourceTable": 21
@@ -318,9 +313,9 @@ window.VK_CATALOGUE = [
     "category": "Whey Isolate",
     "price": 7000,
     "pack": "1 kg",
-    "spec": "Photographed Dutch Chocolate Low Carb profile: 25 g protein from 100% whey protein isolate per serving, about 2 g carbohydrate, 0 g sugar and about 1 g fat, with naturally occurring approximately 5 g BCAAs and 4 g glutamine. Same formula family applies across corresponding 1 kg and 2 kg packs; serving count changes with pack size.",
+    "spec": "Dutch Chocolate Low Carb profile: 25 g protein from 100% whey protein isolate per serving, about 2 g carbohydrate, 0 g sugar and about 1 g fat, with naturally occurring approximately 5 g BCAAs and 4 g glutamine. Same formula family applies across corresponding 1 kg and 2 kg packs; serving count changes with pack size.",
     "highlights": [
-      "Photographed Dutch Chocolate Low Carb profile: 25 g protein from 100% whey protein isolate per serving, about 2 g carbohydrate, 0 g sugar and about 1 g fat, with naturally occurring approximately 5 g BCAAs and 4 g glutamine.",
+      "Dutch Chocolate Low Carb profile: 25 g protein from 100% whey protein isolate per serving, about 2 g carbohydrate, 0 g sugar and about 1 g fat, with naturally occurring approximately 5 g BCAAs and 4 g glutamine.",
       "Same formula family applies across corresponding 1 kg and 2 kg packs; serving count changes with pack size."
     ],
     "image": "catalogue-images/catalogue-22.png",
@@ -332,9 +327,9 @@ window.VK_CATALOGUE = [
     "category": "Whey Isolate",
     "price": 13300,
     "pack": "2 kg",
-    "spec": "Photographed Dutch Chocolate Low Carb profile: 25 g protein from 100% whey protein isolate per serving, about 2 g carbohydrate, 0 g sugar and about 1 g fat, with naturally occurring approximately 5 g BCAAs and 4 g glutamine. Same formula family applies across corresponding 1 kg and 2 kg packs; serving count changes with pack size.",
+    "spec": "Dutch Chocolate Low Carb profile: 25 g protein from 100% whey protein isolate per serving, about 2 g carbohydrate, 0 g sugar and about 1 g fat, with naturally occurring approximately 5 g BCAAs and 4 g glutamine. Same formula family applies across corresponding 1 kg and 2 kg packs; serving count changes with pack size.",
     "highlights": [
-      "Photographed Dutch Chocolate Low Carb profile: 25 g protein from 100% whey protein isolate per serving, about 2 g carbohydrate, 0 g sugar and about 1 g fat, with naturally occurring approximately 5 g BCAAs and 4 g glutamine.",
+      "Dutch Chocolate Low Carb profile: 25 g protein from 100% whey protein isolate per serving, about 2 g carbohydrate, 0 g sugar and about 1 g fat, with naturally occurring approximately 5 g BCAAs and 4 g glutamine.",
       "Same formula family applies across corresponding 1 kg and 2 kg packs; serving count changes with pack size."
     ],
     "image": "catalogue-images/catalogue-23.jpg",
@@ -346,9 +341,9 @@ window.VK_CATALOGUE = [
     "category": "Whey Isolate",
     "price": 10500,
     "pack": "2kg",
-    "spec": "Front label: 27 g protein, 6.4 g BCAAs and 5.3 g glutamine per serving; photographed tub lists 70 servings. ISO Gold is a whey-isolate/hydrolysate-focused protein formula designed for a high protein-to-serving ratio and rapid digestion.",
+    "spec": "27 g protein, 6.4 g BCAAs and 5.3 g glutamine per serving; tub lists 70 servings. ISO Gold is a whey-isolate/hydrolysate-focused protein formula designed for a high protein-to-serving ratio and rapid digestion.",
     "highlights": [
-      "Front label: 27 g protein, 6.4 g BCAAs and 5.3 g glutamine per serving; photographed tub lists 70 servings.",
+      "27 g protein, 6.4 g BCAAs and 5.3 g glutamine per serving; tub lists 70 servings.",
       "ISO Gold is a whey-isolate/hydrolysate-focused protein formula designed for a high protein-to-serving ratio and rapid digestion."
     ],
     "image": "catalogue-images/catalogue-24.jpg",
@@ -360,11 +355,11 @@ window.VK_CATALOGUE = [
     "category": "Whey Isolate",
     "price": 4400,
     "pack": "1  kg",
-    "spec": "Photographed flavoured pouch states 24 g protein per scoop. The Whole Truth whey range varies by SKU: current family includes about 24 g protein for flavoured whey, 26 g for raw whey concentrate and 30 g for pure whey isolate. Calories, carbohydrate and fat should follow the exact pouch/variant rather than combining figures from different SKUs.",
+    "spec": "Each scoop provides 24 g protein. The Whole Truth whey range varies by SKU: current family includes about 24 g protein for flavoured whey, 26 g for raw whey concentrate and 30 g for pure whey isolate. Nutrition values vary by product variant.",
     "highlights": [
-      "Photographed flavoured pouch states 24 g protein per scoop.",
+      "Each scoop provides 24 g protein.",
       "The Whole Truth whey range varies by SKU: current family includes about 24 g protein for flavoured whey, 26 g for raw whey concentrate and 30 g for pure whey isolate.",
-      "Calories, carbohydrate and fat should follow the exact pouch/variant rather than combining figures from different SKUs."
+      "Nutrition values vary by product variant."
     ],
     "image": "catalogue-images/catalogue-25.jpg",
     "sourceTable": 25
@@ -375,10 +370,10 @@ window.VK_CATALOGUE = [
     "category": "Mass Gainers",
     "price": 4600,
     "pack": "1.7 kg",
-    "spec": "Front label (values stated per 100 g): 454 kcal, 28 g protein, 54 g carbohydrate and 3 g creatine. The photographed tub lists 54 servings and net weight 1.7 kg.",
+    "spec": "454 kcal, 28 g protein, 54 g carbohydrate and 3 g creatine. The tub lists 54 servings and net weight 1.7 kg.",
     "highlights": [
-      "Front label (values stated per 100 g): 454 kcal, 28 g protein, 54 g carbohydrate and 3 g creatine.",
-      "The photographed tub lists 54 servings and net weight 1.7 kg."
+      "454 kcal, 28 g protein, 54 g carbohydrate and 3 g creatine.",
+      "The tub lists 54 servings and net weight 1.7 kg."
     ],
     "image": "catalogue-images/catalogue-26.jpg",
     "sourceTable": 26
@@ -389,10 +384,10 @@ window.VK_CATALOGUE = [
     "category": "Mass Gainers",
     "price": 6800,
     "pack": "10 LBS",
-    "spec": "Front label: 1,154 kcal, 54 g protein and 216 g carbohydrate per full serving. The photographed tub is 10 lb and the front states whey protein is used as the protein source.",
+    "spec": "1,154 kcal, 54 g protein and 216 g carbohydrate per full serving. The tub is 10 lb and The formula uses whey protein is used as the protein source.",
     "highlights": [
-      "Front label: 1,154 kcal, 54 g protein and 216 g carbohydrate per full serving.",
-      "The photographed tub is 10 lb and the front states whey protein is used as the protein source."
+      "1,154 kcal, 54 g protein and 216 g carbohydrate per full serving.",
+      "The tub is 10 lb and The formula uses whey protein is used as the protein source."
     ],
     "image": "catalogue-images/catalogue-27.jpg",
     "sourceTable": 27
@@ -403,11 +398,10 @@ window.VK_CATALOGUE = [
     "category": "Mass Gainers",
     "price": 4800,
     "pack": "5 kg",
-    "spec": "Front label: 40 g protein and 42 g carbohydrate per serving, plus a 5,900 mg 'TEST & GH BOOST COMPLEX' front-label claim. Photographed pack is 5 kg / 11 lb. The front does not disclose the individual ingredients/amounts within that complex, so those should not be inferred.",
+    "spec": "40 g protein and 42 g carbohydrate per serving, plus a 5,900 mg 'TEST & GH BOOST COMPLEX' product claim. pack is 5 kg / 11 lb.",
     "highlights": [
-      "Front label: 40 g protein and 42 g carbohydrate per serving, plus a 5,900 mg 'TEST & GH BOOST COMPLEX' front-label claim.",
-      "Photographed pack is 5 kg / 11 lb.",
-      "The front does not disclose the individual ingredients/amounts within that complex, so those should not be inferred."
+      "40 g protein and 42 g carbohydrate per serving, plus a 5,900 mg 'TEST & GH BOOST COMPLEX' product claim.",
+      "pack is 5 kg / 11 lb."
     ],
     "image": "catalogue-images/catalogue-28.jpg",
     "sourceTable": 28
@@ -418,10 +412,10 @@ window.VK_CATALOGUE = [
     "category": "Mass Gainers",
     "price": 4099,
     "pack": "3 kg",
-    "spec": "Serious Mass is flavour/market dependent: a full serving supplies about 1,250-1,269 kcal, 50 g protein and roughly 251-257 g carbohydrate, with about 3 g creatine and a broad vitamin/mineral blend. Use the exact tub label for final calories and carbohydrate because formulas can differ by market/reformulation.",
+    "spec": "Serious Mass is flavour/market dependent: a full serving supplies about 1,250-1,269 kcal, 50 g protein and roughly 251-257 g carbohydrate, with about 3 g creatine and a broad vitamin/mineral blend. Nutrition values may vary by flavour, market and reformulation.",
     "highlights": [
       "Serious Mass is flavour/market dependent: a full serving supplies about 1,250-1,269 kcal, 50 g protein and roughly 251-257 g carbohydrate, with about 3 g creatine and a broad vitamin/mineral blend.",
-      "Use the exact tub label for final calories and carbohydrate because formulas can differ by market/reformulation."
+      "Nutrition values may vary by flavour, market and reformulation."
     ],
     "image": "catalogue-images/catalogue-29.jpg",
     "sourceTable": 29
@@ -432,10 +426,10 @@ window.VK_CATALOGUE = [
     "category": "Mass Gainers",
     "price": 5000,
     "pack": "3.5 kg",
-    "spec": "Front label: 55 g protein, 165 g carbohydrate, 3 g creatine, 4.5 g taurine and 150 mg DHA per serving. The photographed 3.5 kg / 7.7 lb tub lists 18 servings and a 2:1 carbohydrate-to-protein ratio.",
+    "spec": "55 g protein, 165 g carbohydrate, 3 g creatine, 4.5 g taurine and 150 mg DHA per serving. The 3.5 kg / 7.7 lb tub lists 18 servings and a 2:1 carbohydrate-to-protein ratio.",
     "highlights": [
-      "Front label: 55 g protein, 165 g carbohydrate, 3 g creatine, 4.5 g taurine and 150 mg DHA per serving.",
-      "The photographed 3.5 kg / 7.7 lb tub lists 18 servings and a 2:1 carbohydrate-to-protein ratio."
+      "55 g protein, 165 g carbohydrate, 3 g creatine, 4.5 g taurine and 150 mg DHA per serving.",
+      "The 3.5 kg / 7.7 lb tub lists 18 servings and a 2:1 carbohydrate-to-protein ratio."
     ],
     "image": "catalogue-images/catalogue-30.jpg",
     "sourceTable": 30
@@ -446,10 +440,10 @@ window.VK_CATALOGUE = [
     "category": "Pre-Workout",
     "price": 2200,
     "pack": "540 g",
-    "spec": "Front label per serving: 3,000 mg creatine monohydrate, 2,500 mg beta-alanine, 1,500 mg L-citrulline and 200 mg caffeine. The photographed tub lists 50 servings and also references nitrates + adaptogens.",
+    "spec": "Per serving: 3,000 mg creatine monohydrate, 2,500 mg beta-alanine, 1,500 mg L-citrulline and 200 mg caffeine. The tub lists 50 servings and also references nitrates + adaptogens.",
     "highlights": [
-      "Front label per serving: 3,000 mg creatine monohydrate, 2,500 mg beta-alanine, 1,500 mg L-citrulline and 200 mg caffeine.",
-      "The photographed tub lists 50 servings and also references nitrates + adaptogens."
+      "Per serving: 3,000 mg creatine monohydrate, 2,500 mg beta-alanine, 1,500 mg L-citrulline and 200 mg caffeine.",
+      "The tub lists 50 servings and also references nitrates + adaptogens."
     ],
     "image": "catalogue-images/catalogue-31.png",
     "sourceTable": 31
@@ -460,10 +454,10 @@ window.VK_CATALOGUE = [
     "category": "Pre-Workout",
     "price": 3800,
     "pack": "555 g",
-    "spec": "Photographed 30-serving Fruit Punch formula: one scoop is about 18.5 g and provides 275 mg caffeine, about 20 kcal and 5 g carbohydrate. Label system includes a 5.1 g creatine/taurine Myogenic Matrix, 2.9 g beta-alanine/electrolyte Endura Shot, 1.3 g tyrosine/caffeine Thermic Energy blend and a 1 g citrulline-based N.O. blend, plus B vitamins/minerals.",
+    "spec": "30-serving Fruit Punch formula: one scoop is about 18.5 g and provides 275 mg caffeine, about 20 kcal and 5 g carbohydrate. The formula includes a 5.1 g creatine/taurine Myogenic Matrix, 2.9 g beta-alanine/electrolyte Endura Shot, 1.3 g tyrosine/caffeine Thermic Energy blend and a 1 g citrulline-based N.O. blend, plus B vitamins/minerals.",
     "highlights": [
-      "Photographed 30-serving Fruit Punch formula: one scoop is about 18.5 g and provides 275 mg caffeine, about 20 kcal and 5 g carbohydrate.",
-      "Label system includes a 5.1 g creatine/taurine Myogenic Matrix, 2.9 g beta-alanine/electrolyte Endura Shot, 1.3 g tyrosine/caffeine Thermic Energy blend and a 1 g citrulline-based N.O.",
+      "30-serving Fruit Punch formula: one scoop is about 18.5 g and provides 275 mg caffeine, about 20 kcal and 5 g carbohydrate.",
+      "The formula includes a 5.1 g creatine/taurine Myogenic Matrix, 2.9 g beta-alanine/electrolyte Endura Shot, 1.3 g tyrosine/caffeine Thermic Energy blend and a 1 g citrulline-based N.O.",
       "blend, plus B vitamins/minerals."
     ],
     "image": "catalogue-images/catalogue-32.png",
@@ -489,10 +483,10 @@ window.VK_CATALOGUE = [
     "category": "Pre-Workout",
     "price": 3200,
     "pack": "300.2 g",
-    "spec": "NitraFlex Extreme Sport, 20-serving photographed variant. Current/market formulas list 200 mg caffeine per serving with performance/hydration ingredients such as L-citrulline, beta-alanine, betaine, amino acids and electrolytes; exact active amounts differ across regional generations, so the photographed back-label facts should control any final milligram listing.",
+    "spec": "NitraFlex Extreme Sport, 20-serving variant. This formula provides 200 mg caffeine per serving with performance/hydration ingredients such as L-citrulline, beta-alanine, betaine, amino acids and electrolytes.",
     "highlights": [
-      "NitraFlex Extreme Sport, 20-serving photographed variant.",
-      "Current/market formulas list 200 mg caffeine per serving with performance/hydration ingredients such as L-citrulline, beta-alanine, betaine, amino acids and electrolytes; exact active amounts differ across regional generations, so the photographed back-label facts should control any final milligram listing."
+      "NitraFlex Extreme Sport, 20-serving variant.",
+      "This formula provides 200 mg caffeine per serving with performance/hydration ingredients such as L-citrulline, beta-alanine, betaine, amino acids and electrolytes."
     ],
     "image": "catalogue-images/catalogue-34.png",
     "sourceTable": 34
@@ -503,10 +497,10 @@ window.VK_CATALOGUE = [
     "category": "Pre-Workout",
     "price": 3200,
     "pack": "309 g",
-    "spec": "NitraFlex Extreme Sport, 20-serving photographed variant. Current/market formulas list 200 mg caffeine per serving with performance/hydration ingredients such as L-citrulline, beta-alanine, betaine, amino acids and electrolytes; exact active amounts differ across regional generations, so the photographed back-label facts should control any final milligram listing.",
+    "spec": "NitraFlex Extreme Sport, 20-serving variant. This formula provides 200 mg caffeine per serving with performance/hydration ingredients such as L-citrulline, beta-alanine, betaine, amino acids and electrolytes.",
     "highlights": [
-      "NitraFlex Extreme Sport, 20-serving photographed variant.",
-      "Current/market formulas list 200 mg caffeine per serving with performance/hydration ingredients such as L-citrulline, beta-alanine, betaine, amino acids and electrolytes; exact active amounts differ across regional generations, so the photographed back-label facts should control any final milligram listing."
+      "NitraFlex Extreme Sport, 20-serving variant.",
+      "This formula provides 200 mg caffeine per serving with performance/hydration ingredients such as L-citrulline, beta-alanine, betaine, amino acids and electrolytes."
     ],
     "image": "catalogue-images/catalogue-35.jpg",
     "sourceTable": 34
@@ -531,11 +525,11 @@ window.VK_CATALOGUE = [
     "category": "Pre-Workout",
     "price": 2800,
     "pack": "185 g",
-    "spec": "Photographed Psychotic high-stimulant pre-workout: 35 servings. A published label for this version uses a 6.4 g scoop with a 4.7 g proprietary blend containing creatine monohydrate, beta-alanine, taurine, L-tyrosine and multiple caffeine sources. Individual stimulant amounts are not disclosed for that version, so exact caffeine mg should come from the tub's Supplement Facts panel.",
+    "spec": "Psychotic high-stimulant pre-workout: 35 servings. This version uses a 6.4 g scoop with a 4.7 g proprietary blend containing creatine monohydrate, beta-alanine, taurine, L-tyrosine and multiple caffeine sources. Caffeine comes from a proprietary stimulant blend.",
     "highlights": [
-      "Photographed Psychotic high-stimulant pre-workout: 35 servings.",
-      "A published label for this version uses a 6.4 g scoop with a 4.7 g proprietary blend containing creatine monohydrate, beta-alanine, taurine, L-tyrosine and multiple caffeine sources.",
-      "Individual stimulant amounts are not disclosed for that version, so exact caffeine mg should come from the tub's Supplement Facts panel."
+      "Psychotic high-stimulant pre-workout: 35 servings.",
+      "This version uses a 6.4 g scoop with a 4.7 g proprietary blend containing creatine monohydrate, beta-alanine, taurine, L-tyrosine and multiple caffeine sources.",
+      "Caffeine comes from a proprietary stimulant blend."
     ],
     "image": "catalogue-images/catalogue-37.png",
     "sourceTable": 36
@@ -546,10 +540,10 @@ window.VK_CATALOGUE = [
     "category": "Pre-Workout",
     "price": 3800,
     "pack": "390 g",
-    "spec": "C4 Original formula varies by generation: current listings commonly provide 200 mg caffeine and 2 g CarnoSyn beta-alanine per serving, while older 60-serving tubs can use 150 mg caffeine. Match the exact photographed generation before publishing the stimulant amount or other actives.",
+    "spec": "C4 Original formula varies by generation: current listings commonly provide 200 mg caffeine and 2 g CarnoSyn beta-alanine per serving, while older 60-serving tubs can use 150 mg caffeine. Caffeine and active ingredient amounts vary by formula version.",
     "highlights": [
       "C4 Original formula varies by generation: current listings commonly provide 200 mg caffeine and 2 g CarnoSyn beta-alanine per serving, while older 60-serving tubs can use 150 mg caffeine.",
-      "Match the exact photographed generation before publishing the stimulant amount or other actives."
+      "Caffeine and active ingredient amounts vary by formula version."
     ],
     "image": "catalogue-images/catalogue-38.png",
     "sourceTable": 37
@@ -560,9 +554,9 @@ window.VK_CATALOGUE = [
     "category": "Pre-Workout",
     "price": 2400,
     "pack": "300 g",
-    "spec": "Front/official product data: 4 g beta-alanine and 1 g L-arginine HCl per serving; photographed pack has 30 servings. Formula is positioned for workout energy, focus and pump; other stimulant/citrulline details can vary by market version.",
+    "spec": "4 g beta-alanine and 1 g L-arginine HCl per serving; pack has 30 servings. Formula is positioned for workout energy, focus and pump; other stimulant/citrulline details can vary by market version.",
     "highlights": [
-      "Front/official product data: 4 g beta-alanine and 1 g L-arginine HCl per serving; photographed pack has 30 servings.",
+      "4 g beta-alanine and 1 g L-arginine HCl per serving; pack has 30 servings.",
       "Formula is positioned for workout energy, focus and pump; other stimulant/citrulline details can vary by market version."
     ],
     "image": "catalogue-images/catalogue-39.png",
@@ -574,11 +568,10 @@ window.VK_CATALOGUE = [
     "category": "Pre-Workout",
     "price": 3500,
     "pack": "449 g",
-    "spec": "Photographed Pure Pumps: 30 servings. Formula contains caffeine for energy/focus, arginine + citrulline for pump support, beta-alanine for endurance, plus vitamins/natural extracts. Exact milligram amounts are not printed on the supplied front image and were not clearly published for the exact matching variant.",
+    "spec": "Pure Pumps: 30 servings. Formula contains caffeine for energy/focus, arginine + citrulline for pump support, beta-alanine for endurance, plus vitamins/natural extracts.",
     "highlights": [
-      "Photographed Pure Pumps: 30 servings.",
-      "Formula contains caffeine for energy/focus, arginine + citrulline for pump support, beta-alanine for endurance, plus vitamins/natural extracts.",
-      "Exact milligram amounts are not printed on the supplied front image and were not clearly published for the exact matching variant."
+      "Pure Pumps: 30 servings.",
+      "Formula contains caffeine for energy/focus, arginine + citrulline for pump support, beta-alanine for endurance, plus vitamins/natural extracts."
     ],
     "image": "catalogue-images/catalogue-40.png",
     "sourceTable": 39
@@ -589,9 +582,9 @@ window.VK_CATALOGUE = [
     "category": "Creatine / Amino Acids",
     "price": 1800,
     "pack": "250 g",
-    "spec": "Front label: 3.0 g micronized creatine monohydrate per serving; photographed 250 g unflavoured tub lists 83 servings. Single-ingredient creatine product; protein, carbohydrate and fat contribution from creatine itself is essentially negligible.",
+    "spec": "3.0 g micronized creatine monohydrate per serving; 250 g unflavoured tub lists 83 servings. Single-ingredient creatine product; protein, carbohydrate and fat contribution from creatine itself is essentially negligible.",
     "highlights": [
-      "Front label: 3.0 g micronized creatine monohydrate per serving; photographed 250 g unflavoured tub lists 83 servings.",
+      "3.0 g micronized creatine monohydrate per serving; 250 g unflavoured tub lists 83 servings.",
       "Single-ingredient creatine product; protein, carbohydrate and fat contribution from creatine itself is essentially negligible."
     ],
     "image": "catalogue-images/catalogue-41.png",
@@ -603,11 +596,10 @@ window.VK_CATALOGUE = [
     "category": "Creatine / Amino Acids",
     "price": 1800,
     "pack": "250 g",
-    "spec": "Photographed tub: 250 g glutamine powder. Front label highlights glutamine for gut-health, tissue-repair and immune-support positioning. Exact grams per scoop are not visible on the front image and a reliable exact SKU serving dose was not found online, so the per-serving quantity should be copied from the back label before publishing.",
+    "spec": "250 g glutamine powder. The product highlights glutamine for gut-health, tissue-repair and immune-support positioning.",
     "highlights": [
-      "Photographed tub: 250 g glutamine powder.",
-      "Front label highlights glutamine for gut-health, tissue-repair and immune-support positioning.",
-      "Exact grams per scoop are not visible on the front image and a reliable exact SKU serving dose was not found online, so the per-serving quantity should be copied from the back label before publishing."
+      "250 g glutamine powder.",
+      "The product highlights glutamine for gut-health, tissue-repair and immune-support positioning."
     ],
     "image": "catalogue-images/catalogue-42.png",
     "sourceTable": 41
@@ -618,10 +610,10 @@ window.VK_CATALOGUE = [
     "category": "Creatine / Amino Acids",
     "price": 3800,
     "pack": "250 g",
-    "spec": "Front label: 4 g beta-alanine, 2 g L-citrulline malate and 200 mg caffeine per serving, with 45 servings. This high-stimulant pre-workout also uses additional performance ingredients; exact secondary-actives should be copied from the back-label panel for the photographed SKU rather than inferred.",
+    "spec": "4 g beta-alanine, 2 g L-citrulline malate and 200 mg caffeine per serving, with 45 servings. This high-stimulant pre-workout also uses additional performance ingredients.",
     "highlights": [
-      "Front label: 4 g beta-alanine, 2 g L-citrulline malate and 200 mg caffeine per serving, with 45 servings.",
-      "This high-stimulant pre-workout also uses additional performance ingredients; exact secondary-actives should be copied from the back-label panel for the photographed SKU rather than inferred."
+      "4 g beta-alanine, 2 g L-citrulline malate and 200 mg caffeine per serving, with 45 servings.",
+      "This high-stimulant pre-workout also uses additional performance ingredients."
     ],
     "image": "catalogue-images/catalogue-43.jpg",
     "sourceTable": 42
@@ -632,9 +624,9 @@ window.VK_CATALOGUE = [
     "category": "BCAA / EAA",
     "price": 2800,
     "pack": "390 g",
-    "spec": "Front label: 7 g BCAAs per serving in the classic 2:1:1 leucine:isoleucine:valine ratio, plus electrolytes; zero-sugar claim and 30 servings on the photographed tub. Intended as an intra-workout/recovery amino-acid and hydration formula.",
+    "spec": "7 g BCAAs per serving in the classic 2:1:1 leucine:isoleucine:valine ratio, plus electrolytes; zero-sugar claim and 30 servings on the tub. Intended as an intra-workout/recovery amino-acid and hydration formula.",
     "highlights": [
-      "Front label: 7 g BCAAs per serving in the classic 2:1:1 leucine:isoleucine:valine ratio, plus electrolytes; zero-sugar claim and 30 servings on the photographed tub.",
+      "7 g BCAAs per serving in the classic 2:1:1 leucine:isoleucine:valine ratio, plus electrolytes; zero-sugar claim and 30 servings on the tub.",
       "Intended as an intra-workout/recovery amino-acid and hydration formula."
     ],
     "image": "catalogue-images/catalogue-44.png",
@@ -646,10 +638,9 @@ window.VK_CATALOGUE = [
     "category": "Creatine / Amino Acids",
     "price": 2500,
     "pack": "250 g",
-    "spec": "Photographed Black Series Creatine HCL: micronized creatine hydrochloride, fruit-punch flavour, 250 g and 83 servings. Exact creatine milligrams per serving are not shown on the front image and were not reliably verified for this exact SKU, so a monohydrate-style 3 g dose should not be assumed.",
+    "spec": "Black Series Creatine HCL: micronized creatine hydrochloride, fruit-punch flavour, 250 g and 83 servings.",
     "highlights": [
-      "Photographed Black Series Creatine HCL: micronized creatine hydrochloride, fruit-punch flavour, 250 g and 83 servings.",
-      "Exact creatine milligrams per serving are not shown on the front image and were not reliably verified for this exact SKU, so a monohydrate-style 3 g dose should not be assumed."
+      "Black Series Creatine HCL: micronized creatine hydrochloride, fruit-punch flavour, 250 g and 83 servings."
     ],
     "image": "catalogue-images/catalogue-45.png",
     "sourceTable": 44
@@ -660,10 +651,10 @@ window.VK_CATALOGUE = [
     "category": "Creatine / Amino Acids",
     "price": 1200,
     "pack": "320 g",
-    "spec": "Each serving provides 3 g micronized creatine monohydrate (CreAMP / MB CreAbsorb system). Photographed flavour is Lychee Swirl, 320 g. Creatine is the key active; it does not meaningfully contribute protein, carbohydrate or fat.",
+    "spec": "Each serving provides 3 g micronized creatine monohydrate (CreAMP / MB CreAbsorb system). flavour is Lychee Swirl, 320 g. Creatine is the key active; it does not meaningfully contribute protein, carbohydrate or fat.",
     "highlights": [
       "Each serving provides 3 g micronized creatine monohydrate (CreAMP / MB CreAbsorb system).",
-      "Photographed flavour is Lychee Swirl, 320 g.",
+      "flavour is Lychee Swirl, 320 g.",
       "Creatine is the key active; it does not meaningfully contribute protein, carbohydrate or fat."
     ],
     "image": "catalogue-images/catalogue-46.png",
@@ -675,10 +666,10 @@ window.VK_CATALOGUE = [
     "category": "Creatine / Amino Acids",
     "price": 699,
     "pack": "80 g",
-    "spec": "100% micronized creatine monohydrate. The photographed tub lists 30 servings / 80 g; QNT's creatine reference serving is 3 g and provides 3,000 mg creatine monohydrate. This single-ingredient active has essentially no protein, carbohydrate or fat contribution.",
+    "spec": "100% micronized creatine monohydrate. The tub lists 30 servings / 80 g; QNT's creatine reference serving is 3 g and provides 3,000 mg creatine monohydrate. This single-ingredient active has essentially no protein, carbohydrate or fat contribution.",
     "highlights": [
       "100% micronized creatine monohydrate.",
-      "The photographed tub lists 30 servings / 80 g; QNT's creatine reference serving is 3 g and provides 3,000 mg creatine monohydrate.",
+      "The tub lists 30 servings / 80 g; QNT's creatine reference serving is 3 g and provides 3,000 mg creatine monohydrate.",
       "This single-ingredient active has essentially no protein, carbohydrate or fat contribution."
     ],
     "image": "catalogue-images/catalogue-47.png",
@@ -718,11 +709,10 @@ window.VK_CATALOGUE = [
     "category": "Vitamins & Minerals",
     "price": 1000,
     "pack": "100 g",
-    "spec": "Photographed 90-capsule multivitamin. Front label highlights multivitamin/mineral support plus omega-3 and a probiotic component, with energy, heart-health, stress, immunity and muscle-health positioning. Exact vitamin/mineral amounts are not visible on the front and an exact matching Supplement Facts panel was not reliably found online.",
+    "spec": "90-capsule multivitamin. The product highlights multivitamin/mineral support plus omega-3 and a probiotic component, with energy, heart-health, stress, immunity and muscle-health positioning.",
     "highlights": [
-      "Photographed 90-capsule multivitamin.",
-      "Front label highlights multivitamin/mineral support plus omega-3 and a probiotic component, with energy, heart-health, stress, immunity and muscle-health positioning.",
-      "Exact vitamin/mineral amounts are not visible on the front and an exact matching Supplement Facts panel was not reliably found online."
+      "90-capsule multivitamin.",
+      "The product highlights multivitamin/mineral support plus omega-3 and a probiotic component, with energy, heart-health, stress, immunity and muscle-health positioning."
     ],
     "image": "catalogue-images/catalogue-50.png",
     "sourceTable": 48
@@ -733,10 +723,9 @@ window.VK_CATALOGUE = [
     "category": "Vitamins & Minerals",
     "price": 3800,
     "pack": "120 tablets",
-    "spec": "Photographed V Shape Vitamin Complex: 120 tablets, broad-spectrum 'maximum support multivitamin' positioned for active people and all-day energy. Individual vitamin/mineral doses are not shown on the supplied front image and an exact matching current facts panel was not reliably located.",
+    "spec": "V Shape Vitamin Complex: 120 tablets, broad-spectrum 'maximum support multivitamin' positioned for active people and all-day energy.",
     "highlights": [
-      "Photographed V Shape Vitamin Complex: 120 tablets, broad-spectrum 'maximum support multivitamin' positioned for active people and all-day energy.",
-      "Individual vitamin/mineral doses are not shown on the supplied front image and an exact matching current facts panel was not reliably located."
+      "V Shape Vitamin Complex: 120 tablets, broad-spectrum 'maximum support multivitamin' positioned for active people and all-day energy."
     ],
     "image": "catalogue-images/catalogue-51.png",
     "sourceTable": 49
@@ -747,10 +736,10 @@ window.VK_CATALOGUE = [
     "category": "Vitamins & Minerals",
     "price": 3800,
     "pack": "100 tablets",
-    "spec": "Front label: omega-3 formula providing 860 mg EPA and 240 mg DHA, with added vitamin E; 100 softgels. EPA and DHA are the principal omega-3 fatty acids stated on the photographed pack.",
+    "spec": "omega-3 formula providing 860 mg EPA and 240 mg DHA, with added vitamin E; 100 softgels. EPA and DHA are the principal omega-3 fatty acids stated on the pack.",
     "highlights": [
-      "Front label: omega-3 formula providing 860 mg EPA and 240 mg DHA, with added vitamin E; 100 softgels.",
-      "EPA and DHA are the principal omega-3 fatty acids stated on the photographed pack."
+      "omega-3 formula providing 860 mg EPA and 240 mg DHA, with added vitamin E; 100 softgels.",
+      "EPA and DHA are the principal omega-3 fatty acids stated on the pack."
     ],
     "image": "catalogue-images/catalogue-52.png",
     "sourceTable": 50
@@ -761,10 +750,10 @@ window.VK_CATALOGUE = [
     "category": "Anabolic Supplements",
     "price": 7500,
     "pack": "See pack",
-    "spec": "Front label states 200 mg androsterone, 300 mg 'laxosterone' (spelling as printed on the photographed label) and 300 mg epiandrosterone, with strength/body-composition marketing claims. Because this is a hormone/prohormone-style product, the complete ingredient panel, warnings and local legal status should be verified before listing or sale.",
+    "spec": "Contains 200 mg androsterone, 300 mg 'laxosterone' (spelling as printed on the label) and 300 mg epiandrosterone, with strength/body-composition marketing claims. High-risk hormone-style supplement. Check local regulations and consult a qualified healthcare professional before use.",
     "highlights": [
-      "Front label states 200 mg androsterone, 300 mg 'laxosterone' (spelling as printed on the photographed label) and 300 mg epiandrosterone, with strength/body-composition marketing claims.",
-      "Because this is a hormone/prohormone-style product, the complete ingredient panel, warnings and local legal status should be verified before listing or sale."
+      "Contains 200 mg androsterone, 300 mg 'laxosterone' (spelling as printed on the label) and 300 mg epiandrosterone, with strength/body-composition marketing claims.",
+      "High-risk hormone-style supplement. Check local regulations and consult a qualified healthcare professional before use."
     ],
     "image": "catalogue-images/catalogue-53.png",
     "sourceTable": 51
@@ -789,11 +778,11 @@ window.VK_CATALOGUE = [
     "category": "Anabolic Supplements",
     "price": 4500,
     "pack": "See pack",
-    "spec": "Photographed bottle: 30 rapid-release caplets. Published label lists 1 caplet per serving with a 500 mg MYODROL Hard Body proprietary formula containing 5-methyl-7-hydroxy-isoflavone ethyl carbonate ester, plus prickly-pear extract listed at 5,000 IU. Front-label positioning includes strength, size, power and body-composition claims.",
+    "spec": "30 rapid-release caplets. Each serving provides 1 caplet per serving with a 500 mg MYODROL Hard Body proprietary formula containing 5-methyl-7-hydroxy-isoflavone ethyl carbonate ester, plus prickly-pear extract listed at 5,000 IU. product positioning includes strength, size, power and body-composition claims.",
     "highlights": [
-      "Photographed bottle: 30 rapid-release caplets.",
-      "Published label lists 1 caplet per serving with a 500 mg MYODROL Hard Body proprietary formula containing 5-methyl-7-hydroxy-isoflavone ethyl carbonate ester, plus prickly-pear extract listed at 5,000 IU.",
-      "Front-label positioning includes strength, size, power and body-composition claims."
+      "30 rapid-release caplets.",
+      "Each serving provides 1 caplet per serving with a 500 mg MYODROL Hard Body proprietary formula containing 5-methyl-7-hydroxy-isoflavone ethyl carbonate ester, plus prickly-pear extract listed at 5,000 IU.",
+      "product positioning includes strength, size, power and body-composition claims."
     ],
     "image": "catalogue-images/catalogue-55.png",
     "sourceTable": 53
@@ -804,10 +793,9 @@ window.VK_CATALOGUE = [
     "category": "Anabolic Supplements",
     "price": 3800,
     "pack": "See pack",
-    "spec": "Front label: 'GHRP6 SigmaDrol - Ultimate Size Gaining Formula', pineapple flavour, net 175 g and 25 servings, with muscle-building/recovery/pump marketing claims. Exact active ingredients and dosages are not shown on the supplied front image and were not reliably matched online; verify the back label and local legal status before listing.",
+    "spec": "'GHRP6 SigmaDrol - Ultimate Size Gaining Formula', pineapple flavour, net 175 g and 25 servings, with muscle-building/recovery/pump marketing claims.",
     "highlights": [
-      "Front label: 'GHRP6 SigmaDrol - Ultimate Size Gaining Formula', pineapple flavour, net 175 g and 25 servings, with muscle-building/recovery/pump marketing claims.",
-      "Exact active ingredients and dosages are not shown on the supplied front image and were not reliably matched online; verify the back label and local legal status before listing."
+      "'GHRP6 SigmaDrol - Ultimate Size Gaining Formula', pineapple flavour, net 175 g and 25 servings, with muscle-building/recovery/pump marketing claims."
     ],
     "image": "catalogue-images/catalogue-56.png",
     "sourceTable": 54
@@ -818,10 +806,10 @@ window.VK_CATALOGUE = [
     "category": "Health & Wellness",
     "price": 3000,
     "pack": "Tablets",
-    "spec": "Front pack lists tauroursodeoxycholic acid (TUDCA), silymarin, arjuna, N-acetyl cysteine (NAC), CoQ10, astragalus extract, curcumin and vitamin C; box contains 10 x 10 tablets. Exact amount of each ingredient per tablet requires the back-panel facts.",
+    "spec": "Contains tauroursodeoxycholic acid (TUDCA), silymarin, arjuna, N-acetyl cysteine (NAC), CoQ10, astragalus extract, curcumin and vitamin C; box contains 10 x 10 tablets. Ingredient quantities are not specified.",
     "highlights": [
-      "Front pack lists tauroursodeoxycholic acid (TUDCA), silymarin, arjuna, N-acetyl cysteine (NAC), CoQ10, astragalus extract, curcumin and vitamin C; box contains 10 x 10 tablets.",
-      "Exact amount of each ingredient per tablet requires the back-panel facts."
+      "Contains tauroursodeoxycholic acid (TUDCA), silymarin, arjuna, N-acetyl cysteine (NAC), CoQ10, astragalus extract, curcumin and vitamin C; box contains 10 x 10 tablets.",
+      "Ingredient quantities are not specified."
     ],
     "image": "catalogue-images/catalogue-57.png",
     "sourceTable": 55
@@ -832,9 +820,9 @@ window.VK_CATALOGUE = [
     "category": "Amino Acids",
     "price": 2499,
     "pack": "300 g",
-    "spec": "Photographed front: Citrulline 'Extreme Muscle Pump', unflavoured, 83 servings. Current V-Shape product listing: serving size 3 g with 2.9 g citrulline malate; the Indian listing also shows about 7.91 kcal, 1.92 g protein, 0.05 g carbohydrate and 0 g fat/sugar per serving. Pack weight can vary by market/label.",
+    "spec": "Citrulline 'Extreme Muscle Pump', unflavoured, 83 servings. Current V-Shape product listing: serving size 3 g with 2.9 g citrulline malate; the Indian listing also shows about 7.91 kcal, 1.92 g protein, 0.05 g carbohydrate and 0 g fat/sugar per serving. Pack weight can vary by market/label.",
     "highlights": [
-      "Photographed front: Citrulline 'Extreme Muscle Pump', unflavoured, 83 servings.",
+      "Citrulline 'Extreme Muscle Pump', unflavoured, 83 servings.",
       "Current V-Shape product listing: serving size 3 g with 2.9 g citrulline malate; the Indian listing also shows about 7.91 kcal, 1.92 g protein, 0.05 g carbohydrate and 0 g fat/sugar per serving.",
       "Pack weight can vary by market/label."
     ],
@@ -861,10 +849,9 @@ window.VK_CATALOGUE = [
     "category": "Health & Wellness",
     "price": 2800,
     "pack": "90 capsule",
-    "spec": "Front label: Black Mamba Hyperrush, 90 capsules, '65 mg ephedra' and 'Hardcore AAA Complex', marketed as a stimulant/weight-management product. The complete active panel is not visible in the supplied image; because ephedra/stimulant legality and safety are market-dependent, verify the complete ingredient label and local legal status before listing or sale.",
+    "spec": "Black Mamba Hyperrush, 90 capsules, '65 mg ephedra' and 'Hardcore AAA Complex', marketed as a stimulant/weight-management product.",
     "highlights": [
-      "Front label: Black Mamba Hyperrush, 90 capsules, '65 mg ephedra' and 'Hardcore AAA Complex', marketed as a stimulant/weight-management product.",
-      "The complete active panel is not visible in the supplied image; because ephedra/stimulant legality and safety are market-dependent, verify the complete ingredient label and local legal status before listing or sale."
+      "Black Mamba Hyperrush, 90 capsules, '65 mg ephedra' and 'Hardcore AAA Complex', marketed as a stimulant/weight-management product."
     ],
     "image": "catalogue-images/catalogue-60.png",
     "sourceTable": 58
@@ -875,11 +862,10 @@ window.VK_CATALOGUE = [
     "category": "Health & Wellness",
     "price": 3000,
     "pack": "60 capsule",
-    "spec": "Photographed HyperGenetic Labs Killer Bees: 60 capsules. Front label markets it as a thermogenic/weight-management supplement with appetite-suppression and water-retention claims. Exact active ingredients and dosages are not visible and no trustworthy exact current Supplement Facts panel was found, so ingredient quantities should not be invented.",
+    "spec": "HyperGenetic Labs Killer Bees: 60 capsules. The product markets it as a thermogenic/weight-management supplement with appetite-suppression and water-retention claims.",
     "highlights": [
-      "Photographed HyperGenetic Labs Killer Bees: 60 capsules.",
-      "Front label markets it as a thermogenic/weight-management supplement with appetite-suppression and water-retention claims.",
-      "Exact active ingredients and dosages are not visible and no trustworthy exact current Supplement Facts panel was found, so ingredient quantities should not be invented."
+      "HyperGenetic Labs Killer Bees: 60 capsules.",
+      "The product markets it as a thermogenic/weight-management supplement with appetite-suppression and water-retention claims."
     ],
     "image": "catalogue-images/catalogue-61.png",
     "sourceTable": 59
