@@ -837,7 +837,79 @@ $("#openWishlistBtn").addEventListener("click", openWishlist);
 $("#appearanceBtn").addEventListener("click", toggleTheme);
 $("#languageClose").addEventListener("click", closeLanguage);
 languageOverlay.addEventListener("click", closeLanguage);
-document.querySelectorAll(".language-option").forEach(button => button.addEventListener("click", () => { localStorage.setItem("vk-language", button.dataset.language); document.documentElement.lang = button.dataset.language; closeLanguage(); showToast(`${button.textContent} selected.`); }));
+
+/* ---------- Google Translate: English and Marathi only ---------- */
+const SUPPORTED_SITE_LANGUAGES = new Set(["en", "mr"]);
+let googleTranslateReady = false;
+
+function getSavedSiteLanguage() {
+  const saved = localStorage.getItem("vk-language");
+  return SUPPORTED_SITE_LANGUAGES.has(saved) ? saved : "en";
+}
+
+function updateLanguageButtons(language) {
+  document.querySelectorAll(".language-option").forEach(button => {
+    const isActive = button.dataset.language === language;
+    button.classList.toggle("active", isActive);
+    button.setAttribute("aria-pressed", String(isActive));
+  });
+}
+
+function applyGoogleTranslation(language, { silent = false } = {}) {
+  const selectedLanguage = SUPPORTED_SITE_LANGUAGES.has(language) ? language : "en";
+  const translator = document.querySelector("#googleTranslateElement select.goog-te-combo");
+
+  if (!translator) {
+    if (!silent) showToast("Google Translate is still loading. Please try again in a moment.");
+    return false;
+  }
+
+  translator.value = selectedLanguage;
+  translator.dispatchEvent(new Event("change", { bubbles: true }));
+  return true;
+}
+
+window.googleTranslateElementInit = () => {
+  if (!window.google?.translate || googleTranslateReady) return;
+  googleTranslateReady = true;
+  new window.google.translate.TranslateElement({
+    pageLanguage: "en",
+    includedLanguages: "en,mr",
+    autoDisplay: false
+  }, "googleTranslateElement");
+
+  const savedLanguage = getSavedSiteLanguage();
+  if (savedLanguage === "mr") {
+    window.setTimeout(() => applyGoogleTranslation(savedLanguage, { silent: true }), 250);
+  }
+};
+
+function loadGoogleTranslate() {
+  if (document.getElementById("googleTranslateScript")) return;
+  const script = document.createElement("script");
+  script.id = "googleTranslateScript";
+  script.src = "https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit";
+  script.async = true;
+  document.head.appendChild(script);
+}
+
+const initialSiteLanguage = getSavedSiteLanguage();
+document.documentElement.lang = initialSiteLanguage;
+updateLanguageButtons(initialSiteLanguage);
+loadGoogleTranslate();
+
+document.querySelectorAll(".language-option").forEach(button => button.addEventListener("click", () => {
+  const language = button.dataset.language;
+  if (!SUPPORTED_SITE_LANGUAGES.has(language)) return;
+  localStorage.setItem("vk-language", language);
+  document.documentElement.lang = language;
+  updateLanguageButtons(language);
+
+  if (applyGoogleTranslation(language)) {
+    closeLanguage();
+    showToast(language === "mr" ? "मराठी translation selected." : "English selected.");
+  }
+}));
 $("#deleteAccountBtn").addEventListener("click", async () => {
   if (!currentUser || !confirm("Delete your account permanently?")) return;
   const { error } = await supabaseClient.rpc("delete_user_account");
