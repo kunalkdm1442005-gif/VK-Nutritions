@@ -7,4 +7,4 @@
 
 Razorpay integration is supplied through Supabase Edge Functions. Follow [RAZORPAY-SUPABASE-SETUP.md](./RAZORPAY-SUPABASE-SETUP.md) to deploy the functions, set Test Mode secrets, configure the webhook and complete payment testing before using Live Mode.
 
-WhatsApp notifications use a pre-filled action for `+91 7738963610` only after the order or cancellation has been saved. No WhatsApp API token is stored in the website code.
+WhatsApp notifications use a pre-filled action for `+91 84259 20360` only after the order or cancellation has been saved. No WhatsApp API token is stored in the website code.
