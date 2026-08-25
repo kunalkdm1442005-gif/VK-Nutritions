@@ -425,3 +425,20 @@
       .mobile-search-btn{border:0!important;background:transparent!important;box-shadow:none!important;border-radius:0!important}
       .mobile-search-btn:hover,.mobile-search-btn:focus-visible{background:transparent!important;color:var(--lime)}
     }
+
+    /* Store location card */
+    .store-location{padding-top:12px}
+    .store-location-card{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(280px,.8fr);overflow:hidden;border:1px solid var(--line);border-radius:var(--radius);background:var(--surface);box-shadow:var(--shadow)}
+    .store-map-preview{position:relative;min-height:310px;background:#172033;overflow:hidden}
+    .store-map{position:absolute;inset:0;width:100%;height:100%;border:0;pointer-events:none;filter:saturate(.92) contrast(1.04)}
+    .store-map-overlay{position:absolute;inset:auto 16px 16px;display:flex;align-items:center;justify-content:center;gap:8px;min-height:42px;padding:9px 14px;border-radius:10px;background:rgba(15,23,42,.9);color:#fff;font-size:12px;font-weight:900;letter-spacing:.04em;box-shadow:0 8px 20px rgba(0,0,0,.25)}
+    .store-pin{display:grid;place-items:center;width:21px;height:21px;border-radius:50% 50% 50% 0;background:#ef5846;color:transparent;transform:rotate(-45deg);box-shadow:0 2px 8px rgba(0,0,0,.35)}
+    .store-location-copy{display:flex;flex-direction:column;align-items:flex-start;justify-content:center;padding:34px;gap:13px}
+    .store-location-name{display:flex;align-items:baseline;justify-content:space-between;width:100%;gap:14px}
+    .store-location-name h3{margin:0;font-size:27px;letter-spacing:-.04em}
+    .store-rating{color:var(--lime);font-size:14px;font-weight:900;white-space:nowrap}.store-rating small{color:var(--muted);font-size:11px}
+    .store-location-copy p{margin:0;color:var(--muted);font-size:14px;line-height:1.65}.store-location-copy .store-location-note{font-size:12px}
+    .store-directions{margin-top:5px}
+    :root[data-theme="light"] .store-location-card{background:#fff;border-color:#e5e5e5;box-shadow:0 12px 30px rgba(15,23,42,.08)}
+    :root[data-theme="light"] .store-location-copy p,:root[data-theme="light"] .store-rating small{color:#555}
+    @media(max-width:700px){.store-location{padding-top:4px}.store-location-card{grid-template-columns:1fr}.store-map-preview{min-height:235px}.store-location-copy{padding:24px 20px}.store-location-name h3{font-size:24px}.store-location-name{align-items:flex-start;flex-direction:column;gap:4px}.store-directions{width:100%;justify-content:center;text-align:center}.store-map-overlay{left:12px;right:12px;bottom:12px}}
