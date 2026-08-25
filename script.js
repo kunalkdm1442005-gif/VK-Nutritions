@@ -93,7 +93,7 @@ function openProductDetails(productId) {
   $("#productDetailPrice").textContent = money(product.price);
   $("#productDetailHighlights").innerHTML = product.highlights.map(item => `<li>${escapeHtml(cleanCatalogueText(item))}</li>`).join("");
   $("#productDetailSpec").textContent = cleanCatalogueText(product.spec);
-  $("#productDetailAdd").onclick = () => addProduct({ dataset: { name: product.name, price: String(product.price) } });
+  $("#productDetailAdd").onclick = () => addProduct({ dataset: { id: product.id, name: product.name, price: String(product.price) } });
   trackProductView(product);
   $("#productDetailOverlay").classList.add("show");
   $("#productDetailModal").classList.add("open");
@@ -156,8 +156,10 @@ function renderCart() {
   }));
 }
 function addProduct(card, openDrawer = false) {
-  const item = { name: card.dataset.name, price: Number(card.dataset.price), qty: 1 };
-  const existing = cart.find(entry => entry.name === item.name);
+  const productId = card?.dataset?.id;
+  if (!productId) return showToast("This product is unavailable for checkout. Please refresh and try again.");
+  const item = { id: productId, name: card.dataset.name, price: Number(card.dataset.price), qty: 1 };
+  const existing = cart.find(entry => entry.id === item.id);
   if (existing) existing.qty += 1; else cart.push(item);
   renderCart(); showToast(`${item.name} added to cart.`);
   if (openDrawer) { $("#drawer").classList.add("open"); $("#overlay").classList.add("show"); }
@@ -529,7 +531,7 @@ $("#wishlistList")?.addEventListener("click", event => {
   const product = catalogueProducts.find(item => item.id === card.dataset.productId);
   if (!product) return;
   if (button.dataset.wishlistAction === "view") { closeWishlist(); openProductDetails(product.id); }
-  else if (button.dataset.wishlistAction === "cart") addProduct({ dataset: { name: product.name, price: String(product.price) } });
+  else if (button.dataset.wishlistAction === "cart") addProduct({ dataset: { id: product.id, name: product.name, price: String(product.price) } });
   else removeWishlistProduct(product.id);
 });
 
@@ -638,7 +640,14 @@ async function saveAddressForFuture(address) {
   const { error } = await supabaseClient.from("saved_addresses").insert(payload);
   if (error) console.warn("[VK] address was not saved for future orders", error);
 }
-function checkoutItemsForServer() { return cart.map(item => ({ product_id: item.id, quantity: Number(item.qty) })); }
+function checkoutItemsForServer() {
+  return cart.map(item => {
+    // Upgrade any item that was added before cart IDs were introduced.
+    const matchedProduct = item.id ? null : catalogueProducts.find(product => product.name === item.name && Number(product.price) === Number(item.price));
+    if (!item.id && matchedProduct) item.id = matchedProduct.id;
+    return { product_id: item.id, quantity: Number(item.qty) };
+  });
+}
 function newCheckoutRequestId() { return window.crypto?.randomUUID ? window.crypto.randomUUID() : `00000000-0000-4000-8000-${Date.now().toString().padStart(12, "0")}`; }
 function setPaymentButton(text, disabled) { const button = $("#placeOrderBtn"); if (button) { button.textContent = text; button.disabled = disabled; } }
 async function edgeFunctionMessage(error, data, fallback) {
@@ -680,7 +689,14 @@ async function startRazorpayPayment() {
   if (checkoutBusy || !checkoutAddress || !currentUser || !cart.length) return;
   checkoutBusy = true; setPaymentButton("PREPARING SECURE PAYMENT…", true);
   checkoutRequestId ||= newCheckoutRequestId();
-  const { data, error } = await supabaseClient.functions.invoke("create-razorpay-order", { body: { checkout_request_id: checkoutRequestId, shipping_address: checkoutAddress, items: checkoutItemsForServer() } });
+  const items = checkoutItemsForServer();
+  if (items.some(item => !item.product_id)) {
+    checkoutBusy = false;
+    checkoutRequestId = null;
+    setPaymentButton("PROCEED TO PAYMENT →", false);
+    return showToast("A cart product is no longer available. Remove it and add it again.");
+  }
+  const { data, error } = await supabaseClient.functions.invoke("create-razorpay-order", { body: { checkout_request_id: checkoutRequestId, shipping_address: checkoutAddress, items } });
   if (error || !data?.razorpay_order_id || !data?.key_id) {
     console.error("[VK] Razorpay order creation error", error || data);
     checkoutBusy = false; setPaymentButton("PROCEED TO PAYMENT →", false);
@@ -758,7 +774,7 @@ $("#historyList")?.addEventListener("click", event => {
   const product = catalogueProducts.find(item => item.id === card.dataset.productId);
   if (!product) return;
   if (button.dataset.historyAction === "view") { closeHistory(); openProductDetails(product.id); }
-  else addProduct({ dataset: { name: product.name, price: String(product.price) } });
+  else addProduct({ dataset: { id: product.id, name: product.name, price: String(product.price) } });
 });
 $("#historyList")?.addEventListener("click", async event => {
   const button = event.target.closest("button[data-order-action]");
