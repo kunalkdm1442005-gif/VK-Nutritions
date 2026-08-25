@@ -641,7 +641,21 @@ async function saveAddressForFuture(address) {
 function checkoutItemsForServer() { return cart.map(item => ({ product_id: item.id, quantity: Number(item.qty) })); }
 function newCheckoutRequestId() { return window.crypto?.randomUUID ? window.crypto.randomUUID() : `00000000-0000-4000-8000-${Date.now().toString().padStart(12, "0")}`; }
 function setPaymentButton(text, disabled) { const button = $("#placeOrderBtn"); if (button) { button.textContent = text; button.disabled = disabled; } }
-function edgeFunctionMessage(error, data, fallback) { return data?.error || error?.message || fallback; }
+async function edgeFunctionMessage(error, data, fallback) {
+  if (data?.error) return data.error;
+  // Supabase returns the Edge Function response in `context` for non-2xx calls.
+  // Read its safe server message so checkout never fails silently on mobile.
+  try {
+    const response = error?.context;
+    if (response?.clone) {
+      const payload = await response.clone().json();
+      if (payload?.error) return payload.error;
+    }
+  } catch (parseError) {
+    console.warn("[VK] Could not read Razorpay function error response", parseError);
+  }
+  return error?.message || fallback;
+}
 function showPaidOrderConfirmation(order) {
   cart.splice(0, cart.length); renderCart(); closeCart(); checkoutBusy = false; checkoutRequestId = null;
   $("#checkoutReview").innerHTML = `<div class="checkout-review-summary"><h3>Payment Successful</h3><p>Your payment was verified securely and your order is now placed.</p><p><strong>Order ID: ${escapeHtml(order.order_code || `VK-${order.id}`)}</strong></p><p>Payment status: Paid · Order status: Placed</p><p>${escapeHtml(formatAddress(order.shipping_address || {}))}</p><a class="whatsapp-action" href="${whatsappLink("order", order)}" target="_blank" rel="noopener">OPEN WHATSAPP ORDER NOTIFICATION</a></div>`;
@@ -653,7 +667,7 @@ async function verifyRazorpayPayment(order, response) {
   if (error || !data?.verified) {
     console.error("[VK] Razorpay payment verification error", error || data);
     checkoutBusy = false; setPaymentButton("RETRY PAYMENT →", false);
-    return showToast(edgeFunctionMessage(error, data, "Payment was not completed. Please try again."));
+    return showToast(await edgeFunctionMessage(error, data, "Payment was not completed. Please try again."));
   }
   showPaidOrderConfirmation(data.order);
 }
@@ -670,28 +684,35 @@ async function startRazorpayPayment() {
   if (error || !data?.razorpay_order_id || !data?.key_id) {
     console.error("[VK] Razorpay order creation error", error || data);
     checkoutBusy = false; setPaymentButton("PROCEED TO PAYMENT →", false);
-    return showToast(edgeFunctionMessage(error, data, "Could not prepare payment. Please try again."));
+    return showToast(await edgeFunctionMessage(error, data, "Could not prepare payment. Please try again."));
   }
   await saveAddressForFuture(checkoutAddress);
   if (!window.Razorpay) {
     checkoutBusy = false; setPaymentButton("PROCEED TO PAYMENT →", false);
     return showToast("Secure payment could not be loaded. Check your connection and try again.");
   }
-  const payment = new window.Razorpay({
-    key: data.key_id,
-    amount: data.amount_paise,
-    currency: data.currency || "INR",
-    name: "VK Nutrition",
-    description: `Order ${data.order.order_code}`,
-    order_id: data.razorpay_order_id,
-    prefill: { name: data.order.customer_name, email: data.order.customer_email, contact: data.order.customer_mobile },
-    notes: { internal_order_id: String(data.order.id), internal_order_code: data.order.order_code },
-    theme: { color: "#facc15" },
-    handler: response => verifyRazorpayPayment(data.order, response),
-    modal: { ondismiss: () => { if (checkoutBusy) { checkoutBusy = false; setPaymentButton("RETRY PAYMENT →", false); showToast("Payment was not completed. You can try again."); } } }
-  });
-  payment.on("payment.failed", async response => { await recordRazorpayFailure(data.order, response); checkoutBusy = false; setPaymentButton("RETRY PAYMENT →", false); showToast("Payment was not completed. Please try again."); });
-  payment.open();
+  try {
+    const payment = new window.Razorpay({
+      key: data.key_id,
+      amount: data.amount_paise,
+      currency: data.currency || "INR",
+      name: "VK Nutrition",
+      description: `Order ${data.order.order_code}`,
+      order_id: data.razorpay_order_id,
+      prefill: { name: data.order.customer_name, email: data.order.customer_email, contact: data.order.customer_mobile },
+      notes: { internal_order_id: String(data.order.id), internal_order_code: data.order.order_code },
+      theme: { color: "#facc15" },
+      handler: response => verifyRazorpayPayment(data.order, response),
+      modal: { ondismiss: () => { if (checkoutBusy) { checkoutBusy = false; setPaymentButton("RETRY PAYMENT →", false); showToast("Payment was not completed. You can try again."); } } }
+    });
+    payment.on("payment.failed", async response => { await recordRazorpayFailure(data.order, response); checkoutBusy = false; setPaymentButton("RETRY PAYMENT →", false); showToast("Payment was not completed. Please try again."); });
+    payment.open();
+  } catch (razorpayError) {
+    console.error("[VK] Razorpay Checkout could not open", razorpayError);
+    checkoutBusy = false;
+    setPaymentButton("PROCEED TO PAYMENT →", false);
+    showToast("Razorpay Checkout could not open. Please try again.");
+  }
 }
 $("#checkoutBtn").addEventListener("click", openCheckout); $("#checkoutClose").addEventListener("click", closeCheckout); checkoutOverlay.addEventListener("click", closeCheckout);
 $("#shippingForm").addEventListener("submit", event => { event.preventDefault(); const address = readShippingAddress(); if (!validateShippingAddress(address)) return; checkoutAddress = address; renderCheckoutReview(); });
@@ -747,7 +768,7 @@ $("#historyList")?.addEventListener("click", async event => {
   const cancellation_reason = prompt("Cancellation reason (optional):") || "";
   button.disabled = true; button.textContent = "CANCELLING…";
   const { data, error } = await supabaseClient.functions.invoke("cancel-order", { body: { order_id: Number(orderId), cancellation_reason } });
-  if (error || !data?.cancelled) { console.error("[VK] order cancellation error", error || data); button.disabled = false; button.textContent = "CANCEL ORDER"; return showToast(edgeFunctionMessage(error, data, "Order cancellation could not be saved.")); }
+  if (error || !data?.cancelled) { console.error("[VK] order cancellation error", error || data); button.disabled = false; button.textContent = "CANCEL ORDER"; return showToast(await edgeFunctionMessage(error, data, "Order cancellation could not be saved.")); }
   if (data.already_cancelled) { button.remove(); return showToast("This order was already cancelled."); }
   const link = whatsappLink("cancel", data.order);
   button.closest(".history-item").insertAdjacentHTML("beforeend", `<a class="whatsapp-action" href="${link}" target="_blank" rel="noopener">OPEN WHATSAPP CANCELLATION</a>`);
