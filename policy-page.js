@@ -6,7 +6,7 @@ const policyPages={
     ["Cookies and Local Storage","This website may use cookies or local storage to remember session, appearance, cart, wishlist and other website preferences. You can control or clear these through your browser settings, but some website features may then work differently."],
     ["Security and Retention","We use reasonable administrative and technical measures appropriate to the services in use. No online method is completely risk-free. Information is retained only for as long as reasonably necessary for orders, support, legal obligations, dispute resolution and legitimate business records."],
     ["Your Choices and Policy Changes","You may ask us to update account information or raise privacy concerns using the contact details below. We may revise this policy when our services or legal obligations change; the current version will be published on this page."],
-    ["Privacy Contact","For privacy questions, contact <span class=\"editable\">Store owner: add support email before publishing</span>." ]
+    ["Privacy Contact","For privacy questions, contact <span class=\"editable\">Store owner: support@vknutrtions.com>." ]
   ]},
   terms:{title:"Terms & Conditions",intro:"These terms govern use of the VK Nutrition website and purchases made through it.",sections:[
     ["Acceptance and Eligibility","By using this website or placing an order, you agree to these Terms & Conditions. You must provide accurate information and be legally able to enter into a purchase transaction under applicable Indian law."],
