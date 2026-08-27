@@ -6,7 +6,7 @@ const policyPages={
     ["Cookies and Local Storage","This website may use cookies or local storage to remember session, appearance, cart, wishlist and other website preferences. You can control or clear these through your browser settings, but some website features may then work differently."],
     ["Security and Retention","We use reasonable administrative and technical measures appropriate to the services in use. No online method is completely risk-free. Information is retained only for as long as reasonably necessary for orders, support, legal obligations, dispute resolution and legitimate business records."],
     ["Your Choices and Policy Changes","You may ask us to update account information or raise privacy concerns using the contact details below. We may revise this policy when our services or legal obligations change; the current version will be published on this page."],
-    ["Privacy Contact","For privacy questions, contact <span class=\"editable\">Store owner: support@vknutrtions.com>." ]
+    ["Privacy Contact","For privacy questions, contact <span class=\"editable\">Store owner:vknutrition26@gmail.com>." ]
   ]},
   terms:{title:"Terms & Conditions",intro:"These terms govern use of the VK Nutrition website and purchases made through it.",sections:[
     ["Acceptance and Eligibility","By using this website or placing an order, you agree to these Terms & Conditions. You must provide accurate information and be legally able to enter into a purchase transaction under applicable Indian law."],
@@ -16,7 +16,7 @@ const policyPages={
     ["Shipping, Returns and Refunds","Shipping and delivery are governed by our <a href=\"../shipping-delivery-policy/\">Shipping & Delivery Policy</a>. Cancellations and refunds are governed by our <a href=\"../cancellation-refund-policy/\">Cancellation & Refund Policy</a>."],
     ["Intellectual Property and Third Parties","VK Nutrition content, branding and website materials may not be copied or misused without permission. Links or services provided by third parties are subject to their own terms and privacy practices."],
     ["Liability and Changes","To the extent permitted by law, VK Nutrition is not liable for indirect or consequential losses arising from website use or delayed delivery. These terms may change from time to time; continued use after publication means you accept the updated terms."],
-    ["Governing Law and Support","These terms are governed by applicable laws of India. Jurisdiction: <span class=\"editable\">Store owner: Mumbai Maharashtra </span>. For support, use our <a href=\"../contact-us/\">Contact Us</a> page." ]
+    ["Governing Law and Support","These terms are governed by applicable laws of India. Jurisdiction: <span class=\"editable\">Competent courts in Mumbai, Maharashtra, India</span>. For support, use our <a href=\"../contact-us/\">Contact Us</a> page." ]
   ]},
   shipping:{title:"Shipping & Delivery Policy",intro:"Information about order processing, delivery and the prepaid free-delivery offer.",sections:[
     ["Order Processing","Orders are processed after successful order confirmation. Processing may take longer during high demand, holidays, address verification or product availability checks. <span class=\"editable\">Store owner: add normal order-processing timeframe</span>."],
