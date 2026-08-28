@@ -745,62 +745,6 @@ window.VK_CATALOGUE = [
     "sourceTable": 50
   },
   {
-    "id": "pro-level-labs-alpha-see-pack-54",
-    "name": "Pro Level Labs Alpha",
-    "category": "Anabolic Supplements",
-    "price": 7500,
-    "pack": "See pack",
-    "spec": "Contains 200 mg androsterone, 300 mg 'laxosterone' (spelling as printed on the label) and 300 mg epiandrosterone, with strength/body-composition marketing claims. High-risk hormone-style supplement. Check local regulations and consult a qualified healthcare professional before use.",
-    "highlights": [
-      "Contains 200 mg androsterone, 300 mg 'laxosterone' (spelling as printed on the label) and 300 mg epiandrosterone, with strength/body-composition marketing claims.",
-      "High-risk hormone-style supplement. Check local regulations and consult a qualified healthcare professional before use."
-    ],
-    "image": "catalogue-images/catalogue-53.png",
-    "sourceTable": 51
-  },
-  {
-    "id": "testrol-gold-tablets-60-tablets-visible-55",
-    "name": "Testrol Gold Tablets",
-    "category": "Anabolic Supplements",
-    "price": 3800,
-    "pack": "60 tablets visible",
-    "spec": "Per 2-tablet serving (30 servings / 60 tablets): vitamin B6 10 mg, folate 500 mcg DFE, vitamin B12 50 mcg, magnesium 450 mg, zinc 15 mg and selenium 50 mcg. Key actives include Tribulus extract 500 mg, DIM 200 mg and L-arginine 150 mg, plus 100 mg each of Avena sativa, shilajit, fenugreek, longjack and epimedium, with smaller ginkgo, saw-palmetto and cnidium amounts.",
-    "highlights": [
-      "Per 2-tablet serving (30 servings / 60 tablets): vitamin B6 10 mg, folate 500 mcg DFE, vitamin B12 50 mcg, magnesium 450 mg, zinc 15 mg and selenium 50 mcg.",
-      "Key actives include Tribulus extract 500 mg, DIM 200 mg and L-arginine 150 mg, plus 100 mg each of Avena sativa, shilajit, fenugreek, longjack and epimedium, with smaller ginkgo, saw-palmetto and cnidium amounts."
-    ],
-    "image": "catalogue-images/catalogue-54.png",
-    "sourceTable": 52
-  },
-  {
-    "id": "myogenetix-myodrol-see-pack-56",
-    "name": "Myogenetix Myodrol",
-    "category": "Anabolic Supplements",
-    "price": 4500,
-    "pack": "See pack",
-    "spec": "30 rapid-release caplets. Each serving provides 1 caplet per serving with a 500 mg MYODROL Hard Body proprietary formula containing 5-methyl-7-hydroxy-isoflavone ethyl carbonate ester, plus prickly-pear extract listed at 5,000 IU. product positioning includes strength, size, power and body-composition claims.",
-    "highlights": [
-      "30 rapid-release caplets.",
-      "Each serving provides 1 caplet per serving with a 500 mg MYODROL Hard Body proprietary formula containing 5-methyl-7-hydroxy-isoflavone ethyl carbonate ester, plus prickly-pear extract listed at 5,000 IU.",
-      "product positioning includes strength, size, power and body-composition claims."
-    ],
-    "image": "catalogue-images/catalogue-55.png",
-    "sourceTable": 53
-  },
-  {
-    "id": "ghrp6-sigmadrol-product-see-pack-57",
-    "name": "GHRP6 / SigmaDrol Product",
-    "category": "Anabolic Supplements",
-    "price": 3800,
-    "pack": "See pack",
-    "spec": "'GHRP6 SigmaDrol - Ultimate Size Gaining Formula', pineapple flavour, net 175 g and 25 servings, with muscle-building/recovery/pump marketing claims.",
-    "highlights": [
-      "'GHRP6 SigmaDrol - Ultimate Size Gaining Formula', pineapple flavour, net 175 g and 25 servings, with muscle-building/recovery/pump marketing claims."
-    ],
-    "image": "catalogue-images/catalogue-56.png",
-    "sourceTable": 54
-  },
-  {
     "id": "organjet-pro-tablets-58",
     "name": "Organjet Pro",
     "category": "Health & Wellness",
