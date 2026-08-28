@@ -43,34 +43,34 @@ window.VK_CATALOGUE = [
     "sourceTable": 4
   },
   {
-    "id": "newgen-labs-generation-whey-2-265-kg-4",
-    "name": "Newgen Labs Generation Whey",
-    "category": "Whey Protein",
-    "price": 8800,
-    "pack": "2.265 kg",
-    "spec": "24 g protein, 5.5 g BCAAs and 5 g glutamine per serving. The 5 lb / 2,265 g tub lists 71 servings and carries sugar-free and gluten-free features, with muscle-growth, recovery and immunity positioning.",
-    "highlights": [
-      "24 g protein, 5.5 g BCAAs and 5 g glutamine per serving.",
-      "The 5 lb / 2,265 g tub lists 71 servings and carries sugar-free and gluten-free features, with muscle-growth, recovery and immunity positioning."
-    ],
-    "image": "catalogue-images/catalogue-04.jpg",
-    "sourceTable": 5
-  },
+  "id": "newgen-labs-generation-whey-2-265-kg-4",
+  "name": "Newgen Labs Generation Whey",
+  "category": "Whey Protein",
+  "price": 8800,
+  "pack": "2.265 kg",
+  "spec": "24 g protein, 5.5 g BCAAs and 5 g glutamine per serving. The 5 lb / 2,265 g tub lists 71 servings. Sugar-free and gluten-free claims should be retained only if they are stated on the product label.",
+  "highlights": [
+    "24 g protein, 5.5 g BCAAs and 5 g glutamine per serving.",
+    "The 5 lb / 2,265 g tub lists 71 servings.",
+    "Sugar-free and gluten-free claims should be retained only if they are stated on the product label."
+  ],
+  "image": "catalogue-images/catalogue-04.jpg",
+  "sourceTable": 5
+},
   {
-    "id": "omaxgen-whey-2-kg-5",
-    "name": "Omaxgen Whey",
-    "category": "Whey Protein",
-    "price": 8800,
-    "pack": "2 kg",
-    "spec": "24 g protein, 5.6 g BCAAs and 130 kcal per serving, with zero added sugar. The 2 kg tub lists 66 servings. Whey-protein formula positioned for lean-muscle support and post-workout recovery.",
-    "highlights": [
-      "24 g protein, 5.6 g BCAAs and 130 kcal per serving, with zero added sugar.",
-      "The 2 kg tub lists 66 servings.",
-      "Whey-protein formula positioned for lean-muscle support and post-workout recovery."
-    ],
-    "image": "catalogue-images/catalogue-05.jpg",
-    "sourceTable": 6
-  },
+  "id": "omaxgen-whey-2-kg-5",
+  "name": "Omaxgen Whey",
+  "category": "Whey Protein",
+  "price": 8800,
+  "pack": "2 kg",
+  "spec": "24 g protein, 5.6 g BCAAs and 130 kcal per serving, with zero added sugar. The 2 kg tub lists 66 servings.",
+  "highlights": [
+    "24 g protein, 5.6 g BCAAs and 130 kcal per serving, with zero added sugar.",
+    "The 2 kg tub lists 66 servings."
+  ],
+  "image": "catalogue-images/catalogue-05.jpg",
+  "sourceTable": 6
+},
   {
     "id": "muscletiet-whey-protein-1kg-6",
     "name": "MuscleTiet Whey Protein",
@@ -171,18 +171,19 @@ window.VK_CATALOGUE = [
     "sourceTable": 13
   },
   {
-    "id": "muscletiet-bobx-whey-gold-100-whey-2-kg-13",
-    "name": "MuscleTiet BOBX Whey Gold 100% Whey",
-    "category": "Whey Protein",
-    "price": 6400,
-    "pack": "2 kg",
-    "spec": "The product identifies a 100% whey formula and highlights lean-muscle, recovery and performance positioning.",
-    "highlights": [
-      "The product identifies a 100% whey formula and highlights lean-muscle, recovery and performance positioning."
-    ],
-    "image": "catalogue-images/catalogue-13.jpg",
-    "sourceTable": 14
-  },
+  "id": "muscletiet-bobx-whey-gold-100-whey-2-kg-13",
+  "name": "MuscleTiet BOBX Whey Gold 100% Whey",
+  "category": "Whey Protein",
+  "price": 6400,
+  "pack": "2 kg",
+  "spec": "2 kg whey protein product. The product packaging identifies it as a 100% whey formula.",
+  "highlights": [
+    "2 kg whey protein product.",
+    "The product packaging identifies it as a 100% whey formula."
+  ],
+  "image": "catalogue-images/catalogue-13.jpg",
+  "sourceTable": 14
+},
   {
     "id": "muscletiet-whey-challenge-2-kg-14",
     "name": "MuscleTiet Whey Challenge",
@@ -240,19 +241,19 @@ window.VK_CATALOGUE = [
     "sourceTable": 18
   },
   {
-    "id": "myogenetix-whey-protein-concentrate-2-kg-18",
-    "name": "Myogenetix Whey Protein Concentrate",
-    "category": "Whey Protein",
-    "price": 7000,
-    "pack": "2 kg",
-    "spec": "100% premium whey protein concentrate, net 2,000 g / 4.4 lb. Designed for recovery and lean-muscle support.",
-    "highlights": [
-      "100% premium whey protein concentrate, net 2,000 g / 4.4 lb.",
-      "Designed for recovery and lean-muscle support."
-    ],
-    "image": "catalogue-images/catalogue-18.jpg",
-    "sourceTable": 19
-  },
+  "id": "myogenetix-whey-protein-concentrate-2-kg-18",
+  "name": "Myogenetix Whey Protein Concentrate",
+  "category": "Whey Protein",
+  "price": 7000,
+  "pack": "2 kg",
+  "spec": "Whey protein concentrate. Net quantity: 2,000 g / 4.4 lb.",
+  "highlights": [
+    "Whey protein concentrate.",
+    "Net quantity: 2,000 g / 4.4 lb."
+  ],
+  "image": "catalogue-images/catalogue-18.jpg",
+  "sourceTable": 19
+},
   {
     "id": "fitness-peanut-butter-variant-1-1-kg-19",
     "name": "Fitness Peanut Butter - Variant 1",
@@ -703,20 +704,20 @@ window.VK_CATALOGUE = [
     "image": "catalogue-images/catalogue-49.jpg",
     "sourceTable": 47
   },
-  {
-    "id": "muscletiet-multivitamin-100-g-51",
-    "name": "MuscleTiet Multivitamin",
-    "category": "Vitamins & Minerals",
-    "price": 1000,
-    "pack": "100 g",
-    "spec": "90-capsule multivitamin. The product highlights multivitamin/mineral support plus omega-3 and a probiotic component, with energy, heart-health, stress, immunity and muscle-health positioning.",
-    "highlights": [
-      "90-capsule multivitamin.",
-      "The product highlights multivitamin/mineral support plus omega-3 and a probiotic component, with energy, heart-health, stress, immunity and muscle-health positioning."
-    ],
-    "image": "catalogue-images/catalogue-50.png",
-    "sourceTable": 48
-  },
+ {
+  "id": "muscletiet-multivitamin-100-g-51",
+  "name": "MuscleTiet Multivitamin",
+  "category": "Vitamins & Minerals",
+  "price": 1000,
+  "pack": "100 g",
+  "spec": "90-capsule multivitamin containing vitamins and minerals, with omega-3 and a probiotic component as stated on the product packaging.",
+  "highlights": [
+    "90-capsule multivitamin.",
+    "Contains vitamins and minerals, with omega-3 and a probiotic component as stated on the product packaging."
+  ],
+  "image": "catalogue-images/catalogue-50.png",
+  "sourceTable": 48
+},
   {
     "id": "v-shape-supps-vitamin-complex-120-tablets-52",
     "name": "V Shape Supps Vitamin Complex",
