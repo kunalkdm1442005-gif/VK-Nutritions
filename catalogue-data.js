@@ -345,7 +345,7 @@ window.VK_CATALOGUE = [
     "spec": "27 g protein, 6.4 g BCAAs and 5.3 g glutamine per serving; tub lists 70 servings. ISO Gold is a whey-isolate/hydrolysate-focused protein formula designed for a high protein-to-serving ratio.",
     "highlights": [
       "27 g protein, 6.4 g BCAAs and 5.3 g glutamine per serving; tub lists 70 servings.",
-      "ISO Gold is a whey-isolate/hydrolysate-focused protein formula designed for a high protein-to-serving ratio and rapid digestion."
+      "ISO Gold is a whey-isolate/hydrolysate-focused protein formula designed for a high protein-to-serving ratio ."
     ],
     "image": "catalogue-images/catalogue-24.jpg",
     "sourceTable": 24
@@ -473,7 +473,7 @@ window.VK_CATALOGUE = [
     "spec": "Per scoop: 320 mg caffeine, 6 g citrulline malate and 3.2 g beta-alanine; common/current tub is about 30 servings. High-stimulant pre-workout formula for positioning.",
     "highlights": [
       "Per scoop: 320 mg caffeine, 6 g citrulline malate and 3.2 g beta-alanine; common/current tub is about 30 servings.",
-      "High-stimulant pre-workout formula for energy, pump and endurance positioning."
+      "High-stimulant pre-workout formula positioning."
     ],
     "image": "catalogue-images/catalogue-33.png",
     "sourceTable": 33
@@ -558,7 +558,7 @@ window.VK_CATALOGUE = [
     "spec": "4 g beta-alanine and 1 g L-arginine HCl per serving; pack has 30 servings. Formula is positioned ; other stimulant/citrulline details can vary by market version.",
     "highlights": [
       "4 g beta-alanine and 1 g L-arginine HCl per serving; pack has 30 servings.",
-      "Formula is positioned for workout energy, focus and pump; other stimulant/citrulline details can vary by market version."
+      "Formula is positioned ; other stimulant/citrulline details can vary by market version."
     ],
     "image": "catalogue-images/catalogue-39.png",
     "sourceTable": 38
@@ -765,9 +765,9 @@ window.VK_CATALOGUE = [
     "category": "Amino Acids",
     "price": 2499,
     "pack": "300 g",
-    "spec": "Citrulline 'Extreme Muscle Pump', unflavoured, 83 servings. Current V-Shape product listing: serving size 3 g with 2.9 g citrulline malate; the Indian listing also shows about 7.91 kcal, 1.92 g protein, 0.05 g carbohydrate and 0 g fat/sugar per serving. Pack weight can vary by market/label.",
+    "spec": "Citrulline , unflavoured, 83 servings. Current V-Shape product listing: serving size 3 g with 2.9 g citrulline malate; the Indian listing also shows about 7.91 kcal, 1.92 g protein, 0.05 g carbohydrate and 0 g fat/sugar per serving. Pack weight can vary by market/label.",
     "highlights": [
-      "Citrulline 'Extreme Muscle Pump', unflavoured, 83 servings.",
+      "Citrulline , unflavoured, 83 servings.",
       "Current V-Shape product listing: serving size 3 g with 2.9 g citrulline malate; the Indian listing also shows about 7.91 kcal, 1.92 g protein, 0.05 g carbohydrate and 0 g fat/sugar per serving.",
       "Pack weight can vary by market/label."
     ],
