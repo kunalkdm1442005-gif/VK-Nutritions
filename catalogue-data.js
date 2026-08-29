@@ -342,7 +342,7 @@ window.VK_CATALOGUE = [
     "category": "Whey Isolate",
     "price": 10500,
     "pack": "2kg",
-    "spec": "27 g protein, 6.4 g BCAAs and 5.3 g glutamine per serving; tub lists 70 servings. ISO Gold is a whey-isolate/hydrolysate-focused protein formula designed for a high protein-to-serving ratio and rapid digestion.",
+    "spec": "27 g protein, 6.4 g BCAAs and 5.3 g glutamine per serving; tub lists 70 servings. ISO Gold is a whey-isolate/hydrolysate-focused protein formula designed for a high protein-to-serving ratio.",
     "highlights": [
       "27 g protein, 6.4 g BCAAs and 5.3 g glutamine per serving; tub lists 70 servings.",
       "ISO Gold is a whey-isolate/hydrolysate-focused protein formula designed for a high protein-to-serving ratio and rapid digestion."
@@ -470,7 +470,7 @@ window.VK_CATALOGUE = [
     "category": "Pre-Workout",
     "price": 4099,
     "pack": "420 g",
-    "spec": "Per scoop: 320 mg caffeine, 6 g citrulline malate and 3.2 g beta-alanine; common/current tub is about 30 servings. High-stimulant pre-workout formula for energy, pump and endurance positioning.",
+    "spec": "Per scoop: 320 mg caffeine, 6 g citrulline malate and 3.2 g beta-alanine; common/current tub is about 30 servings. High-stimulant pre-workout formula for positioning.",
     "highlights": [
       "Per scoop: 320 mg caffeine, 6 g citrulline malate and 3.2 g beta-alanine; common/current tub is about 30 servings.",
       "High-stimulant pre-workout formula for energy, pump and endurance positioning."
@@ -555,7 +555,7 @@ window.VK_CATALOGUE = [
     "category": "Pre-Workout",
     "price": 2400,
     "pack": "300 g",
-    "spec": "4 g beta-alanine and 1 g L-arginine HCl per serving; pack has 30 servings. Formula is positioned for workout energy, focus and pump; other stimulant/citrulline details can vary by market version.",
+    "spec": "4 g beta-alanine and 1 g L-arginine HCl per serving; pack has 30 servings. Formula is positioned ; other stimulant/citrulline details can vary by market version.",
     "highlights": [
       "4 g beta-alanine and 1 g L-arginine HCl per serving; pack has 30 servings.",
       "Formula is positioned for workout energy, focus and pump; other stimulant/citrulline details can vary by market version."
@@ -724,9 +724,9 @@ window.VK_CATALOGUE = [
     "category": "Vitamins & Minerals",
     "price": 3800,
     "pack": "120 tablets",
-    "spec": "V Shape Vitamin Complex: 120 tablets, broad-spectrum 'maximum support multivitamin' positioned for active people and all-day energy.",
+    "spec": "V Shape Vitamin Complex: 120 tablets, broad-spectrum  positioned for active people and all-day energy.",
     "highlights": [
-      "V Shape Vitamin Complex: 120 tablets, broad-spectrum 'maximum support multivitamin' positioned for active people and all-day energy."
+      "V Shape Vitamin Complex: 120 tablets, broad-spectrum positioned for active people and all-day energy."
     ],
     "image": "catalogue-images/catalogue-51.png",
     "sourceTable": 49
