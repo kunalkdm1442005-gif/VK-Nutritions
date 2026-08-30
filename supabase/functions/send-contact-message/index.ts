@@ -1,5 +1,5 @@
 const ALLOWED_ORIGINS = ["https://vknutrtions.com", "https://www.vknutrtions.com", "http://localhost:3000"];
-const SUPPORT_EMAIL = "vknutrition26@gmail.com"; // 
+const SUPPORT_EMAIL = "<anything>@eopixoomel.resend.app"; // 
 
 function cors(request: Request) {
   const origin = request.headers.get("Origin") || "";
