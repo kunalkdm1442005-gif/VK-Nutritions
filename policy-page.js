@@ -39,6 +39,40 @@ const key=document.body.dataset.policy;const page=policyPages[key];const main=do
 function slug(value){return value.toLowerCase().replace(/&/g,'and').replace(/[^a-z0-9]+/g,'-').replace(/(^-|-$)/g,'')}
 function renderSections(sections){return sections.map(([heading,content])=>`<section class="policy-section" id="${slug(heading)}"><h2>${heading}</h2><p>${content}</p></section>`).join('')}
 function renderStandard(){document.querySelector('#policyTitle').textContent=page.title;document.querySelector('#policyIntro').textContent=page.intro;const toc=page.sections.map(([heading])=>`<a href="#${slug(heading)}">${heading}</a>`).join('');main.innerHTML=`<aside class="policy-toc"><strong>On this page</strong><nav>${toc}</nav></aside><article class="policy-content">${renderSections(page.sections)}</article>`}
-function renderContact(){document.querySelector('#policyTitle').textContent='Contact Us';document.querySelector('#policyIntro').textContent='Contact VK Nutrition for product, order, delivery and support questions.';main.innerHTML=`<article class="policy-content"><section class="policy-section"><h2>Customer Support</h2><div class="contact-grid"><div class="contact-card"><h3>Support Email</h3><p><span class="editable">support@vknutrtions.coml</span></p></div><div class="contact-card"><h3>Support Phone</h3><p><span class="editable">91+ 84259 20360</span></p></div><div class="contact-card"><h3>Store Address</h3><p><span class="editable">Samadhan Society, om, Chandavarkar Rd, opp. Borivali West, Vazira, Borivali, Mumbai, Maharashtra 400091</span></p></div><div class="contact-card"><h3>Support Hours</h3><p><span class="editable">10 AM to 9 PM </span></p></div></div></section><section class="policy-section"><h2>Send a Message</h2><p>Please include your order number when your enquiry relates to an order.</p><form id="contactForm" class="contact-form" novalidate><div class="contact-field"><label for="contactName">Name</label><input id="contactName" required autocomplete="name"></div><div class="contact-field"><label for="contactEmail">Email</label><input id="contactEmail" type="email" required autocomplete="email"></div><div class="contact-field"><label for="contactMobile">Mobile Number</label><input id="contactMobile" inputmode="tel" autocomplete="tel"></div><div class="contact-field"><label for="contactOrder">Order Number (optional)</label><input id="contactOrder"></div><div class="contact-field full"><label for="contactSubject">Subject</label><input id="contactSubject" required></div><div class="contact-field full"><label for="contactMessage">Message</label><textarea id="contactMessage" required></textarea></div><button class="policy-submit" type="submit">Send Message</button><p class="form-status" id="contactStatus" aria-live="polite"></p></form></section></article>`;document.querySelector('#contactForm').addEventListener('submit',event=>{event.preventDefault();const form=event.currentTarget;if(!form.checkValidity()){form.reportValidity();return}document.querySelector('#contactStatus').textContent='This contact form needs a configured support inbox before it can deliver messages. Please add the support email above before publishing.'})}
+function renderContact(){document.querySelector('#policyTitle').textContent='Contact Us';document.querySelector('#policyIntro').textContent='Contact VK Nutrition for product, order, delivery and support questions.';main.innerHTML=`<article class="policy-content"><section class="policy-section"><h2>Customer Support</h2><div class="contact-grid"><div class="contact-card"><h3>Support Email</h3><p><span class="editable">support@vknutrtions.coml</span></p></div><div class="contact-card"><h3>Support Phone</h3><p><span class="editable">91+ 84259 20360</span></p></div><div class="contact-card"><h3>Store Address</h3><p><span class="editable">Samadhan Society, om, Chandavarkar Rd, opp. Borivali West, Vazira, Borivali, Mumbai, Maharashtra 400091</span></p></div><div class="contact-card"><h3>Support Hours</h3><p><span class="editable">10 AM to 9 PM </span></p></div></div></section><section class="policy-section"><h2>Send a Message</h2><p>Please include your order number when your enquiry relates to an order.</p><form id="contactForm" class="contact-form" novalidate><div class="contact-field"><label for="contactName">Name</label><input id="contactName" required autocomplete="name"></div><div class="contact-field"><label for="contactEmail">Email</label><input id="contactEmail" type="email" required autocomplete="email"></div><div class="contact-field"><label for="contactMobile">Mobile Number</label><input id="contactMobile" inputmode="tel" autocomplete="tel"></div><div class="contact-field"><label for="contactOrder">Order Number (optional)</label><input id="contactOrder"></div><div class="contact-field full"><label for="contactSubject">Subject</label><input id="contactSubject" required></div><div class="contact-field full"><label for="contactMessage">Message</label><textarea id="contactMessage" required></textarea></div><button class="policy-submit" type="submit">Send Message</button><p class="form-status" id="contactStatus" aria-live="polite"></p></form></section></article>`;document.querySelector('#contactForm').addEventListener('submit', async event => {
+  event.preventDefault();
+  const form = event.currentTarget;
+  if (!form.checkValidity()) { form.reportValidity(); return; }
+  const statusEl = document.querySelector('#contactStatus');
+  const submitBtn = form.querySelector('.policy-submit');
+  submitBtn.disabled = true;
+  statusEl.textContent = 'Sending…';
+  try {
+    const res = await fetch('https://owpgbkrnimhwvgqntggq.supabase.co/functions/v1/send-contact-message', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'apikey': 'sb_publishable_yVu_tEIx690wZny03SmjBg_yNQX8toM',
+        'Authorization': 'Bearer sb_publishable_yVu_tEIx690wZny03SmjBg_yNQX8toM'
+      },
+      body: JSON.stringify({
+        name: document.querySelector('#contactName').value,
+        email: document.querySelector('#contactEmail').value,
+        mobile: document.querySelector('#contactMobile').value,
+        order_number: document.querySelector('#contactOrder').value,
+        subject: document.querySelector('#contactSubject').value,
+        message: document.querySelector('#contactMessage').value
+      })
+    });
+    const data = await res.json();
+    if (!res.ok || data.error) throw new Error(data.error || 'Failed to send.');
+    statusEl.textContent = 'Message sent. We will get back to you soon.';
+    form.reset();
+  } catch (err) {
+    statusEl.textContent = 'Could not send your message right now. Please try again or email us directly.';
+  } finally {
+    submitBtn.disabled = false;
+  }
+})}
 function applyTheme(theme){const next=theme==='dark'?'dark':'light';document.documentElement.dataset.theme=next;localStorage.setItem('vk-theme',next);const btn=document.querySelector('#policyTheme');if(btn){btn.textContent=next==='dark'?'☀':'🌙';btn.setAttribute('aria-label',next==='dark'?'Switch to light mode':'Switch to dark mode')}}
 applyTheme(localStorage.getItem('vk-theme')||'light');document.querySelector('#policyTheme').addEventListener('click',()=>applyTheme(document.documentElement.dataset.theme==='dark'?'light':'dark'));if(key==='contact')renderContact();else renderStandard();
