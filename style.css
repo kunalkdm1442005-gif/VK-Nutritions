@@ -25,7 +25,7 @@
     .nav{height:76px;display:flex;align-items:center;gap:34px}
     .logo{display:flex;align-items:center;gap:9px;font-weight:950;letter-spacing:-1.7px;font-size:24px;line-height:.8;white-space:nowrap}
     .logo-img{height:44px;width:auto;display:block;object-fit:contain}
-    .logo span{color:var(--lime)}
+    .footer-grid .logo-img{margin-bottom:14px}
     .nav-links{display:flex;align-items:center;gap:25px;margin-left:22px;font-weight:700;font-size:14px;color:#d8ddd9}
     .nav-links a{transition:.2s}
     .nav-links a:hover,.nav-links a.active{color:var(--lime)}
@@ -328,7 +328,7 @@
     @media(max-width:767px){
       body{padding-bottom:76px}
       .nav{position:relative;justify-content:center}
-     .logo{position:absolute;left:50%;margin:0;transform:translateX(-50%);z-index:2}
+    .nav .logo{position:absolute;left:50%;margin:0;transform:translateX(-50%);z-index:2}
       .mobile-header-btn{display:grid;place-items:center;width:38px;height:38px;padding:0;border:1px solid var(--line);border-radius:9px;background:transparent;color:var(--white);font-size:21px;line-height:1;z-index:3}
       .mobile-header-btn:first-child{position:absolute;left:0}
       .mobile-search-btn{position:absolute;right:42px}
