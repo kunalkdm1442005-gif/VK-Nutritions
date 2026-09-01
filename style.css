@@ -328,7 +328,7 @@
     @media(max-width:767px){
       body{padding-bottom:76px}
       .nav{position:relative;justify-content:center}
-      .logo{position:absolute;left:50%;margin:0;transform:translateX(-50%);z-index:2}
+     .logo{position:absolute;left:50%;margin:0;transform:translateX(-50%);z-index:2}
       .mobile-header-btn{display:grid;place-items:center;width:38px;height:38px;padding:0;border:1px solid var(--line);border-radius:9px;background:transparent;color:var(--white);font-size:21px;line-height:1;z-index:3}
       .mobile-header-btn:first-child{position:absolute;left:0}
       .mobile-search-btn{position:absolute;right:42px}
