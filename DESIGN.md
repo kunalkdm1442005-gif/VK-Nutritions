@@ -165,3 +165,4 @@ Sale and "New" badges are positioned in the top-right of product images. These a
 
 ### Lists & Navigation
 Navigation items use **Label-Bold** with a bottom-aligned animated underline that appears on hover. Footer lists should be condensed and clean, using the secondary gray text to minimize visual weight.
+Deployment refresh
