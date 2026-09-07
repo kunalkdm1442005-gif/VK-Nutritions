@@ -387,6 +387,10 @@
     .catalogue-detail-copy ul{margin:0;padding-left:19px;color:var(--muted);font-size:13px;line-height:1.55}
     .catalogue-detail-copy li{margin:5px 0}
     .catalogue-detail-note{color:var(--muted);font-size:11px;line-height:1.5;margin:18px 0}
+.qty-stepper{display:flex;align-items:center;gap:14px;margin:6px 0 14px;width:fit-content;border:1px solid var(--line);border-radius:10px;padding:6px 14px}
+.qty-stepper button{background:none;border:none;color:inherit;font-size:18px;width:26px;height:26px;cursor:pointer}
+.qty-stepper span{min-width:18px;text-align:center;font-weight:600}
+.catalogue-detail-copy .btn.full{margin-top:10px}
     .catalogue-detail-spec{border-top:1px solid var(--line);margin-top:26px;padding-top:2px}
     .catalogue-detail-spec p{color:var(--muted);font-size:13px;line-height:1.65;margin:0}
     :root[data-theme="light"] .catalogue-product .product-image,:root[data-theme="light"] .catalogue-detail-image{background:#f5f5f5}
