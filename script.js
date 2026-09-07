@@ -82,9 +82,12 @@ function bindCatalogueCards() {
   }));
   catalogueGrid.querySelectorAll(".view-details").forEach(button => button.addEventListener("click", event => openProductDetails(event.currentTarget.dataset.productId)));
 }
+let productDetailQty = 1;
 function openProductDetails(productId) {
   const product = catalogueProducts.find(item => item.id === productId);
   if (!product) return;
+  productDetailQty = 1;
+  $("#productDetailQtyValue").textContent = "1";
   $("#productDetailImage").src = product.image;
   $("#productDetailImage").alt = product.name;
   $("#productDetailCategory").textContent = product.category;
@@ -93,11 +96,25 @@ function openProductDetails(productId) {
   $("#productDetailPrice").textContent = money(product.price);
   $("#productDetailHighlights").innerHTML = product.highlights.map(item => `<li>${escapeHtml(cleanCatalogueText(item))}</li>`).join("");
   $("#productDetailSpec").textContent = cleanCatalogueText(product.spec);
-  $("#productDetailAdd").onclick = () => addProduct({ dataset: { id: product.id, name: product.name, price: String(product.price) } });
+  const addToCart = (openDrawer) => {
+    for (let i = 0; i < productDetailQty; i++) {
+      addProduct({ dataset: { id: product.id, name: product.name, price: String(product.price) } }, openDrawer && i === productDetailQty - 1);
+    }
+  };
+  $("#productDetailAdd").onclick = () => addToCart(false);
+  $("#productDetailBuy").onclick = () => addToCart(true);
   trackProductView(product);
   $("#productDetailOverlay").classList.add("show");
   $("#productDetailModal").classList.add("open");
 }
+$("#productDetailQtyMinus")?.addEventListener("click", () => {
+  productDetailQty = Math.max(1, productDetailQty - 1);
+  $("#productDetailQtyValue").textContent = String(productDetailQty);
+});
+$("#productDetailQtyPlus")?.addEventListener("click", () => {
+  productDetailQty = Math.min(20, productDetailQty + 1);
+  $("#productDetailQtyValue").textContent = String(productDetailQty);
+});
 function closeProductDetails() {
   $("#productDetailOverlay").classList.remove("show");
   $("#productDetailModal").classList.remove("open");
