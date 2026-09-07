@@ -46,7 +46,7 @@ const escapeHtml = value => String(value).replace(/[&<>'"]/g, character => ({ "&
 function cleanCatalogueText(value) {
   return String(value).replace(/\s{2,}/g, " ").trim();
 }
-const catalogueProducts = Array.isArray(window.VK_CATALOGUE) ? window.VK_CATALOGUE : [];
+let catalogueProducts = Array.isArray(window.VK_CATALOGUE) ? window.VK_CATALOGUE : [];
 let catalogueQuery = "";
 let catalogueCategory = "";
 const catalogueGrid = $("#productGrid");
@@ -167,6 +167,12 @@ function addProduct(card, openDrawer = false) {
 function closeCart() { $("#drawer").classList.remove("open"); $("#overlay").classList.remove("show"); }
 document.getElementById("newArrivalsSection")?.remove();
 renderCatalogue();
+if (window.VK_CATALOGUE_READY) {
+  window.VK_CATALOGUE_READY.then((products) => {
+    catalogueProducts = products;
+    renderCatalogue();
+  });
+}
 document.querySelectorAll(".category[data-category], .mobile-category-link[data-category]").forEach(button => button.addEventListener("click", event => {
   event.preventDefault();
   catalogueCategory = button.dataset.category;
