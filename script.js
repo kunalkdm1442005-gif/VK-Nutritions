@@ -188,6 +188,7 @@ if (window.VK_CATALOGUE_READY) {
   window.VK_CATALOGUE_READY.then((products) => {
     catalogueProducts = products;
     renderCatalogue();
+    populateCategoryThumbnails();
   });
 }
 document.querySelectorAll(".category[data-category], .mobile-category-link[data-category]").forEach(button => button.addEventListener("click", event => {
@@ -986,3 +987,15 @@ if (supabaseClient) {
   supabaseClient.auth.getSession().then(({ data }) => hydrateUser(data.session?.user || null));
 }
 renderCart();
+function populateCategoryThumbnails() {
+  document.querySelectorAll(".category[data-category]").forEach(card => {
+    const category = card.dataset.category;
+    const match = catalogueProducts.find(p => p.category === category && p.image);
+    const img = card.querySelector(".cat-thumb");
+    if (match && img) {
+      img.src = match.image;
+      img.onload = () => img.classList.add("loaded");
+    }
+  });
+}
+populateCategoryThumbnails();
