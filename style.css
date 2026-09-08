@@ -446,5 +446,6 @@
     :root[data-theme="light"] .store-location-card{background:#fff;border-color:#e5e5e5;box-shadow:0 12px 30px rgba(15,23,42,.08)}
     :root[data-theme="light"] .store-location-copy p,:root[data-theme="light"] .store-rating small{color:#555}
     @media(max-width:700px){.store-location{padding-top:4px}.store-location-card{grid-template-columns:1fr}.store-map-preview{min-height:235px}.store-location-copy{padding:24px 20px}.store-location-name h3{font-size:24px}.store-location-name{align-items:flex-start;flex-direction:column;gap:4px}.store-directions{width:100%;justify-content:center;text-align:center}.store-map-overlay{left:12px;right:12px;bottom:12px}}
-    .cat-thumb{position:absolute;right:10px;top:10px;width:60px;height:60px;object-fit:contain;background:#fff;border-radius:10px;padding:4px;display:none;box-shadow:0 2px 8px rgba(0,0,0,.2)}
-.category:has(.cat-thumb.loaded) .cat-icon{display:none}
+   .category{position:relative}
+   .cat-thumb{position:absolute;right:14px;top:14px;width:56px;height:56px;object-fit:contain;background:#fff;border-radius:10px;padding:6px;box-shadow:0 2px 8px rgba(0,0,0,.12)}
+    @media(max-width:620px){.cat-thumb{width:46px;height:46px;right:10px;top:10px}}
