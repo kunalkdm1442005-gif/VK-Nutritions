@@ -990,12 +990,16 @@ renderCart();
 function populateCategoryThumbnails() {
   document.querySelectorAll(".category[data-category]").forEach(card => {
     const category = card.dataset.category;
-    const match = catalogueProducts.find(p => p.category === category && p.image);
+    const match = catalogueProducts.find(p => p.category === category && p.image && p.image.trim() !== "");
     const img = card.querySelector(".cat-thumb");
-    if (match && img) {
-      img.src = match.image;
-      img.onload = () => img.classList.add("loaded");
-    }
+    if (!match || !img) return;
+    img.onload = () => {
+      if (img.naturalWidth > 0) img.classList.add("loaded");
+    };
+    img.onerror = () => {
+      img.classList.remove("loaded");
+      img.removeAttribute("src");
+    };
+    img.src = match.image;
   });
 }
-populateCategoryThumbnails();
